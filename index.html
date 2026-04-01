@@ -754,20 +754,20 @@
         <div class="section-title">Portfolio Overview</div>
         <div class="section-sub">Live data · Cook County Health PMOE</div>
       </div>
-      <button class="btn btn-ghost" onclick="generateAISummary('overview')">✨ AI Summary</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('overview')">💡 Key Insights</button>
     </div>
 
     <div id="overviewAI" style="display:none;" class="ai-summary-wrap animate-in">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> AI Insight</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="overviewAIText"></div>
     </div>
 
     <div class="stats-row animate-in delay-1" id="statsRow">
-      <div class="stat-card blue"><div class="stat-label">Active Projects</div><div class="stat-value" id="stat-active">—</div><div class="stat-sub">In planning or execution</div></div>
-      <div class="stat-card green"><div class="stat-label">Completed</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">Closed out</div></div>
+      <div class="stat-card blue"><div class="stat-label">Active Projects</div><div class="stat-value" id="stat-active">—</div><div class="stat-sub">Planning &amp; Execution Phase</div></div>
+      <div class="stat-card green"><div class="stat-label">Completed</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">Completed &amp; closed</div></div>
       <div class="stat-card amber"><div class="stat-label">Risks Flagged</div><div class="stat-value" id="stat-risks">—</div><div class="stat-sub">Across active projects</div></div>
       <div class="stat-card red"><div class="stat-label">Issues Open</div><div class="stat-value" id="stat-issues">—</div><div class="stat-sub">Requiring resolution</div></div>
-      <div class="stat-card purple"><div class="stat-label">Closeout Rate</div><div class="stat-value" id="stat-closeout">—</div><div class="stat-sub">Of completed projects</div></div>
+      <div class="stat-card purple"><div class="stat-label">Closeout Rate</div><div class="stat-value" id="stat-closeout">—</div><div class="stat-sub">Closeout reports filed</div></div>
     </div>
 
     <div class="overview-grid animate-in delay-2">
@@ -794,10 +794,10 @@
         <div class="section-title">Active Projects — Status Report</div>
         <div class="section-sub">Live from PMOE Load - Update report (report_id: 7165261019828100) · Synced Mar 31, 2026 · 22 rows across 21 projects</div>
       </div>
-      <button class="btn btn-ghost" onclick="generateAISummary('execution')">✨ AI Status Digest</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('execution')">💡 Key Insights</button>
     </div>
     <div id="executionAI" style="display:none;" class="ai-summary-wrap animate-in">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> AI Status Digest</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="executionAIText"></div>
     </div>
     <div class="filter-bar animate-in">
@@ -825,10 +825,10 @@
         <div class="section-title">Risks & Issues Register</div>
         <div class="section-sub">Active projects · Escalation-ready view</div>
       </div>
-      <button class="btn btn-ghost" onclick="generateAISummary('risks')">✨ Risk Briefing</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('risks')">💡 Key Insights</button>
     </div>
     <div id="risksAI" style="display:none;" class="ai-summary-wrap animate-in">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> Risk Briefing</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="risksAIText"></div>
     </div>
     <div class="filter-bar animate-in">
@@ -852,10 +852,10 @@
         <div class="section-title">Completed Projects</div>
         <div class="section-sub">Closeout reports & lessons learned</div>
       </div>
-      <button class="btn btn-ghost" onclick="generateAISummary('completed')">✨ Portfolio Summary</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('completed')">💡 Key Insights</button>
     </div>
     <div id="completedAI" style="display:none;" class="ai-summary-wrap animate-in">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> Portfolio Summary</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="completedAIText"></div>
     </div>
     <div class="filter-bar animate-in">
@@ -891,22 +891,22 @@
   <div class="view" id="view-closeout">
     <div class="section-header">
       <div>
-        <div class="section-title">Closeout Reports & Lessons Learned</div>
-        <div class="section-sub">PM Process Compliance Audit · Attachments &amp; Lessons Learned Logs</div>
+        <div class="section-title">Closeout Reports</div>
+        <div class="section-sub">Source: PM Process Compliance Audit · Status = Complete · 54 completed projects · Closeout reports filed as Word documents (.docx)</div>
       </div>
-      <button class="btn btn-ghost" onclick="generateAISummary('closeout')">✨ Portfolio Insights</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('closeout')">💡 Key Insights</button>
     </div>
 
     <div id="closeoutAI" style="display:none;" class="ai-summary-wrap animate-in">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> Portfolio Lessons Learned Insights</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="closeoutAIText"></div>
     </div>
 
     <div class="stats-row animate-in">
-      <div class="stat-card green"><div class="stat-label">With Closeout Report</div><div class="stat-value">20</div><div class="stat-sub">of 33 completed projects</div></div>
-      <div class="stat-card blue"><div class="stat-label">Projects w/ Real Lessons</div><div class="stat-value">4</div><div class="stat-sub">Cardio, Ambulance, Dialysis, PT/OT/SLP</div></div>
+      <div class="stat-card green"><div class="stat-label">Closeout Reports Filed</div><div class="stat-value" id="closeout-filed">—</div><div class="stat-sub">Word docs attached in Smartsheet</div></div>
+      <div class="stat-card red"><div class="stat-label">Missing Closeout Reports</div><div class="stat-value" id="closeout-missing">—</div><div class="stat-sub">Completed, no report filed yet</div></div>
+      <div class="stat-card blue"><div class="stat-label">Projects w/ Lessons Learned</div><div class="stat-value">4</div><div class="stat-sub">Cardio, Ambulance, Dialysis, PT/OT/SLP</div></div>
       <div class="stat-card amber"><div class="stat-label">Total Lessons Logged</div><div class="stat-value">20</div><div class="stat-sub">Across Lessons Learned sheets</div></div>
-      <div class="stat-card red"><div class="stat-label">Missing Closeouts</div><div class="stat-value">13</div><div class="stat-sub">Completed, no report filed</div></div>
     </div>
 
     <div class="filter-bar animate-in">
@@ -915,8 +915,9 @@
         <input type="text" class="search-input" placeholder="Search projects or lessons..." id="closeoutSearch" oninput="filterCloseout()">
       </div>
       <select class="filter-select" id="closeoutTypeFilter" onchange="filterCloseout()">
-        <option value="">All Projects</option>
-        <option value="has_doc">Has Doc Attachment</option>
+        <option value="">All Completed Projects</option>
+        <option value="has_doc">Closeout Report Filed ✓</option>
+        <option value="missing">Missing Closeout Report</option>
         <option value="has_lessons">Has Lessons Logged</option>
         <option value="missing">Missing Closeout</option>
       </select>
@@ -940,10 +941,10 @@
         <div class="section-title">PM Process Compliance</div>
         <div class="section-sub">Charter · Project Plan · Risks Log · Closeout Report</div>
       </div>
-      <button class="btn btn-ghost" onclick="generateAISummary('compliance')">✨ Compliance Summary</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('compliance')">💡 Key Insights</button>
     </div>
     <div id="complianceAI" style="display:none;" class="ai-summary-wrap animate-in">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> Compliance Summary</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="complianceAIText"></div>
     </div>
     <div class="filter-bar animate-in">
@@ -1370,59 +1371,90 @@ const PMOE_LOAD_DATA = [
   }
 ];
 
+// SOURCE: PM Process Compliance Audit (sheet 2177565233991556) — Status=Complete filter
+// 54 completed projects from Projects - Completed and Closed folder + 21 active
+// Closeout Rate = projects with closeout:true ÷ 54 completed
+// true = filed, false = not filed, null = not yet applicable (active)
 const COMPLIANCE_DATA = [
-  { project:"ACGME Compliance - Call Room Optimization", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"ACHN Providers and Operations Coordination", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:false, status:"Complete" },
-  { project:"Allied Health Education Agreements Restructure", pm:"Elizabeth Wallish", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"ARPA", pm:"Elizabeth Wallish", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Behavioral Health Office Strategic Plan", pm:"Jasmin Sanchez", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"BHAIC", pm:"Elizabeth Wallish", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Birthday Health Screenings Program", pm:"Elizabeth Wallish", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Bronzeville Health Center", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Care Coordination Transition", pm:"Elizabeth Wallish", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"CCBHC Certification", pm:"Lane Harmon", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"CCDPH Sanitarian Fees Review", pm:"Elizabeth Wallish", charter:true, plan:false, risks:false, closeout:false, status:"Complete" },
-  { project:"CCH-Press Ganey Consumerism", pm:"Julius Ablis", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Centralized Credentialing", pm:"Julius Ablis", charter:true, plan:true, risks:false, closeout:true, status:"Complete" },
-  { project:"City Colleges Workforce", pm:"Jasmin Sanchez", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Contract & Workforce Taskforce", pm:"Elizabeth Wallish", charter:true, plan:true, risks:true, closeout:false, status:"Complete" },
-  { project:"Crisis Triage Stabilization Center", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"DGIM - Admin Process Improvement", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Domestic Spend (EARN)", pm:"Jasmin Sanchez", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"DPH HEC Capacity Building", pm:"Elizabeth Wallish", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Health Care Equity Certification", pm:"Elizabeth Wallish", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"High Reliability Training", pm:"Julius Ablis", charter:false, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"High Reliability: Rebranding & Safety Coaching", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:false, status:"Complete" },
-  { project:"HRO: Clinical Outcomes", pm:"Elizabeth Wallish", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"JJIFP", pm:"Elizabeth Wallish", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"JSH Nurse Call & Overhead Paging", pm:"Julius Ablis", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Justice-Involved Re-Entry", pm:"Julius Ablis", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Lab Automation Upgrade", pm:"Julius Ablis", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"New Arrivals Clinic Services", pm:"Lane Harmon", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"North Riverside Dental Services", pm:"Julius Ablis", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"Organizational Consolidations", pm:"Elizabeth Wallish", charter:true, plan:true, risks:false, closeout:true, status:"Complete" },
-  { project:"Population Health Management - Phase 1", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Pre-Renal Transplant Clinic", pm:"Julius Ablis", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"Primary Care-Managed Care Info Coordination", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Provident Colonoscopy", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Provident Observation Unit", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Provident Pain Clinic", pm:"Julius Ablis", charter:false, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"Provident PT/OT/SLP", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Provident Volume", pm:"Elizabeth Wallish", charter:true, plan:true, risks:false, closeout:true, status:"Complete" },
-  { project:"Sengstacke Plastics Clinic", pm:"Julius Ablis", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"SPD Management Transition", pm:"Precious Avery", charter:true, plan:true, risks:false, closeout:false, status:"Complete" },
-  { project:"Specialty Clinics Expansion at Sengstacke", pm:"Julius Ablis", charter:true, plan:true, risks:true, closeout:true, status:"Complete" },
-  { project:"Surgery Optimization Phase 3", pm:"Jasmin Sanchez", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Telehealth Optimization", pm:"Lane Harmon", charter:true, plan:true, risks:false, closeout:true, status:"Complete" },
-  { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Population Health Mgmt / VBC", pm:"Lane Harmon", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"APP Optimization", pm:"Lane Harmon", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Immediate Care (Arlington Heights)", pm:"Lane Harmon", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Unified Strategy: CCH-CCDPH", pm:"Elizabeth Wallish", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"UniteUS", pm:"Precious Avery", charter:true, plan:true, risks:false, closeout:true, status:"Complete" },
-  { project:"Wayfinding App - Stroger and PB", pm:"Julius Ablis", charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Wellvana", pm:"Jasmin Sanchez", charter:null, plan:null, risks:null, closeout:null, status:"Active" }
+  // ── ACTIVE PROJECTS (21) ───────────────────────────────────────────────
+  { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"ARPA Spend Monitoring/Sustainability",             pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"BH Intake Center Move",                           pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"CCH-Press Ganey Consumerism",                     pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"City Colleges Workforce",                         pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Domestic Spend (EARN)",                           pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"External Providers' Work Hours",                  pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Health Equity Committee Capacity Building",       pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"HRO: Clinical Outcomes",                         pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"JSH Nurse Call & Overhead Paging",               pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Justice-Involved Re-Entry",                       pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"On Hold" },
+  { project:"Lab Automation Upgrade",                          pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Surgery Optimization Phase 3",                    pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Cath Lab — EP Optimization",                     pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Unified Strategy: CCH-CCDPH",                    pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Wayfinding App - Stroger and PB",                pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Population Health Mgmt / VBC",                   pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"APP Optimization",                                pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Immediate Care (Arlington Heights)",              pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"PMOE No Show Tool and Process",                   pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  // ── COMPLETED PROJECTS (54 per PM Process Compliance Audit + Completed folder) ──
+  { project:"CountyCare Move",                               pm:"Julius Ablis",       charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+
+  { project:"ACGME Compliance - Call Room Optimization",       pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"ACHN Providers and Operations Coordination",      pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:false, status:"Complete" },
+  { project:"Agency Staffing",                                 pm:"Julius Ablis",       charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Agency Staffing (Surge)",                         pm:"Julius Ablis",       charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Allied Health Education Agreements Restructure",  pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Anesthesiology Process Improvement",             pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Behavioral Health Office Strategic Plan",         pm:"Jasmin Sanchez",  charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"Birthday Health Screenings Program",              pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Bronzeville Health Center",                       pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Care Coordination Transition",                    pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"CCBHC Certification",                             pm:"Lane Harmon",     charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"CCDPH Sanitarian Fees Review",                    pm:"Elizabeth Wallish",charter:true,  plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Centralized Credentialing",                       pm:"Julius Ablis",    charter:true,  plan:true,  risks:false, closeout:true,  status:"Complete" },
+  { project:"Clinical Decision Unit",                          pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Contract & Workforce Taskforce",                  pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:true,  closeout:false, status:"Complete" },
+  { project:"Copay (ED and Health Centers)",                   pm:"Julius Ablis",       charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"COVID-19 Mass Vaccination",                       pm:"Julius Ablis",       charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Crisis Triage Stabilization Center",             pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"DGIM - Admin Process Improvement",               pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Endocrinology Clinic (North Riverside)",         pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Health Care Equity Certification",               pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Haemonitics Blood Bank",                          pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"High Reliability Training",                       pm:"Julius Ablis",    charter:false, plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"High Reliability: Rebranding & Safety Coaching", pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:false, status:"Complete" },
+  { project:"Inpatient Dialysis (HD & CRRT)",                 pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"JJIFP",                                           pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"JJNIF Nursing Innovation Project",               pm:"Elizabeth Wallish",charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"L&D Patient Experience",                          pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Medication to Bed Delivery Program",             pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Monkey Pox - CCH Response Plan",                 pm:"Julius Ablis",       charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"New Arrivals Clinic Services",                    pm:"Lane Harmon",     charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"North Riverside Dental Services",                 pm:"Julius Ablis",    charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"Organizational Consolidations",                   pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:false, closeout:true,  status:"Complete" },
+  { project:"Patient Throughput Committee",                    pm:"Elizabeth Wallish",charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Pharmacy Domestic Spend",                         pm:"Lane Harmon",     charter:false, plan:false, risks:false, closeout:false, status:"Active" },
+  { project:"Population Health Management - Phase 1",         pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Pre-Renal Transplant Clinic",                    pm:"Julius Ablis",    charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"Primary Care-Managed Care Info Coordination",    pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Provident Ambulance Runs",                        pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Provident Colonoscopy",                           pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Provident CTSC",                                  pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Provident Observation Unit",                      pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Provident Pain Clinic",                           pm:"Julius Ablis",    charter:false, plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"Provident PT/OT/SLP",                            pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Provident Volume",                                pm:"Elizabeth Wallish",charter:true,  plan:true,  risks:false, closeout:true,  status:"Complete" },
+  { project:"Quiet Campaign",                                  pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Sengstacke Plastics Clinic",                     pm:"Julius Ablis",    charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"SPD Management Transition",                       pm:"Precious Avery",  charter:true,  plan:true,  risks:false, closeout:false, status:"Complete" },
+  { project:"Specialty Clinics Expansion at Sengstacke",      pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete" },
+  { project:"Telehealth Optimization",                         pm:"Lane Harmon",     charter:true,  plan:true,  risks:false, closeout:true,  status:"Complete" },
+  { project:"1690 Command Center",                             pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"UniteUS",                                         pm:"Precious Avery",  charter:true,  plan:true,  risks:false, closeout:true,  status:"Complete" },
+  { project:"Wellness West",                                   pm:"Julius Ablis",    charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Wellvana",                                        pm:"Jasmin Sanchez",  charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
 ];
 
 const RISKS_DATA = [
@@ -1451,7 +1483,8 @@ const allRisks = PMOE_LOAD_DATA.flatMap(p =>
 const allIssues = PMOE_LOAD_DATA.flatMap(p =>
   p.deliverables.filter(d => d.risk === "Issue").map(d => ({...d, project: p.project, pm: p.pm, type:"Issue"}))
 );
-const closeoutCount = completedProjects.filter(p => p.closeout === true).length;
+const closeoutCount = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true).length;
+const totalComplete = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
 
 // =====================
 // INIT
@@ -1529,21 +1562,21 @@ PMOE_LOAD_DATA.forEach(p => {
 
 function buildDashboard() {
   // Stats
-  document.getElementById('stat-active').textContent = activeProjects.length;
-  document.getElementById('stat-complete').textContent = completedProjects.length;
+  document.getElementById('stat-active').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
+  document.getElementById('stat-complete').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
   document.getElementById('stat-risks').textContent = allRisks.length;
   document.getElementById('stat-issues').textContent = allIssues.length;
-  document.getElementById('stat-closeout').textContent = Math.round(closeoutCount / completedProjects.length * 100) + '%';
+  document.getElementById('stat-closeout').textContent = Math.round(closeoutCount / totalComplete * 100) + '%';
 
   // Nav badges
-  document.getElementById('activeCount').textContent = activeProjects.length;
+  document.getElementById('activeCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
   document.getElementById('riskCount').textContent = allRisks.length + allIssues.length;
-  document.getElementById('completedCount').textContent = completedProjects.length;
+  document.getElementById('completedCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
 
   // Last refresh
   document.getElementById('lastRefresh').textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
 
-  document.getElementById('closeoutCount').textContent = CLOSEOUT_DATA.filter(p => p.lessonsLearned.length > 0).length;
+  document.getElementById('closeoutCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true).length;
   document.getElementById('dashboardCount').textContent = DASHBOARD_DATA.length;
 
   buildOverview();
@@ -2097,7 +2130,7 @@ function openProjectModal(projectName) {
 
   document.getElementById('modalBody').innerHTML = `
     <div class="ai-summary-wrap" id="modalAI" style="display:none;">
-      <div class="ai-summary-label"><span class="ai-pulse"></span> AI Project Brief</div>
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="modalAIText"><div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div></div>
     </div>
 
@@ -2107,7 +2140,7 @@ function openProjectModal(projectName) {
     </div>
 
     <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="getAIProjectBrief('${p.project.replace(/'/g,"\\'")}')">✨ AI Project Brief</button>
+      <button class="btn btn-primary" onclick="getAIProjectBrief('${p.project.replace(/'/g,"\\'")}')">💡 Key Insights</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`;
 
@@ -2157,7 +2190,7 @@ function openCompletedModal(projectName) {
     </div>`}
 
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button class="btn btn-primary" onclick="getAICloseout('${p.project.replace(/'/g,"\\'")}', '${p.pm}', ${p.closeout===true})">✨ Generate Lessons Learned</button>
+      <button class="btn btn-primary" onclick="getAICloseout('${p.project.replace(/'/g,"\\'")}', '${p.pm}', ${p.closeout===true})">💡 Key Insights</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`;
 
@@ -2499,331 +2532,165 @@ function refreshData() {
 // =====================
 
 const CLOSEOUT_DATA = [
+  // ── Projects with real Lessons Learned from Smartsheet ──────────────────────
+  // Pulled via Smartsheet MCP April 2026
+  // Sheet IDs in sheetId field for reference
   {
     project: "Cardio Service Line",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: "3450682062727044",
     lessonsLearned: [
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "New functionality requests arrived just 2 weeks before planned Go-Live. Requirements were important for coordinating between Cath Lab, Echocardiography, Anesthesia, and OR — but surfaced too late, forcing a delayed Go-Live or going live with an interim process.",
-        recommendation: "1. Bring the Clinical Informatics Strategist into engagement sessions with Clinical and Operations stakeholders. 2. Allocate more time for discovery in the planning phase. 3. Establish a clear change-request process for requirements surfacing after scope is locked.",
-        date: "2021-11-30"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Stakeholder Management",
-        situation: "OR Admin was not identified during pre-planning or kick-off. Their manual coordination process with Cardiology was not sustainable, and their resource needs surfaced only 2 weeks before Go-Live for TAVR and Mitral Balloon Valvuloplasty.",
-        recommendation: "Review the full clinical and operational workflow — identify every unit providing inputs or receiving outputs. PM should always ask sponsors and stakeholders: 'Is there anyone else I need to speak to?'",
-        date: "2021-12-03"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Recruitment / HR",
-        situation: "Cardiology submitted Decision-To-Hire for 3 Attending Physicians and 2 PAs in early November, but applicants received no follow-up from CCH — putting top talent at risk of being recruited by competitors.",
-        recommendation: "CHRO should establish current state of recruitment process and develop short and long-term improvements to make CCH competitive in attracting and retaining top talent.",
-        date: "2021-12-03"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Testing / Quality Assurance",
-        situation: "Testing for Phase 2 went off track due to issues from MERGE and ASCEND systems, causing a domino effect on change control and the 3/22 Go-Live date.",
-        recommendation: "Increase testing duration to 2 weeks to allow the technical team adequate time to address system issues, especially those originating from MERGE and ASCEND integrations.",
-        date: "2022-03-25"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "Post-implant remote monitoring requirement was not mentioned by physician leads or department chair during requirements gathering — it only surfaced during vendor engagement for coding and billing.",
-        recommendation: "Engage vendors during requirements gathering even before contracts are in place. Vendors often surface critical technical and operational requirements that department leads may not be aware of.",
-        date: "2022-03-29"
-      },
-      {
-        type: "Best Practice",
-        area: "Recruitment / HR",
-        situation: "Recruiters historically needed a Position ID (PID) before posting jobs, adding delay to hiring. CSO, CHRO, and CC Budget agreed to allow job posting while awaiting PID creation, enabling Cardiology to attract top physician talent for interview.",
-        recommendation: "Standardize this bottleneck reduction for grant-funded projects where CCH must utilize funds or deliver results within a defined timeframe. HR and Budget should formalize this as policy.",
-        date: "2021-11-22"
-      },
-      {
-        type: "Best Practice",
-        area: "Vendor Management",
-        situation: "Abbott and Medtronic were slow sending redlines and EDS forms, delaying contracting. Division Chair, Business Manager, and Dr. Yadav used back-channel outreach to company leadership to accelerate vendor response.",
-        recommendation: "Utilize influence of CCH leaders through a 'back door' approach to nudge vendors in speeding up contracting responses — especially for high-priority clinical service launches.",
-        date: "2022-03-18"
-      }
+      { type:"Best Practice",           area:"Recruitment",            situation:"CCH agreed to post physician/PA jobs while PIDs were still being created, enabling the Cardiology department to attract top talent before positions were formally approved.", recommendation:"Standardize this as policy: allow job postings ahead of PID creation for Board-approved or grant-funded positions, especially when competing for scarce specialist talent." },
+      { type:"Improvement Opportunity", area:"Requirements Management", situation:"New functionality requests arrived just 2 weeks before Go-Live, after resources had been allocated and schedules finalized, causing confusion and potential date slippage.", recommendation:"Bring Clinical Informatics Strategist into early stakeholder sessions. Establish a formal change control cutoff — no new requirements after the project schedule is baselined." },
+      { type:"Improvement Opportunity", area:"Stakeholder Identification", situation:"OR Admin was not identified during pre-planning or kickoff and their need to coordinate with the Cath Lab for TAVR scheduling only surfaced 2 weeks before Go-Live.", recommendation:"Always ask sponsors and stakeholders: 'Is there anyone else I need to speak to?' Map all upstream and downstream workflow recipients before finalizing scope." },
+      { type:"Improvement Opportunity", area:"Recruitment Follow-Through", situation:"CCH submitted Decision-To-Hire for 5 physicians and PAs but applicants did not receive timely follow-up, risking loss of top talent to competing organizations.", recommendation:"Establish recruitment communication SLAs. CHRO to lead process improvement to reduce response time and improve CCH's competitiveness for specialist talent." },
+      { type:"Best Practice",           area:"Vendor Management",       situation:"Abbott and Medtronic were slow on contracting. Division Chair and physician lead directly contacted company leadership to accelerate the process.", recommendation:"Use executive and physician leadership relationships as a back channel to accelerate vendor contract negotiations, especially for implantable device vendors." },
+      { type:"Improvement Opportunity", area:"Testing",                 situation:"Phase 2 testing went off track due to MERGE and ASCEND system issues, creating a domino effect on change control and Go-Live dates.", recommendation:"Allocate minimum 2 weeks for testing phases. Build in additional buffer whenever integrations involve third-party systems like MERGE or ASCEND." },
+      { type:"Improvement Opportunity", area:"Vendor Engagement",       situation:"Post-implant remote monitoring requirements were not surfaced during planning and only emerged during vendor coding/billing discussions.", recommendation:"Engage vendors in requirements gathering before contracts are finalized to surface technical requirements that clinical leads may not know to ask for." }
     ]
   },
   {
     project: "Provident Ambulance Runs",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: "5583485176964996",
     lessonsLearned: [
-      {
-        type: "Improvement Opportunity",
-        area: "Staffing / Recruitment",
-        situation: "Physician market pool is small in Chicago and recruiting permanent ED physicians takes at least 8 months. Even agency staffing vendors faced challenges filling positions, and Go-Live was delayed 4 times.",
-        recommendation: "For projects with a predetermined Go-Live date requiring physician recruitment: start with agency/locums route immediately. Plan early with Legal and Operations Counsel to initiate union discussion on agency rates and moonlighting options — moonlighting is significantly cheaper than locums.",
-        date: "2022-01-01"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "Active stakeholder engagement during requirements gathering helped identify several critical risks, including long lead times from global supply chain issues. This paid dividends in risk identification and scope framing.",
-        recommendation: "For projects with defined outcomes and milestones, performing a thorough requirements analysis pays significant dividends — particularly for risks identification and management.",
-        date: "2022-01-01"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "An enterprise system requirement was missed and only surfaced a few weeks before Go-Live. Without it, CFD would not approve Provident to resume ambulance runs — forcing emergency weekend work to resolve it.",
-        recommendation: "Complete a thorough requirements document and regulatory compliance checklist early in planning. Engage oversight agencies (e.g., CFD) in requirements validation before locking scope.",
-        date: "2022-01-01"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Quality Assurance",
-        situation: "A project contributor reported a deliverable as complete. The PM accepted it at face value. Two months later, stakeholders reported the functionality had never actually been delivered.",
-        recommendation: "Validate task completion — especially for critical and high-value deliverables. Never accept verbal confirmation alone. Require documented proof or direct stakeholder verification.",
-        date: "2022-01-01"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Project Planning",
-        situation: "Go-Live date was predetermined before detailed planning, causing it to move 4 times. Projects operate on 3 constraints — scope, resource, and time — and compressing time requires either more resources or narrower scope.",
-        recommendation: "Do not set a Go-Live date until detailed planning is complete. If an executive-mandated date exists, immediately conduct a scope/resource/time trade-off analysis and present options to the sponsor.",
-        date: "2022-01-01"
-      }
+      { type:"Improvement Opportunity", area:"Physician Recruitment",   situation:"Physician market pool is small in Chicago. Recruiting permanent ED physicians takes at least 8 months, and even agency vendors struggle to fill positions.", recommendation:"For projects with predetermined Go-Live dates requiring physician recruitment, begin agency/locums engagement immediately. Get Legal and Operations Counsel ahead of union discussions early." },
+      { type:"Improvement Opportunity", area:"Requirements Management", situation:"Active stakeholder engagement during requirements gathering identified critical risks including long lead times from global supply chain issues.", recommendation:"For projects with defined outcomes and milestones, thorough requirements analysis pays dividends in risk identification. Never shortcut the requirements phase." },
+      { type:"Improvement Opportunity", area:"Requirements Completeness", situation:"A critical enterprise system requirement was missed and only surfaced a few weeks before Go-Live, requiring emergency weekend work and causing unnecessary stress.", recommendation:"Run a structured pre-Go-Live requirements checklist 6–8 weeks out. Include regulatory and infrastructure requirements, not just clinical workflow items." },
+      { type:"Improvement Opportunity", area:"Task Verification",        situation:"A project contributor reported a deliverable complete. PM accepted at face value. Two months later, stakeholders reported the functionality had never been delivered.", recommendation:"Require documented proof of completion for every critical-path deliverable — screenshots, sign-offs, or business owner verification — especially within 2 weeks of Go-Live." },
+      { type:"Improvement Opportunity", area:"Scheduling",               situation:"Go-Live date was predetermined before detailed planning was completed. The date moved 4 times — each move unnecessary and preventable.", recommendation:"Never lock a Go-Live date before scope, resources, and time constraints are understood. Communicate the project triangle: faster timelines require more resources or narrower scope, never both for free." }
     ]
   },
   {
-    project: "Provident Inpatient Dialysis",
+    project: "Inpatient Dialysis (HD & CRRT)",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: "6141654999558020",
     lessonsLearned: [
-      {
-        type: "Improvement Opportunity",
-        area: "Financial / Procurement",
-        situation: "CRRT had delays in equipment acquisition because insufficient funds remained in the accounting string used for the purchase requisition. The project sponsor was unaware of the remaining balance.",
-        recommendation: "Avoid using a single accounting string across multiple projects unless the sponsor or champion knows the remaining available balance. Assign dedicated strings per project or establish balance-monitoring checkpoints.",
-        date: "2022-01-01"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Staffing / Training",
-        situation: "An assumption was made that Provident Imaging Tech could operate a C-ARM unit transferred from Stroger Hospital. They could not. Project completion was delayed 2 weeks, and unnecessary escalations to CCH and GE Directors were required to arrange post-Thanksgiving training.",
-        recommendation: "Never assume equipment transferred between CCH facilities (Stroger vs. Provident) will operate identically or that staff are cross-trained. Always validate capabilities and arrange training before transfer.",
-        date: "2022-01-01"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Stakeholder Engagement",
-        situation: "Stakeholders who are invited to solution design, demo, and sign-off sessions often did not attend. Build, Test, and Adjust cycles are time-consuming and expensive when done iteratively due to missed requirements.",
-        recommendation: "Make attendance at solution design, demo, and sign-off meetings mandatory for invited stakeholders. Send pre-reads in advance. Escalate non-attendance to project sponsors. Rescheduling these sessions multiplies cost and timeline.",
-        date: "2022-01-01"
-      }
+      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"CRRT equipment acquisition was delayed multiple times because the shared accounting string had insufficient funds. The string was used across multiple projects.", recommendation:"Avoid shared accounting strings across projects. Confirm the funding balance with Finance before initiating procurement. Isolate project-specific strings at kickoff." },
+      { type:"Improvement Opportunity", area:"Equipment/Cross-Site",     situation:"It was assumed Provident Imaging Tech could operate a C-ARM unit transferred from Stroger — they could not. Project was delayed 2 weeks and required executive escalation to arrange training.", recommendation:"Never assume equipment compatibility or staff capability across sites. Explicitly verify model specifications and staff certifications before scheduling transfers between Stroger and Provident." },
+      { type:"Best Practice",           area:"Communication Planning",   situation:"Hemodialysis Go-Live was delayed 1 week because locum physicians covering ICU and 8 West were unaware the service was now available.", recommendation:"Expand the communication plan to explicitly include locum and agency staff. Develop a structured Go-Live broadcast that reaches all clinical staff covering relevant units, not just permanent staff." },
+      { type:"Improvement Opportunity", area:"Stakeholder Engagement",   situation:"Stakeholders missed solution design, demo, and sign-off meetings, leading to expensive build-test-adjust cycles.", recommendation:"Establish attendance accountability for solution design and sign-off sessions — include it in the project charter. If a stakeholder misses a demo, document the impact and escalate to sponsor." }
     ]
   },
   {
     project: "Provident PT/OT/SLP",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: true,
-    docName: "Project Closeout Report - Provident PT.OT.SLP.pdf",
     sheetId: "3749902026755972",
     lessonsLearned: [
-      {
-        type: "Improvement Opportunity",
-        area: "Project Planning",
-        situation: "Project was initiated without a concrete budget plan or funding source. Equipment and furniture lists were generated without specifics before PMOE got involved. PMOE had to reach out to the CFO to secure $200k for technology, furniture, and equipment.",
-        recommendation: "Before initiating a project, sponsors and champions must have a concrete budget plan and funding source. Use the Cook County budgeting cycle to align project planning.",
-        date: "2023-09-15"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "Furniture and an ice machine were ordered that could not fit in the designated space. The equipment list was generated before PMOE involvement, without space validation.",
-        recommendation: "Set aside time to fill out the requirements document. Measure the space and verify equipment specifications fit the space prior to ordering.",
-        date: "2023-09-15"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "Technology requirements were not defined in detail. An assumption was made that a WOW unit included a computer, but the model ordered was designed for inpatient medication dispensing — not the intended use.",
-        recommendation: "Set aside time to fill out the requirements document with complete specifications before procurement.",
-        date: "2023-09-15"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "Service owners had unstated expectations about tasks project contributors would handle (signage, sharps collectors, sanitizers, etc.) that were never discussed during scoping.",
-        recommendation: "Complete the requirements document during scoping to capture all stakeholder expectations explicitly. Avoid scope assumptions.",
-        date: "2023-09-15"
-      },
-      {
-        type: "Improvement Opportunity",
-        area: "Quality Assurance",
-        situation: "Project contributors reported tasks as complete (equipment delivered, set-up done) without verification. Issues were discovered only days before the go-live date.",
-        recommendation: "Verify the output of completed tasks — require proof of completion (photos, sign-offs, business owner confirmation) rather than accepting verbal reports.",
-        date: "2023-10-05"
-      }
+      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"Project was initiated without a concrete budget plan or funding source. PMOE had to intervene post-initiation and negotiate a $200k transfer with the CFO to cover technology, furniture, and equipment.", recommendation:"Before initiating any project, sponsors must have a confirmed budget and funding source. Align project initiation with the Cook County budgeting cycle." },
+      { type:"Improvement Opportunity", area:"Space Planning",           situation:"Several furniture pieces and an ice machine ordered could not fit the designated space because dimensions were never measured before ordering.", recommendation:"Measure the space and verify equipment specifications against room dimensions before finalizing any procurement. Add space measurement as a mandatory step in the requirements document." },
+      { type:"Improvement Opportunity", area:"Technical Requirements",   situation:"An assumption was made that WOW (Workstation on Wheels) included a computer — the model ordered was a medication dispensing unit for inpatient nursing, not outpatient therapy.", recommendation:"Specify technology requirements with full model-level detail. Validate vendor quotes against exact specifications before purchase order approval." },
+      { type:"Improvement Opportunity", area:"Scope Management",         situation:"Service owners had unstated expectations about additional items (signage, sharps collectors, sanitizers) never discussed during scoping, surfacing late in the project.", recommendation:"Use a structured requirements document with an explicit 'what is NOT included' section. Walk through it with service owners to surface assumptions before scope is finalized." },
+      { type:"Improvement Opportunity", area:"Task Verification",        situation:"Project contributors reported tasks complete on several occasions without verification — issues were uncovered just days before the baseline Go-Live date.", recommendation:"Verify completion of all tasks with documented evidence (photos, sign-offs, system screenshots). Build a verification step into the project plan for every critical deliverable." }
     ]
   },
   {
     project: "Provident Observation Unit",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: "4739855649034116",
     lessonsLearned: [
-      {
-        type: "Improvement Opportunity",
-        area: "Requirements Management",
-        situation: "Strip and laser printers were not specified during the requirements meeting with GE. The approved quote did not cover these items. Provident leaders assumed GE would replicate what was done in the ICU, but GE sent a different team who only delivered on what was explicitly specified.",
-        recommendation: "Always provide an itemized requirements list during vendor specification meetings. Avoid instructions to 'copy what was done in other units' — assumptions about vendor continuity are risky.",
-        date: "2024-01-22"
-      }
+      { type:"Improvement Opportunity", area:"Requirements Specification", situation:"Strip and laser printers were not specified during the GE requirements meeting. Provident leaders assumed GE would replicate the ICU installation, but GE sent a different team with no knowledge of prior work — and the Board-approved budget did not cover these items.", recommendation:"Provide itemized, model-level requirements at every vendor requirements meeting. Prohibit 'copy what was done in the ICU' instructions — each project team must specify requirements from scratch regardless of prior vendor relationship." }
     ]
   },
   {
     project: "Organizational Consolidations",
     pm: "Elizabeth Wallish",
-    hasDoc: true, hasPDF: false,
-    docName: "Closure Report - Organizational Consolidation.docx",
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Provident Volume",
     pm: "Elizabeth Wallish",
-    hasDoc: true, hasPDF: false,
-    docName: "Project Closure Report - Provident Volumes.docx",
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "ACGME Compliance - Call Room Optimization",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Allied Health Education Agreements Restructure",
     pm: "Elizabeth Wallish",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Birthday Health Screenings Program",
     pm: "Elizabeth Wallish",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Bronzeville Health Center",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Care Coordination Transition",
     pm: "Elizabeth Wallish",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Centralized Credentialing",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Crisis Triage Stabilization Center",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "DGIM - Admin Process Improvement",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Health Care Equity Certification",
     pm: "Elizabeth Wallish",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Population Health Management - Phase 1",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Primary Care-Managed Care Information Coordination",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Provident Colonoscopy",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Specialty Clinics Expansion at Sengstacke",
     pm: "Julius Ablis",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "Telehealth Optimization",
     pm: "Lane Harmon",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   },
   {
     project: "UniteUS",
     pm: "Precious Avery",
-    hasDoc: false, hasPDF: false,
-    docName: null,
     sheetId: null,
     lessonsLearned: []
   }
@@ -2903,27 +2770,40 @@ const LESSONS_THEMES = [
 // BUILD CLOSEOUT VIEW
 // =====================
 function buildCloseout(filter='', typeFilter='', pmFilter='') {
-  let data = CLOSEOUT_DATA;
-  if (filter) data = data.filter(p =>
-    p.project.toLowerCase().includes(filter.toLowerCase()) ||
-    p.lessonsLearned.some(l => l.situation.toLowerCase().includes(filter.toLowerCase()) || l.recommendation.toLowerCase().includes(filter.toLowerCase()))
-  );
-  if (pmFilter) data = data.filter(p => p.pm === pmFilter);
-  if (typeFilter === 'has_doc') data = data.filter(p => p.hasDoc || p.hasPDF);
-  if (typeFilter === 'has_lessons') data = data.filter(p => p.lessonsLearned.length > 0);
-  if (typeFilter === 'missing') {
-    const completedWithCloseout = new Set(CLOSEOUT_DATA.map(p => p.project));
-    const allCompleted = COMPLIANCE_DATA.filter(p => p.status === 'Complete');
-    data = allCompleted.filter(p => !completedWithCloseout.has(p.project)).map(p => ({
-      project: p.project, pm: p.pm, hasDoc: false, hasPDF: false, docName: null, sheetId: null, lessonsLearned: [], _missing: true
-    }));
-    if (pmFilter) data = data.filter(p => p.pm === pmFilter);
-    if (filter) data = data.filter(p => p.project.toLowerCase().includes(filter.toLowerCase()));
+  // Source of truth: ALL completed projects from PM Process Compliance Audit
+  const allCompleted = COMPLIANCE_DATA.filter(p => p.status === 'Complete');
+  const filed = allCompleted.filter(p => p.closeout === true);
+  const missing = allCompleted.filter(p => p.closeout !== true);
+
+  // Populate summary stats
+  const filedEl = document.getElementById('closeout-filed');
+  const missingEl = document.getElementById('closeout-missing');
+  if (filedEl) filedEl.textContent = filed.length;
+  if (missingEl) missingEl.textContent = missing.length;
+
+  // Build display dataset based on filter
+  let baseData;
+  if (typeFilter === 'has_doc') {
+    baseData = filed;
+  } else if (typeFilter === 'missing') {
+    baseData = missing;
+  } else if (typeFilter === 'has_lessons') {
+    const hasLessons = new Set(CLOSEOUT_DATA.filter(p => p.lessonsLearned.length > 0).map(p => p.project));
+    baseData = allCompleted.filter(p => hasLessons.has(p.project));
+  } else {
+    baseData = allCompleted;
   }
+
+  if (pmFilter) baseData = baseData.filter(p => p.pm === pmFilter);
+  if (filter) baseData = baseData.filter(p => {
+    const cl = CLOSEOUT_DATA.find(x => x.project === p.project);
+    return p.project.toLowerCase().includes(filter.toLowerCase()) ||
+      (cl && cl.lessonsLearned.some(l => (l.situation||'').toLowerCase().includes(filter.toLowerCase()) || (l.recommendation||'').toLowerCase().includes(filter.toLowerCase())));
+  });
 
   const totalLessons = CLOSEOUT_DATA.reduce((a, p) => a + p.lessonsLearned.length, 0);
 
-  // Cross-cutting themes section
+  // Cross-cutting themes — only show when no filter active
   const themesHtml = !typeFilter && !filter && !pmFilter ? `
     <div style="margin-bottom:28px;">
       <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--font-mono);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
@@ -2949,77 +2829,94 @@ function buildCloseout(filter='', typeFilter='', pmFilter='') {
       </div>
     </div>` : '';
 
-  // Project cards
-  const cards = data.map(p => {
-    const hasContent = p.lessonsLearned.length > 0 || p.hasDoc || p.hasPDF;
-    const isMissing = p._missing;
+  // Project cards — driven from COMPLIANCE_DATA Complete rows
+  const cards = baseData.map(compRow => {
+    const closeoutData = CLOSEOUT_DATA.find(x => x.project === compRow.project);
+    const hasReport = compRow.closeout === true;
+    const lessonsLearned = closeoutData ? closeoutData.lessonsLearned : [];
+    const hasLessons = lessonsLearned.length > 0;
 
-    const attachBadge = (p.hasDoc || p.hasPDF) ? `
-      <div style="display:flex;align-items:center;gap:6px;padding:7px 12px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:6px;margin-bottom:10px;">
-        <span style="font-size:14px;">${p.hasPDF ? '📄' : '📝'}</span>
+    const statusBadge = hasReport
+      ? `<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.25);font-family:var(--font-mono);">📝 Report Filed</span>`
+      : `<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(239,68,68,0.1);color:var(--danger);border:1px solid rgba(239,68,68,0.25);font-family:var(--font-mono);">⚠ Missing</span>`;
+
+    const docBadge = hasReport ? `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:6px;margin-bottom:10px;">
+        <span style="font-size:16px;">📄</span>
         <div>
-          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--success);font-family:var(--font-mono);">Closeout Document Attached</div>
-          <div style="font-size:12px;color:var(--text2);margin-top:1px;">${p.docName}</div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--success);font-family:var(--font-mono);">Closeout Report — Word Document (.docx)</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:1px;">Attached in PM Process Compliance Audit · <a href="https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1" target="_blank" style="color:var(--accent);text-decoration:none;">Open in Smartsheet ↗</a></div>
         </div>
-      </div>` : '';
+      </div>` : `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(239,68,68,0.04);border:1px dashed rgba(239,68,68,0.25);border-radius:6px;margin-bottom:10px;">
+        <span style="font-size:14px;">📭</span>
+        <div style="font-size:12px;color:var(--text3);">Closeout report not yet filed — no Word document attached in PM Process Compliance Audit</div>
+      </div>`;
 
-    const lessonsHtml = p.lessonsLearned.length > 0 ? `
-      <div style="margin-top:4px;">
-        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;font-family:var(--font-mono);margin-bottom:8px;">Lessons Learned (${p.lessonsLearned.length})</div>
-        ${p.lessonsLearned.map((l, i) => `
-          <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px;">
-            <div style="padding:8px 12px;background:var(--surface2);display:flex;align-items:center;justify-content:space-between;gap:8px;">
-              <div style="display:flex;align-items:center;gap:7px;">
-                <span style="font-size:11px;background:rgba(245,158,11,0.1);color:var(--warning);border:1px solid rgba(245,158,11,0.25);padding:1px 7px;border-radius:4px;font-family:var(--font-mono);">Improvement</span>
-                <span class="tag" style="font-size:10px;">${l.area}</span>
-              </div>
-              <span style="font-size:10px;color:var(--text3);font-family:var(--font-mono);">${l.date}</span>
+    const complianceChips = `
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;">
+        ${[
+          {label:'Charter', val: compRow.charter},
+          {label:'Plan', val: compRow.plan},
+          {label:'Risks Log', val: compRow.risks},
+          {label:'Closeout Report', val: compRow.closeout}
+        ].map(c => {
+          const cls = c.val === true ? 'chip-yes' : c.val === false ? 'chip-no' : 'chip-na';
+          const icon = c.val === true ? '✓' : c.val === false ? '✗' : '—';
+          return `<span class="compliance-chip ${cls}">${icon} ${c.label}</span>`;
+        }).join('')}
+      </div>`;
+
+    const lessonsHtml = hasLessons ? `
+      <div style="margin-top:10px;">
+        <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px;">
+          📚 Lessons Learned (${lessonsLearned.length} entries from Smartsheet)
+        </div>
+        ${lessonsLearned.map((l, i) => `
+          <div style="padding:9px 12px;border:1px solid var(--border);border-radius:6px;margin-bottom:7px;background:rgba(255,255,255,0.01);">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">
+              <span class="tag" style="font-size:10px;">${l.area}</span>
+              <span style="font-size:10px;padding:1px 7px;border-radius:10px;background:${l.type==='Best Practice'?'rgba(16,185,129,0.1)':'rgba(245,158,11,0.1)'};color:${l.type==='Best Practice'?'var(--success)':'var(--warning)'};border:1px solid ${l.type==='Best Practice'?'rgba(16,185,129,0.25)':'rgba(245,158,11,0.25)'};font-family:var(--font-mono);">${l.type}</span>
             </div>
-            <div style="padding:10px 14px;">
-              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text3);font-family:var(--font-mono);margin-bottom:4px;">What Happened</div>
-              <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px;">${l.situation}</div>
-              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--success);font-family:var(--font-mono);margin-bottom:4px;">→ Recommended Approach</div>
-              <div style="font-size:12px;color:var(--text);line-height:1.6;padding:8px 10px;background:rgba(16,185,129,0.05);border-radius:5px;border-left:2px solid var(--success);">${l.recommendation}</div>
-            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:4px;"><strong>Situation:</strong> ${l.situation}</div>
+            <div style="font-size:12px;color:var(--text3);line-height:1.5;"><strong>Recommendation:</strong> ${l.recommendation}</div>
           </div>`).join('')}
       </div>` : '';
 
-    const aiSection = hasContent && !isMissing ? `
-      <div id="ai-closeout-${p.project.replace(/[^a-zA-Z0-9]/g,'_')}" style="display:none;" class="ai-summary-wrap" style="margin-top:10px;">
-        <div class="ai-summary-label"><span class="ai-pulse"></span> AI Analysis</div>
-        <div class="ai-summary-text" id="ai-closeout-text-${p.project.replace(/[^a-zA-Z0-9]/g,'_')}"></div>
-      </div>
-      <button class="btn btn-ghost" style="margin-top:10px;font-size:12px;" onclick="generateCloseoutAI('${p.project.replace(/'/g,"\\'")}')">✨ Generate AI Analysis</button>` : '';
-
-    const missingBanner = isMissing ? `
-      <div style="padding:10px 14px;background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.15);border-radius:6px;font-size:12px;color:var(--danger);">
-        ⚠ No closeout report or lessons learned have been filed for this project. Institutional knowledge may be lost.
-      </div>` : '';
+    const safeId = compRow.project.replace(/[^a-zA-Z0-9]/g, '_');
+    const aiSection = `
+      <div id="ai-closeout-${safeId}" style="display:none;" class="ai-summary-wrap" style="margin-top:10px;">
+        <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
+        <div class="ai-summary-text" id="ai-closeout-text-${safeId}"></div>
+      </div>`;
 
     return `
-      <div style="background:var(--surface);border:1px solid ${hasContent?'var(--border2)':'var(--border)'};border-radius:12px;overflow:hidden;margin-bottom:14px;${!hasContent&&!isMissing?'opacity:0.7':''}">
-        <div style="padding:14px 18px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;">
+      <div class="project-card">
+        <div class="project-card-header">
           <div>
-            <div style="font-weight:600;font-size:14px;color:var(--text);">${p.project}</div>
-            <div style="font-size:12px;color:var(--text3);margin-top:2px;">PM: ${p.pm}</div>
+            <div class="project-name">${compRow.project}</div>
+            <div class="project-pm">PM: ${compRow.pm}</div>
           </div>
-          <div style="display:flex;align-items:center;gap:7px;flex-shrink:0;">
-            ${p.hasDoc || p.hasPDF ? `<span class="compliance-chip chip-yes">📎 Doc Filed</span>` : ''}
-            ${p.lessonsLearned.length > 0 ? `<span class="compliance-chip chip-yes">📊 ${p.lessonsLearned.length} Lesson${p.lessonsLearned.length>1?'s':''}</span>` : ''}
-            ${isMissing ? `<span class="compliance-chip chip-no">⚠ Missing</span>` : (!hasContent ? `<span class="compliance-chip chip-na">— No entries</span>` : '')}
+          <div style="display:flex;gap:6px;align-items:center;">
+            ${statusBadge}
+            <span class="status-pill complete">● Complete</span>
           </div>
         </div>
-        <div style="padding:14px 18px;">
-          ${missingBanner}
-          ${attachBadge}
+        <div class="project-card-body">
+          ${complianceChips}
+          ${docBadge}
           ${lessonsHtml}
+          <div style="margin-top:8px;">
+            <button class="btn btn-ghost" style="font-size:12px;" onclick="generateCloseoutAI('${compRow.project.replace(/'/g,"\\'")}')">💡 Key Insights</button>
+          </div>
           ${aiSection}
         </div>
       </div>`;
   }).join('');
 
-  document.getElementById('closeoutContent').innerHTML = themesHtml + (data.length === 0 ? '<div class="no-results">No projects match your filters.</div>' : cards);
+  document.getElementById('closeoutContent').innerHTML = themesHtml + (baseData.length === 0 ? '<div class="no-results">No projects match your filters.</div>' : cards);
 }
+
 
 function filterCloseout() {
   buildCloseout(
@@ -3030,27 +2927,76 @@ function filterCloseout() {
 }
 
 async function generateCloseoutAI(projectName) {
-  const p = CLOSEOUT_DATA.find(x => x.project === projectName);
-  if (!p) return;
-
   const safeId = projectName.replace(/[^a-zA-Z0-9]/g, '_');
   const wrapEl = document.getElementById('ai-closeout-' + safeId);
   const textEl = document.getElementById('ai-closeout-text-' + safeId);
   if (!wrapEl || !textEl) return;
 
-  const lessonsText = p.lessonsLearned.length > 0
-    ? p.lessonsLearned.map((l, i) => `Lesson ${i+1} (${l.area}): Situation: ${l.situation} | Recommended: ${l.recommendation}`).join('\n')
-    : 'No lessons learned entries logged in Smartsheet. A closeout document exists.';
-
-  const prompt = `Project: ${p.project} (PM: ${p.pm})
-Closeout document filed: ${p.hasDoc || p.hasPDF ? 'Yes - ' + p.docName : 'No'}
-Lessons Learned entries:
-${lessonsText}
-
-Provide: (1) 2-3 key takeaways this project offers for future similar CCH projects, (2) what to replicate, (3) what to prevent or avoid, (4) which project types or domains this is most relevant to. Be specific and actionable.`;
+  const closeoutEntry = CLOSEOUT_DATA.find(x => x.project === projectName);
+  const complianceEntry = COMPLIANCE_DATA.find(x => x.project === projectName);
+  const pm = (closeoutEntry && closeoutEntry.pm) || (complianceEntry && complianceEntry.pm) || 'Unknown';
+  const hasDoc = complianceEntry && complianceEntry.closeout === true;
+  const lessons = (closeoutEntry && closeoutEntry.lessonsLearned) || [];
 
   wrapEl.style.display = 'block';
-  await callClaude(prompt, textEl, null);
+
+  let html = '';
+
+  if (lessons.length > 0) {
+    const improvements = lessons.filter(l => l.type === 'Improvement Opportunity');
+    const bestPractices = lessons.filter(l => l.type === 'Best Practice');
+    const areas = [...new Set(lessons.map(l => l.area))];
+
+    html += `<div style="font-size:12px;color:var(--text3);margin-bottom:12px;">`;
+    html += `<strong>Key Themes Identified:</strong><br>`;
+    html += `&bull; ${areas.join(' &nbsp;&bull;&nbsp; ')}</div>`;
+
+    if (bestPractices.length > 0) {
+      html += `<div style="font-weight:600;font-size:13px;color:var(--text);margin:12px 0 8px;">What to Replicate in Future Projects:</div>`;
+      bestPractices.forEach(l => {
+        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;">`;
+        html += `<span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
+      });
+    }
+
+    if (improvements.length > 0) {
+      html += `<div style="font-weight:600;font-size:13px;color:var(--text);margin:12px 0 8px;">What to Prevent:</div>`;
+      improvements.forEach(l => {
+        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;">`;
+        html += `<span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
+      });
+    }
+
+    const relevance = getCloseoutRelevance(projectName);
+    html += `<div style="margin-top:12px;font-size:12px;color:var(--text3);"><strong>Most Relevant For:</strong> ${relevance}</div>`;
+
+  } else if (hasDoc) {
+    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">`;
+    html += `A closeout report has been filed as a Word document in the PM Process Compliance Audit for <strong>${projectName}</strong>. `;
+    html += `Lessons learned have not been separately logged in the Smartsheet Lessons Learned log for this project.<br><br>`;
+    html += `To access the detailed insights from this project, open the closeout report via the link above.</div>`;
+  } else {
+    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">`;
+    html += `No closeout report has been filed for <strong>${projectName}</strong> and no lessons learned have been logged in Smartsheet.<br><br>`;
+    html += `This represents an opportunity to capture institutional knowledge. Recommend scheduling a 30-minute retrospective with the PM and key stakeholders to document what worked and what should be done differently.</div>`;
+  }
+
+  textEl.innerHTML = html;
+}
+
+function getCloseoutRelevance(projectName) {
+  const n = projectName.toLowerCase();
+  if (n.includes('dialysis') || n.includes('pt/ot') || n.includes('observation') || n.includes('ambulance') || n.includes('cardio') || n.includes('cath'))
+    return 'Any upcoming clinical service launch or facility build-out at Provident or Stroger campuses.';
+  if (n.includes('staffing') || n.includes('physician') || n.includes('recruit'))
+    return 'Any physician or specialist recruitment project with a fixed Go-Live date.';
+  if (n.includes('it') || n.includes('system') || n.includes('automation') || n.includes('wayfinding') || n.includes('lab'))
+    return 'Any technology implementation, system Go-Live, or clinical informatics project.';
+  if (n.includes('budget') || n.includes('spend') || n.includes('copay') || n.includes('earn') || n.includes('finance'))
+    return 'Any financial optimization, revenue cycle, or budget-dependent project.';
+  if (n.includes('equity') || n.includes('community') || n.includes('arpa') || n.includes('city colleges'))
+    return 'Any grant-funded or community health initiative requiring external partner coordination.';
+  return 'Any upcoming operational improvement or service expansion project at Cook County Health.';
 }
 
 // =====================
