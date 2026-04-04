@@ -1539,7 +1539,7 @@ function buildDashboard() {
   document.getElementById('completedCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
 
   // Last refresh
-  document.getElementById('lastRefresh').textContent = 'Data: April 4, 2026';
+  document.getElementById('lastRefresh').textContent = 'Data: Apr 4 2026 · Click ↺ Refresh for live data';
 
   document.getElementById('closeoutCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true).length;
   document.getElementById('dashboardCount').textContent = DASHBOARD_DATA.length;
@@ -2485,40 +2485,91 @@ function showView(name) {
 }
 
 async function refreshData() {
-  const btn = document.getElementById('refreshBtn');
+  const btn       = document.getElementById('refreshBtn');
   const refreshEl = document.getElementById('lastRefresh');
 
-  // The dashboard data is embedded at build time from Smartsheet via Claude + Smartsheet MCP.
-  // To refresh: open Claude (claude.ai), upload this file, and say "refresh the dashboard data".
-  // Claude will pull all live Smartsheet data and generate a new file with current information.
+  // ── API server URL — update this after deploying to Render ──────────────
+  // Example: 'https://pmoe-dashboard-api.onrender.com'
+  const API_URL = window.PMOE_API_URL || 'https://pmoe-dashboard-api.onrender.com';
 
-  btn.textContent = '↺ Refresh';
-  btn.disabled = false;
+  btn.disabled    = true;
+  btn.textContent = '⏳ Fetching...';
+  refreshEl.textContent = 'Connecting to Smartsheet...';
 
-  // Show how to refresh
-  const modal = document.createElement('div');
-  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
-  modal.innerHTML = `
-    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:32px;max-width:500px;width:90%;box-shadow:0 24px 48px rgba(0,0,0,0.4);">
-      <div style="font-size:24px;margin-bottom:12px;">🔄 How to Refresh Live Data</div>
-      <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px;">
-        This dashboard embeds live Smartsheet data that was last pulled on <strong>April 4, 2026</strong>.<br><br>
-        To update with the latest changes from all Smartsheet sources:
-        <ol style="margin:12px 0 0 20px;padding:0;">
-          <li style="margin-bottom:8px;">Open <a href="https://claude.ai" target="_blank" style="color:var(--accent);">claude.ai</a> in your browser</li>
-          <li style="margin-bottom:8px;">Upload this HTML file to a new message</li>
-          <li style="margin-bottom:8px;">Type: <strong>"Refresh the dashboard data from Smartsheet"</strong></li>
-          <li>Claude will pull all live data and deliver an updated file</li>
-        </ol>
-      </div>
-      <div style="font-size:12px;color:var(--text3);margin-bottom:20px;padding:10px 14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);">
-        📊 <strong>Sources refreshed:</strong> PMOE Load-Update report · PM Process Compliance Audit · CCH-Press Ganey Risks Log · Lab Automation Risks Log · Master File · Lessons Learned sheets
-      </div>
-      <button onclick="this.closest('div[style*=fixed]').remove()" style="background:var(--accent);color:white;border:none;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;font-weight:600;">Got it</button>
-    </div>`;
-  document.body.appendChild(modal);
-  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+  try {
+    const res = await fetch(`${API_URL}/api/data`);
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+      throw new Error(err.error || `Server error ${res.status}`);
+    }
+
+    const data = await res.json();
+    refreshEl.textContent = 'Updating dashboard...';
+
+    // ── Update PMOE_LOAD_DATA ──────────────────────────────────────────────
+    if (data.pmoeLoadData && data.pmoeLoadData.length > 0) {
+      PMOE_LOAD_DATA.length = 0;
+      data.pmoeLoadData.forEach(p => PMOE_LOAD_DATA.push(p));
+    }
+
+    // ── Update RISKS_DATA ──────────────────────────────────────────────────
+    if (data.risksData && data.risksData.length > 0) {
+      RISKS_DATA.length = 0;
+      data.risksData.forEach(r => RISKS_DATA.push(r));
+    }
+
+    // ── Update COMPLIANCE_DATA (active/completed projects) ─────────────────
+    if (data.complianceData && data.complianceData.length > 0) {
+      // Merge: keep existing entries for projects not in API response
+      // Update entries that ARE in API response
+      data.complianceData.forEach(live => {
+        const idx = COMPLIANCE_DATA.findIndex(e => e.project === live.project);
+        if (idx >= 0) {
+          COMPLIANCE_DATA[idx] = { ...COMPLIANCE_DATA[idx], ...live };
+        }
+        // Don't add new rows — structure changes go through Claude rebuild
+      });
+    }
+
+    // ── Recompute derived arrays ───────────────────────────────────────────
+    allRisks.length = 0;
+    allIssues.length = 0;
+    PMOE_LOAD_DATA
+      .flatMap(p => p.deliverables.filter(d => d.risk === 'Risk').map(d => ({...d, project: p.project, pm: p.pm, type:'Risk'})))
+      .forEach(r => allRisks.push(r));
+    PMOE_LOAD_DATA
+      .flatMap(p => p.deliverables.filter(d => d.risk === 'Issue').map(d => ({...d, project: p.project, pm: p.pm, type:'Issue'})))
+      .forEach(r => allIssues.push(r));
+
+    // ── Refresh all stat cards ─────────────────────────────────────────────
+    buildDashboard();
+
+    // ── Re-render current active tab ───────────────────────────────────────
+    const activeTab = document.querySelector('.nav-tab.active');
+    const current   = activeTab ? activeTab.id.replace('tab-', '') : 'overview';
+    if      (current === 'overview')   buildOverview();
+    else if (current === 'execution')  buildExecution();
+    else if (current === 'risks')      buildRisks();
+    else if (current === 'completed')  buildCompleted();
+    else if (current === 'meeting')    buildMeetingPrep();
+    else if (current === 'closeout')   buildCloseout();
+    else if (current === 'compliance') buildCompliance();
+
+    const now = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+    refreshEl.textContent = `Live · ${data.meta.reportRows} projects · ${data.meta.riskRows} risks · ${now}`;
+    btn.textContent = '✓ Updated';
+    setTimeout(() => { btn.textContent = '↺ Refresh'; btn.disabled = false; }, 2500);
+
+  } catch (err) {
+    console.error('Refresh error:', err);
+    refreshEl.textContent = '⚠ ' + err.message;
+    btn.textContent = '↺ Retry';
+    btn.disabled = false;
+  }
 }
+
+
 
 // =====================
 // CLOSEOUT / LESSONS LEARNED DATA
