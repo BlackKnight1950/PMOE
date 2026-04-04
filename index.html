@@ -111,6 +111,11 @@
     color: var(--text3);
     margin-right: 8px;
   }
+  #refreshBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
   .btn {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 7px 14px; border-radius: 8px;
@@ -727,7 +732,7 @@
   </div>
   <div class="topbar-actions">
     <span class="last-refresh" id="lastRefresh"></span>
-    <button class="btn btn-ghost" onclick="refreshData()">↺ Refresh</button>
+    <button class="btn btn-ghost" onclick="refreshData()" id="refreshBtn">↺ Refresh</button>
     <button class="btn btn-primary" onclick="showView('meeting')">📋 Meeting Prep</button>
   </div>
 </header>
@@ -1170,203 +1175,166 @@ const DASHBOARD_DATA = [
 // ── LIVE DATA from PMOE Load - Update Report (report_id: 7165261019828100) ──
 // Pulled: March 31, 2026 · 22 rows across all active projects
 // Source: PMOE Current Load folder → PMOE Load - Update sheet
+
+
+// =====================
+// PMOE LOAD - UPDATE DATA
+// SOURCE: PMOE Load - Update Report (report_id: 7165261019828100)
+// LAST FETCHED: April 4, 2026
+// =====================
 const PMOE_LOAD_DATA = [
   {
-    project: "Pharmacy Domestic Spend",
+    project: "Pharmacy Domestic Spend", pm: "Lane Harmon", lastUpdated: "2026-03-06",
     masterKey: "Pharmacy Domestic Spend",
-    pm: "Lane Harmon",
-    lastUpdated: "2026-03-06",
     deliverables: [
       { name: "Project Benefits/Impact Monitoring", status: "Leadership recently met with system APPs to discuss prescribing. Claims data will be reviewed to determine impact. Initial data has been prepared for HIV drugs to be shared with providers at a future meeting. Group is working to create roadmap for 2026 with an initial focus on HIV drugs. Likely, we'll then focus on biologics specific to dermatology, GI, and pulmonary. Red flag/blue ribbon report has been 'sunsetted'. March meeting was cancelled due to multiple conflicts, will regroup in April.", risk: "", impact: "" }
     ]
   },
   {
-    project: "Population Health / VBC",
+    project: "Population Health/VBC", pm: "Lane Harmon", lastUpdated: "2026-04-03",
     masterKey: "Population Health Management/VBC",
-    pm: "Lane Harmon",
-    lastUpdated: "2026-03-27",
     deliverables: [
-      { name: "Project Benefits/Impact Monitoring", status: "Bi-weekly meeting series will resume 3/31 for leaders to share OKR updates.", risk: "Issue", impact: "Many leaders are expressing frustration with balancing VBC work alongside other priorities. This program would benefit from dedicated support." }
+      { name: "Project Benefits/Impact Monitoring", status: "Bi-weekly series for OKR report outs began 3/30. Preparing for next monthly update to senior leadership on 4/9.", risk: "Issue", impact: "Many leaders are expressing frustration with balancing VBC work alongside other priorities. This program would benefit from dedicated support." }
     ]
   },
   {
-    project: "Medication Refill & Reconciliation Optimization",
+    project: "Medication Refill and Reconciliation Optimization", pm: "Lane Harmon", lastUpdated: "2026-04-03",
     masterKey: "Medication Refill and Reconciliation Optimization",
-    pm: "Lane Harmon",
-    lastUpdated: "2026-03-27",
     deliverables: [
-      { name: "SOW and Plan", status: "Group met 3/16 to discuss updates. Dr. Loafman shared PA process at a Family Med meeting and providers are reporting using it with success. Discussed creating a training for existing and new providers including all education aspects mentioned on project plan. Will review project plan for updates and discuss patient education tactics at 3/30 meeting.", risk: "", impact: "" }
+      { name: "SOW and Plan", status: "Group met on 3/30. Discussed focusing on 'direct to patient' education rather than clerk/provider scripting. Reviewed materials that Pharmacy team has created and at next meeting will further discuss leveraging these tools in our clinics and improving 'visibility'. Discussed editing verbiage in the depart summaries as well.", risk: "", impact: "" }
     ]
   },
   {
-    project: "APP Optimization",
+    project: "APP Optimization", pm: "Lane Harmon", lastUpdated: "2026-03-27",
     masterKey: "APP Optimization",
-    pm: "Lane Harmon",
-    lastUpdated: "2026-03-27",
     deliverables: [
       { name: "SOW and Plan", status: "Follow up meetings for ortho and GU are scheduled in addition to initial meetings for plastics and GI.", risk: "", impact: "" }
     ]
   },
   {
-    project: "Immediate Care (Arlington Heights)",
+    project: "Immediate Care (AH)", pm: "Lane Harmon", lastUpdated: "2026-03-27",
     masterKey: "Immediate Care (AH)",
-    pm: "Lane Harmon",
-    lastUpdated: "2026-03-27",
     deliverables: [
       { name: "SOW and Plan", status: "Group has determined that a new district code is not needed for immediate care services at Arlington Heights as the system is moving away from creating new district codes. We will use a hospital service, Imm Care, to differentiate these services/volumes. PM working to finalize itemized budget for HRSA with itemized detail for furniture & HIS items.", risk: "Risk", impact: "Anticipating low volumes until we have PIDs to bring on dedicated staff. Current model is dependent on moonlighting/overtime." }
     ]
   },
   {
-    project: "Unified Strategy: CCH-CCDPH",
+    project: "Unified Strategy: CCH-CCDPH", pm: "Elizabeth Wallish", lastUpdated: "2026-04-03",
     masterKey: "Unified Strategy: CCH-CCDPH",
-    pm: "Elizabeth Wallish",
-    lastUpdated: "2026-03-27",
     deliverables: [
-      { name: "Project Governance", status: "Complete update summary for sponsors. Biweekly check in with Immunization lead: complete next mtg agenda, brainstorm how initiative owners brief out, create shared mtg slide deck. Encourage initiative owners to finalize charters, assign activities to owners, and review deadlines for accuracy before next report out. Update and share project plan.", risk: "", impact: "" }
+      { name: "Project Governance", status: "MCH: Addressing challenges in integrated MCH care coordination has been identified as a key driver for improving population health outcomes. Success will be measured through increased enrollment in MCH-focused programs, greater engagement among underserved and vulnerable populations, strengthened adherence and continuity of care, and measurable improvements in clinical outcomes. Immunization: Data Sharing work is underway to develop a unified view of immunization coverage. Community Immunizations: Back-to-school clinics are being organized, and mobile clinic capacity is expanding. Clinical Workflow: Best practices are being implemented to reduce missed vaccination opportunities.", risk: "", impact: "" }
     ]
   },
   {
-    project: "Health Equity Committee Capacity Building",
-    masterKey: "Behavioral Intake Center",
-    pm: "Elizabeth Wallish",
-    lastUpdated: "2026-03-27",
+    project: "Health Equity Committee Capacity Building", pm: "Elizabeth Wallish", lastUpdated: "2026-04-03",
+    masterKey: "Health Equity Committee Capacity Building",
     deliverables: [
-      { name: "Project Governance", status: "Co-leads canceled bi-weekly planning meeting with PM. Co-leads pushed out to next week HEC monthly committee meeting. PM encourages vital activities discussions e.g. meeting agenda creation, priorities brainstorming, and updates to charter ahead of meetings.", risk: "", impact: "" }
+      { name: "Project Governance", status: "HEC Committee and SteerCo meetings have been well attended and continue to generate productive dialogue. However, project progress remains slow due to limited authority within the project management role, which constrains the ability to drive timelines and secure next steps. Communication challenges persist — inconsistent meeting schedules, delayed email responses, and unshared agendas hinder alignment. The project's reliance on a fully volunteer committee continues to impact capacity and pace.", risk: "", impact: "" }
     ]
   },
   {
-    project: "HRO: Clinical Outcomes",
-    masterKey: "HRO: Clinical Outcomes Group",
-    pm: "Elizabeth Wallish",
-    lastUpdated: "2026-03-27",
+    project: "HRO: Clinical Outcomes", pm: "Elizabeth Wallish", lastUpdated: "2026-04-03",
+    masterKey: "HRO: Clinical Outcomes",
     deliverables: [
-      { name: "Project Governance", status: "Weekly check-in with dyad leads to discuss future council model driven by Quality dept and our ability to carry on despite inevitable dissolution of clinical outcomes tracking/reporting as we know it. Drive successful CNL/nurse lead assignment to PSI and HACs subgroups with nurse leaders. Coordinate and participate in meet and greet with new PSI-12 physician lead to onboard ahead of team one-on-ones and monthly report outs.", risk: "", impact: "" }
+      { name: "Project Governance", status: "Mortality: Improved code documentation processes are being reviewed to reduce observed mortality rates. Sepsis: Nurse clinicians will be engaged in nurse-focused sepsis education. PSI-12: Physician onboarding is underway. PSI-11: The measure currently lacks an assigned physician or nurse lead. CAUTI/CLABSI: A new iRounding tool with improved survey questions is being introduced — goal is 5% improvement, stretch goal zero infections. C. difficile: A standardized protocol-to-policy process is being implemented with Contact Plus precautions. Falls: 2026 target to reduce falls and falls with injury by 5% (10% stretch goal). HAPI: Physician education materials for pressure injury prevention have been developed and approved.", risk: "", impact: "" }
     ]
   },
   {
-    project: "ARPA",
-    masterKey: "ARPA Spend Monitoring/Sustainability",
-    pm: "Elizabeth Wallish",
-    lastUpdated: "2026-03-27",
+    project: "ARPA", pm: "Elizabeth Wallish", lastUpdated: "2026-04-03",
+    masterKey: "ARPA",
     deliverables: [
-      { name: "Cash Flow exercise, Expenditures Monitoring, Sustainability Planning", status: "Complete weekly pivot table for outstanding GovGrant tasks for biweekly discussion with program leads and finance with governance over next steps. Use monthly status report from GH to update funding spend down progress and produce brief out slide results for board meeting.", risk: "", impact: "" }
+      { name: "Cash Flow exercise, Expenditures Monitoring, Sustainability Planning", status: "DBMS completed rollover analysis and updated the PMO budget to reflect FY25 actuals and remaining FY26 funds; EBS has been aligned accordingly. Corporate-funded line items (e.g., personnel, supplies, unobligated costs) have been removed — these expenses should now be reflected in departmental operating budgets. FY26 costs marked as 'general fund-covered' are part of an internal monitoring process and do not limit partner spending authority. Updated ARPA PMO budgets will be distributed over the next two weeks, with GovGrants program-level revisions expected by month-end.", risk: "", impact: "" }
     ]
   },
   {
-    project: "BH Intake Center Move",
-    masterKey: "Behavioral Intake Center",
-    pm: "Elizabeth Wallish",
-    lastUpdated: "2026-03-27",
+    project: "BH Intake Center Move", pm: "Elizabeth Wallish", lastUpdated: "2026-04-03",
+    masterKey: "BH Intake Center Move",
     deliverables: [
-      { name: "Project Governance", status: "Oversee weekly project check-in with team for impact statistics. Drive weekly steering committee meeting objectives for project timeline adherence. Complete sign-off on PCR/ICRA/ILSM forms through docusign. Discussion with infection control, set hard barriers on 6W to prevent dust, drive actions for B&G to initiative labor to action moving furniture, patching and painting.", risk: "", impact: "" }
+      { name: "Project Governance", status: "Weekly project punch list reviews with sponsors are actively tracking impact metrics and ensuring timely follow-up. Steering committee meetings continue to drive stakeholder alignment and adherence to the project timeline. Buildings and Grounds have mobilized carpenter, painter, and furniture resources, and EVS is fully engaged. The project remains on track with no reported barriers.", risk: "", impact: "" }
     ]
   },
   {
-    project: "Domestic Spend (EARN)",
-    masterKey: "Domestic Spend (EARN)",
-    pm: "Jasmin Sanchez",
-    lastUpdated: "2026-03-26",
+    project: "Domestic Spend (EARN)", pm: "Jasmin Sanchez", lastUpdated: "2026-04-02",
+    masterKey: "Domestic Spend",
     deliverables: [
-      { name: "Implementation / Project Benefits & Impact Monitoring", status: "In-Progress. 11 PCP change request forms as of last week. Texts were sent out Tuesday for redetermination events and reminder text will go out on Tuesday 3/31. Working through resubmitting claims — 150 were resubmitted yesterday totaling ~$24K. Working with Asja to problem solve root cause: provider had to renew NPI and in the interim they are not active in IMPACT so those claims cannot be paid. Denials have decreased a lot since the summer so the process of notifying the department chairs is working. Diane's team and CountyCare will meet weekly to review high utilizer lists. Received approval from UM workgroup to proceed with building out an Access Dashboard.", risk: "Issue", impact: "" }
+      { name: "Implementation / Project Benefits & Impact Monitoring", status: "In-Progress. Kathy has escalated the patient list standardization to HFS and requested we get files directly from them so we can text them on rede events. Patient list for mail order letter received, sent to Alex for final review. This week's revenue workgroup was cancelled as CountyCare needs additional time to give us a refresh of the denial data.", risk: "Issue", impact: "Downstream effects of patients not in network — seeing denials for eligibility and an uptick in prior auths for out of network patients for surgery. Financial clearance workflow review group has been formed. Question raised: should this become a separate project?" }
     ]
   },
   {
-    project: "City Colleges Workforce",
-    masterKey: "Workforce Pipeline Development (City Colleges of Chicago)",
-    pm: "Jasmin Sanchez",
-    lastUpdated: "2026-03-26",
+    project: "City Colleges Workforce", pm: "Jasmin Sanchez", lastUpdated: "2026-04-02",
+    masterKey: "City Colleges Workforce",
     deliverables: [
-      { name: "Implementation", status: "In-Progress — Created a discovery log for all key questions we need to get answered with the working groups. Continue to edit master document with MOU. Sent a meeting invite HOLD for kick off though work is happening now. Got meeting invites to present PTF award to community orgs. Scheduled quarterly leadership meeting — next one is in June. Tamieka is filling out financial documents city colleges sent over so we get the monies. City Colleges is on Spring Break this week.", risk: "Issue", impact: "Need a final decision on space. Initially discussed the pharmacy and NEC room on second floor however could use 6th floor — need a final decision so construction can begin. Other items to move on: knowing all the security needs (onboarding, IDs, actual security guard) for students and IT (do they need to install own server?)." }
+      { name: "Implementation", status: "In-Progress. Created a discovery log for all key questions to get answered with the working groups. Continuing to edit master document with MOU. Kickoff meeting and all quarterly leadership meetings are scheduled. Ad-hoc meetings are starting — meeting next week to discuss all the KPIs and tracking (planning to set up in Smartsheet with a dashboard). Financial forms sent so we receive the 3 separate payments. Met with Janine to propose advance skills for the MA program workgroup — gaps at the system level and apprenticeships to fill clerk and tech roles.", risk: "Issue", impact: "Still need a final decision on space. Initially discussed pharmacy and NEC room on second floor however 6th floor is also an option — need a final decision so construction can begin. Also need clarity on security needs (onboarding, IDs, security guard) for students and IT infrastructure." }
     ]
   },
   {
-    project: "Surgery Optimization Phase 3",
-    masterKey: "Surgery Optimization Phase 3",
-    pm: "Jasmin Sanchez",
-    lastUpdated: "2026-03-26",
+    project: "Surgery Optimization Phase 3", pm: "Jasmin Sanchez", lastUpdated: "2026-04-02",
+    masterKey: "Surgery Optimization",
     deliverables: [
-      { name: "Implementation / Project Benefits & Impact Monitoring", status: "In-Progress: PPT v2 short form is complete, there needs to be training on staff. There were issues with the short form — the logic was not working, Rene and Shannon need to fix the form. We expect the long form to be completed next month but all the training materials are ready to go. BI was able to publish a utilization dashboard — sent over on Monday, refreshed every second Monday of the month and shared in the divisional chair meetings.", risk: "Issue", impact: "High uptick in prior authorizations of patient out of network. Will need to review the current processes and see if this could be captured sooner with instructions on how to be in network and get services here." }
+      { name: "Implementation / Project Benefits & Impact Monitoring", status: "In-Progress: PPT v2 short form is in production. A win is we have seen a 3% drop of cancellation in 24-48 hours. Met budget in Feb, 10 cases over. Average FCOT 84.8%. Average TAT 33 Min. Block utilization increase 2% from previous month — February 71% and January 69%.", risk: "Issue", impact: "" }
     ]
   },
   {
-    project: "Cath Lab — EP Optimization",
-    masterKey: "Cath Lab- EP Optimization Project",
-    pm: "Jasmin Sanchez",
-    lastUpdated: "2026-03-26",
+    project: "Cath Lab — EP Optimization", pm: "Jasmin Sanchez", lastUpdated: "2026-04-02",
+    masterKey: "Cath Lab- EP Optimization",
     deliverables: [
-      { name: "Project Governance", status: "In-Progress: Completed project charters and have documented all the key stakeholders, purpose and deliverables as well as org structure. Javier will review with Craig and I need to convert all this into our charter for our records and begin the project plan, I plan to get started on this tomorrow!", risk: "Issue", impact: "Charter draft in progress — link to SharePoint draft shared in notes." }
+      { name: "Project Governance", status: "In-Progress: Completed project charters and have documented all the key stakeholders, purpose and deliverables as well as org structure. Javier will review with Craig — once approved the charter can be submitted.", risk: "Issue", impact: "Charter draft v1 link: https://cchhs1.sharepoint.com/:p:/r/sites/PMOE2/Shared%20Documents/General/Jasmin/Cath%20Lab-EP%20Operations/Pre-Implementation/Cath%20Lab%20Optimization%20Charter%20Draft%20v1%203-4-26.pptx" }
     ]
   },
   {
-    project: "Lab Automation Upgrade",
-    masterKey: "Lab Automation Upgrade",
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-19",
+    project: "Lab Automation Upgrade", pm: "Julius Ablis", lastUpdated: "2026-04-02",
+    masterKey: "Lab Automation (Upgrade)",
     deliverables: [
-      { name: "Readiness and Implementation", status: "Construction work started with containment completed and start removing existing power and data poles. Interface component where build is expected to be available by 4/13. Planned activities are proceeding according to plan. 2 issues reported this week related to construction were all addressed and no further intervention were needed.", risk: "", impact: "" }
+      { name: "Readiness and Implementation", status: "Phase 1 of construction is complete. Phase 2 started but needs to resolve 1 outstanding issue related to cable management. Scheduled onsite meeting with BOT, vendor, and General Contractor to physically review the power poles structures and then discuss and agree on path forward. First super-user staff attended the out-of-state training and DXA analyzer is scheduled to arrive on 4/7.", risk: "", impact: "" }
     ]
   },
   {
-    project: "PMOE No Show Tool and Process",
-    masterKey: null,
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-19",
+    project: "PMOE No Show Tool and Process", pm: "Julius Ablis", lastUpdated: "2026-04-02",
+    masterKey: "No Show Prediction and Targeted Overbooking",
     deliverables: [
-      { name: "Tool and Process", status: "Week of 3/9 has 51% positive prediction value. Updated performance metrics are available in SharePoint for CORE to leaders to review.", risk: "", impact: "" }
+      { name: "Tool and Process", status: "Completed analysis for Arlington Heights, Austin, Prieto, and North Riverside then completed the build of recency and risk stratification codes for ACHN sites. Completed work including result of actual testing for January-March 2026 were sent to Nancy Rivera for review and decision whether she would like to proceed further. The overall positive prediction value of the tool is 51%.", risk: "", impact: "" }
     ]
   },
   {
-    project: "External Providers' Work Hours",
-    masterKey: "External Providers",
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-12",
-    deliverables: [
-      { name: "Tool and Process", status: "First iteration of invoice management is complete and sent to Medical Affairs for review and feedback. For the timeclock app, Medical Affairs said that they will review further and use the app if the CCT team will not be able to deploy their solution this year. Timeclock app is ready for deployment anytime.", risk: "", impact: "" }
-    ]
-  },
-  {
-    project: "Stroger Nurse Call and Overhead Paging Systems",
+    project: "JSH Nurse Call & Overhead Paging", pm: "Julius Ablis", lastUpdated: "2026-04-02",
     masterKey: "JSH Nurse Call and Overhead Paging Systems",
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-12",
     deliverables: [
-      { name: "Workflows", status: "User discovery scope for current state and construction constraints were complete. 95% of the SMEs attended the discussion and inputs were collected and will be used by IMEG consultants for initial planning iteration.", risk: "", impact: "" }
+      { name: "Workflows", status: "Analysis report including indexes were completed by IMEG. Discussed with BAM and Capital Planning on 4/1. Next steps is merely on Capital Planning.", risk: "", impact: "" }
     ]
   },
   {
-    project: "Anal Dysplasia Diagnostic and Treatment Services",
-    masterKey: "Anal Dysplasia Diagnostic and Treatment Services",
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-19",
+    project: "Anal Dysplasia Diagnostic and Treatment Services", pm: "Julius Ablis", lastUpdated: "2026-03-19",
+    masterKey: "Anal Dysplasia Clinic",
     deliverables: [
       { name: "Procurement", status: "Budget provided account string to be used for procurement of the PICO equipment worth $34k. Waiting for account string to be used for procurement of training services.", risk: "", impact: "" }
     ]
   },
   {
-    project: "Wayfinding Tool",
+    project: "Wayfinding Tool", pm: "Julius Ablis", lastUpdated: "2026-04-02",
     masterKey: "Wayfinding App - Stroger and PB",
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-19",
     deliverables: [
-      { name: "Tool and Process", status: "Shared with Stroger and PB stakeholders the first iteration of the PMOE Wayfinding tool. Initial feedback is good as managers expressed that the tool is very beneficial for their patients and will improve patient experience and patients' on-time arrival in their clinic.", risk: "", impact: "" }
+      { name: "Tool and Process", status: "Updated the feature backlog as Imaging, PB 4th floor, Rehab, and Surgery have provided their feedback. Live tool: https://blackknight1950.github.io/Wayfinding/", risk: "", impact: "" }
     ]
   },
   {
-    project: "Justice-Involved Re-Entry",
-    masterKey: null,
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-05",
+    project: "Justice-Involved Re-Entry", pm: "Julius Ablis", lastUpdated: "2026-03-05",
+    masterKey: "Justice-Involved Re-Entry",
     deliverables: [
-      { name: "Billing Mechanism (90-day Pre-release)", status: "Discussed with Revenue Cycle SPM that the only pending information from HFS are the code modifiers. CCH need to set-up Cermak like an outpatient clinic in order to comply with reimbursement model — fee for service. Rev Cycle SPM will check with Oracle if there are potential solutions that could be leveraged so as to bypass the manual registration component.", risk: "Issue", impact: "24/7 operations will require more than 25 new Clerk V just to be able to do the manual registration process." }
+      { name: "Billing Mechanism (90-day Pre-release)", status: "Discussed with Revenue Cycle SPM that the only pending information from HFS are the code modifiers. CCH need to set-up Cermak like an outpatient clinic in order to comply with reimbursement model - fee for service. Rev Cycle SPM will check with Oracle if there are potential solutions that could be leveraged so as to bypass the manual registration component.", risk: "Issue", impact: "24/7 operations will require more than 25 new Clerk V just to be able to do the manual registration process." }
     ]
   },
   {
-    project: "CCH-Press Ganey Consumerism",
+    project: "CCH-Press Ganey Consumerism", pm: "Julius Ablis", lastUpdated: "2026-03-05",
     masterKey: "CCH-Press Ganey Consumerism",
-    pm: "Julius Ablis",
-    lastUpdated: "2026-03-05",
     deliverables: [
       { name: "Implementation", status: "Waiting for Provider Finder to be launched. Communication traffic shows that BI has sent updated file. Waiting for Press Ganey and Chief Communications Officer if it's enough to push through with Provider Finder launch. If yes, then Consumerism project will start in 3 weeks.", risk: "", impact: "" }
+    ]
+  },
+  {
+    project: "External Providers' Work Hours", pm: "Julius Ablis", lastUpdated: "2026-03-27",
+    masterKey: "External Providers",
+    deliverables: [
+      { name: "Implementation", status: "First iteration of invoice management is complete and sent to Medical Affairs for review and feedback. For the timeclock app, Medical Affairs said that they will review further and use the app if the CCT team will not be able to deploy their solution this year. Timeclock app is ready for deployment anytime. Timeclock: https://timeclock-server.onrender.com/ | Invoice Processor: https://invoice-processor-r1c0.onrender.com/", risk: "", impact: "" }
     ]
   }
 ];
@@ -1458,19 +1426,16 @@ const COMPLIANCE_DATA = [
 ];
 
 const RISKS_DATA = [
-  { project:"CCH-Press Ganey Consumerism", highRisk:true, category:"Technical", description:"Incomplete provider mapping — some physicians/APPs not captured in platform", chance:"Medium", impact:"High", actionPlan:"Early, thorough inventory and validation with departmental leadership; periodic audits." },
-  { project:"CCH-Press Ganey Consumerism", highRisk:false, category:"Compliance", description:"PHI / compliance risk — reviews may inadvertently contain protected health information", chance:"Medium", impact:"High", actionPlan:"Leverage Press Ganey PHI-scrubbing capabilities; define policy for review responses; train staff." },
-  { project:"CCH-Press Ganey Consumerism", highRisk:false, category:"Stakeholder Engagement", description:"Provider pushback — concern over negative reviews and public visibility", chance:"Medium", impact:"Medium", actionPlan:"Engage providers early; communicate value of reputation management; set fair response policies." },
-  { project:"Lab Automation (Upgrade)", highRisk:true, category:"Interface/Financial", description:"SCC charging $92k for interface for new auto line — unbudgeted. MSA negotiations may further impede cost resolution.", chance:"High", impact:"High", actionPlan:"Verify with Vendor PM if they will cover the cost. Suresh to reach out to SCC to confirm scope." },
-  { project:"Lab Automation (Upgrade)", highRisk:false, category:"Staffing", description:"New/contracted staff unfamiliar with CCH lab's manual processes; supervisors may lack time to train during transition.", chance:"Medium", impact:"High", actionPlan:"Recheck with supervisors about staff knowledge and ability to carry out manual processes during transition." },
-  { project:"Anal Dysplasia Clinic", highRisk:true, category:"Credentialing", description:"Specialist credentialing not yet approved — blocks patient care initiation", chance:"High", impact:"High", actionPlan:"Expedite Medical Staff Office review; escalate to CMO if approval exceeds 30-day window." },
-  { project:"HEC Capacity", highRisk:true, category:"Compliance/Grant", description:"Grant report deadline March 31 — missing Quality Department data creates non-compliance risk", chance:"High", impact:"High", actionPlan:"Escalate data request to Quality Dept Director; submit partial report with addendum if necessary." },
-  { project:"JSH Nurse Call Systems", highRisk:true, category:"Financial", description:"Capital budget approval pending VP sign-off — vendor contract cannot be executed without it", chance:"Medium", impact:"High", actionPlan:"Escalate to CFO. Prepare brief for VP with ROI justification. Request expedited review." },
-  { project:"Surgery Optimization Phase 3", highRisk:true, category:"Performance", description:"First case on-time start rate at 68% vs 85% target — trajectory insufficient to meet June 2026 goal", chance:"High", impact:"High", actionPlan:"Immediate intervention: daily huddle with OR Charge Nurse; root cause analysis on top 3 delay categories." },
-  { project:"ARPA", highRisk:true, category:"Funding Compliance", description:"Missing two director sign-offs on compliance documentation — submission deadline at risk", chance:"High", impact:"High", actionPlan:"Direct outreach to department directors; escalate to VP of Operations if not resolved within 48 hrs." },
-  { project:"City Colleges Workforce", highRisk:false, category:"Partnership", description:"MOU not yet signed by CCC Chancellor — blocks Summer 2026 program launch", chance:"Medium", impact:"High", actionPlan:"Request executive sponsor to make direct contact with CCC Chancellor's office for timeline commitment." },
-  { project:"Wayfinding App", highRisk:false, category:"IT/Integration", description:"Portal integration requires EPIC team support — EPIC team at capacity through April 2026", chance:"Medium", impact:"Medium", actionPlan:"Request EPIC team capacity planning session; explore phased launch without portal integration first." },
+  // SOURCE: CCH-Press Ganey Risks Log (sheet 3689972654624644) — pulled April 4 2026
+  { project:"CCH-Press Ganey Consumerism", highRisk:true,  category:"Technical",            description:"Incomplete provider mapping — some physicians/APPs not captured in the platform", chance:"Medium", impact:"High", actionPlan:"Early, thorough inventory and validation with departmental leadership; periodic audits." },
+  { project:"CCH-Press Ganey Consumerism", highRisk:false, category:"Compliance",            description:"PHI / compliance risk — reviews may inadvertently contain protected health information", chance:"Medium", impact:"High", actionPlan:"Leverage Press Ganey PHI-scrubbing capabilities; define policy for review responses; train staff." },
+  { project:"CCH-Press Ganey Consumerism", highRisk:false, category:"Stakeholder Engagement",description:"Provider pushback — concern over negative reviews and public visibility", chance:"Medium", impact:"Medium", actionPlan:"Engage providers early; communicate value of reputation management; set fair response policies; involve provider leads in workflow design." },
+  { project:"CCH-Press Ganey Consumerism", highRisk:false, category:"Operations",            description:"Over-reliance on reviews as quality metric — reviews may not reflect actual care quality", chance:"Medium", impact:"Medium", actionPlan:"Use review data as one component of overall quality — complement with internal surveys, outcomes data, and clinical quality measures." },
+  // SOURCE: Lab Automation Risks Log (sheet 7875273287487364) — pulled April 4 2026
+  { project:"Lab Automation Upgrade", highRisk:true,  category:"Interface/Financial", description:"SCC is charging CCH $92k for the interface for the new auto line — unbudgeted. CCH is working on MSA with SCC which will likely impede the ability to pay the interface cost.", chance:"High", impact:"High", actionPlan:"1. Verify with Vendor PM if they will cover the cost. 2. Confirm % of cost that vendor PM will cover. Suresh to reach out to SCC." },
+  { project:"Lab Automation Upgrade", highRisk:false, category:"Staffing",            description:"New and contracted staff may not be familiar with CCH lab's manual processes; supervisors may not have time to train during transition.", chance:"Medium", impact:"High", actionPlan:"Recheck with supervisors about staff knowledge and ability to carry out manual processes during transition." },
 ];
+
 
 // =====================
 // COMPUTED STATS
@@ -1574,7 +1539,7 @@ function buildDashboard() {
   document.getElementById('completedCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
 
   // Last refresh
-  document.getElementById('lastRefresh').textContent = 'Updated ' + new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+  document.getElementById('lastRefresh').textContent = 'Data: April 4, 2026';
 
   document.getElementById('closeoutCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true).length;
   document.getElementById('dashboardCount').textContent = DASHBOARD_DATA.length;
@@ -2519,11 +2484,40 @@ function showView(name) {
   if (validTabs.includes(name)) document.getElementById('tab-' + name).classList.add('active');
 }
 
-function refreshData() {
-  document.getElementById('lastRefresh').textContent = 'Refreshed ' + new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
-  // Re-render current view
-  const current = document.querySelector('.nav-tab.active').id.replace('tab-', '');
-  if (current === 'overview') buildOverview();
+async function refreshData() {
+  const btn = document.getElementById('refreshBtn');
+  const refreshEl = document.getElementById('lastRefresh');
+
+  // The dashboard data is embedded at build time from Smartsheet via Claude + Smartsheet MCP.
+  // To refresh: open Claude (claude.ai), upload this file, and say "refresh the dashboard data".
+  // Claude will pull all live Smartsheet data and generate a new file with current information.
+
+  btn.textContent = '↺ Refresh';
+  btn.disabled = false;
+
+  // Show how to refresh
+  const modal = document.createElement('div');
+  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  modal.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:32px;max-width:500px;width:90%;box-shadow:0 24px 48px rgba(0,0,0,0.4);">
+      <div style="font-size:24px;margin-bottom:12px;">🔄 How to Refresh Live Data</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px;">
+        This dashboard embeds live Smartsheet data that was last pulled on <strong>April 4, 2026</strong>.<br><br>
+        To update with the latest changes from all Smartsheet sources:
+        <ol style="margin:12px 0 0 20px;padding:0;">
+          <li style="margin-bottom:8px;">Open <a href="https://claude.ai" target="_blank" style="color:var(--accent);">claude.ai</a> in your browser</li>
+          <li style="margin-bottom:8px;">Upload this HTML file to a new message</li>
+          <li style="margin-bottom:8px;">Type: <strong>"Refresh the dashboard data from Smartsheet"</strong></li>
+          <li>Claude will pull all live data and deliver an updated file</li>
+        </ol>
+      </div>
+      <div style="font-size:12px;color:var(--text3);margin-bottom:20px;padding:10px 14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);">
+        📊 <strong>Sources refreshed:</strong> PMOE Load-Update report · PM Process Compliance Audit · CCH-Press Ganey Risks Log · Lab Automation Risks Log · Master File · Lessons Learned sheets
+      </div>
+      <button onclick="this.closest('div[style*=fixed]').remove()" style="background:var(--accent);color:white;border:none;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;font-weight:600;">Got it</button>
+    </div>`;
+  document.body.appendChild(modal);
+  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
 }
 
 // =====================
@@ -2532,168 +2526,70 @@ function refreshData() {
 // =====================
 
 const CLOSEOUT_DATA = [
-  // ── Projects with real Lessons Learned from Smartsheet ──────────────────────
-  // Pulled via Smartsheet MCP April 2026
-  // Sheet IDs in sheetId field for reference
   {
-    project: "Cardio Service Line",
-    pm: "Julius Ablis",
-    sheetId: "3450682062727044",
+    project: "Cardio Service Line", pm: "Julius Ablis", sheetId: "3450682062727044",
     lessonsLearned: [
-      { type:"Best Practice",           area:"Recruitment",            situation:"CCH agreed to post physician/PA jobs while PIDs were still being created, enabling the Cardiology department to attract top talent before positions were formally approved.", recommendation:"Standardize this as policy: allow job postings ahead of PID creation for Board-approved or grant-funded positions, especially when competing for scarce specialist talent." },
-      { type:"Improvement Opportunity", area:"Requirements Management", situation:"New functionality requests arrived just 2 weeks before Go-Live, after resources had been allocated and schedules finalized, causing confusion and potential date slippage.", recommendation:"Bring Clinical Informatics Strategist into early stakeholder sessions. Establish a formal change control cutoff — no new requirements after the project schedule is baselined." },
-      { type:"Improvement Opportunity", area:"Stakeholder Identification", situation:"OR Admin was not identified during pre-planning or kickoff and their need to coordinate with the Cath Lab for TAVR scheduling only surfaced 2 weeks before Go-Live.", recommendation:"Always ask sponsors and stakeholders: 'Is there anyone else I need to speak to?' Map all upstream and downstream workflow recipients before finalizing scope." },
-      { type:"Improvement Opportunity", area:"Recruitment Follow-Through", situation:"CCH submitted Decision-To-Hire for 5 physicians and PAs but applicants did not receive timely follow-up, risking loss of top talent to competing organizations.", recommendation:"Establish recruitment communication SLAs. CHRO to lead process improvement to reduce response time and improve CCH's competitiveness for specialist talent." },
-      { type:"Best Practice",           area:"Vendor Management",       situation:"Abbott and Medtronic were slow on contracting. Division Chair and physician lead directly contacted company leadership to accelerate the process.", recommendation:"Use executive and physician leadership relationships as a back channel to accelerate vendor contract negotiations, especially for implantable device vendors." },
-      { type:"Improvement Opportunity", area:"Testing",                 situation:"Phase 2 testing went off track due to MERGE and ASCEND system issues, creating a domino effect on change control and Go-Live dates.", recommendation:"Allocate minimum 2 weeks for testing phases. Build in additional buffer whenever integrations involve third-party systems like MERGE or ASCEND." },
-      { type:"Improvement Opportunity", area:"Vendor Engagement",       situation:"Post-implant remote monitoring requirements were not surfaced during planning and only emerged during vendor coding/billing discussions.", recommendation:"Engage vendors in requirements gathering before contracts are finalized to surface technical requirements that clinical leads may not know to ask for." }
+      { type:"Best Practice",           area:"Recruitment",             situation:"CCH agreed to post physician/PA jobs while PIDs were still being created, enabling the Cardiology department to attract top talent before positions were formally approved.", recommendation:"Standardize this as policy: allow job postings ahead of PID creation for Board-approved or grant-funded positions, especially when competing for scarce specialist talent." },
+      { type:"Improvement Opportunity", area:"Requirements Management",  situation:"New functionality requests arrived just 2 weeks before Go-Live, after resources had been allocated and schedules finalized.", recommendation:"Bring Clinical Informatics Strategist into early stakeholder sessions. Establish a formal change control cutoff — no new requirements after the project schedule is baselined." },
+      { type:"Improvement Opportunity", area:"Stakeholder Identification",situation:"OR Admin was not identified during pre-planning or kickoff and their coordination need for TAVR scheduling only surfaced 2 weeks before Go-Live.", recommendation:"Always ask sponsors and stakeholders: 'Is there anyone else I need to speak to?' Map all upstream and downstream workflow recipients before finalizing scope." },
+      { type:"Improvement Opportunity", area:"Recruitment Follow-Through",situation:"CCH submitted Decision-To-Hire for 5 physicians and PAs but applicants did not receive timely follow-up, risking loss of talent to competitors.", recommendation:"Establish recruitment communication SLAs. CHRO to improve CCH's response time to compete effectively for specialist talent." },
+      { type:"Best Practice",           area:"Vendor Management",        situation:"Abbott and Medtronic were slow on contracting. Division Chair and physician lead directly contacted company leadership behind the scenes to accelerate.", recommendation:"Use executive and physician leadership relationships as a back channel to accelerate vendor contract negotiations, especially for implantable device vendors." },
+      { type:"Improvement Opportunity", area:"Testing",                  situation:"Phase 2 testing went off track due to MERGE and ASCEND system issues, causing a domino effect on change control and Go-Live dates.", recommendation:"Allocate minimum 2 weeks for testing phases. Build in additional buffer whenever integrations involve third-party systems like MERGE or ASCEND." },
+      { type:"Improvement Opportunity", area:"Vendor Engagement",        situation:"Post-implant remote monitoring requirements were not surfaced during planning and only emerged during vendor coding/billing discussions.", recommendation:"Engage vendors in requirements gathering before contracts are finalized to surface technical requirements that clinical leads may not know to ask for." }
     ]
   },
   {
-    project: "Provident Ambulance Runs",
-    pm: "Julius Ablis",
-    sheetId: "5583485176964996",
+    project: "Provident Ambulance Runs", pm: "Julius Ablis", sheetId: "5583485176964996",
     lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Physician Recruitment",   situation:"Physician market pool is small in Chicago. Recruiting permanent ED physicians takes at least 8 months, and even agency vendors struggle to fill positions.", recommendation:"For projects with predetermined Go-Live dates requiring physician recruitment, begin agency/locums engagement immediately. Get Legal and Operations Counsel ahead of union discussions early." },
-      { type:"Improvement Opportunity", area:"Requirements Management", situation:"Active stakeholder engagement during requirements gathering identified critical risks including long lead times from global supply chain issues.", recommendation:"For projects with defined outcomes and milestones, thorough requirements analysis pays dividends in risk identification. Never shortcut the requirements phase." },
-      { type:"Improvement Opportunity", area:"Requirements Completeness", situation:"A critical enterprise system requirement was missed and only surfaced a few weeks before Go-Live, requiring emergency weekend work and causing unnecessary stress.", recommendation:"Run a structured pre-Go-Live requirements checklist 6–8 weeks out. Include regulatory and infrastructure requirements, not just clinical workflow items." },
+      { type:"Improvement Opportunity", area:"Physician Recruitment",    situation:"Physician market pool is small in Chicago. Recruiting permanent ED physicians takes at least 8 months, and even agency vendors struggle to fill positions.", recommendation:"For projects with predetermined Go-Live dates requiring physician recruitment, begin agency/locums engagement immediately. Get Legal and Operations Counsel ahead of union discussions early." },
+      { type:"Improvement Opportunity", area:"Requirements Management",  situation:"Active stakeholder engagement during requirements gathering identified critical risks including long lead times from global supply chain issues.", recommendation:"For projects with defined outcomes and milestones, thorough requirements analysis pays dividends. Never shortcut the requirements phase." },
+      { type:"Improvement Opportunity", area:"Requirements Completeness",situation:"A critical enterprise system requirement was missed and only surfaced a few weeks before Go-Live, requiring emergency weekend work.", recommendation:"Run a structured pre-Go-Live requirements checklist 6–8 weeks out. Include regulatory and infrastructure requirements, not just clinical workflow items." },
       { type:"Improvement Opportunity", area:"Task Verification",        situation:"A project contributor reported a deliverable complete. PM accepted at face value. Two months later, stakeholders reported the functionality had never been delivered.", recommendation:"Require documented proof of completion for every critical-path deliverable — screenshots, sign-offs, or business owner verification — especially within 2 weeks of Go-Live." },
-      { type:"Improvement Opportunity", area:"Scheduling",               situation:"Go-Live date was predetermined before detailed planning was completed. The date moved 4 times — each move unnecessary and preventable.", recommendation:"Never lock a Go-Live date before scope, resources, and time constraints are understood. Communicate the project triangle: faster timelines require more resources or narrower scope, never both for free." }
+      { type:"Improvement Opportunity", area:"Scheduling",               situation:"Go-Live date was predetermined before detailed planning was completed. The date moved 4 times — each move unnecessary and preventable.", recommendation:"Never lock a Go-Live date before scope, resources, and time constraints are understood. Faster timelines require more resources or narrower scope, never both for free." }
     ]
   },
   {
-    project: "Inpatient Dialysis (HD & CRRT)",
-    pm: "Julius Ablis",
-    sheetId: "6141654999558020",
+    project: "Inpatient Dialysis (HD & CRRT)", pm: "Julius Ablis", sheetId: "6141654999558020",
     lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"CRRT equipment acquisition was delayed multiple times because the shared accounting string had insufficient funds. The string was used across multiple projects.", recommendation:"Avoid shared accounting strings across projects. Confirm the funding balance with Finance before initiating procurement. Isolate project-specific strings at kickoff." },
-      { type:"Improvement Opportunity", area:"Equipment/Cross-Site",     situation:"It was assumed Provident Imaging Tech could operate a C-ARM unit transferred from Stroger — they could not. Project was delayed 2 weeks and required executive escalation to arrange training.", recommendation:"Never assume equipment compatibility or staff capability across sites. Explicitly verify model specifications and staff certifications before scheduling transfers between Stroger and Provident." },
-      { type:"Best Practice",           area:"Communication Planning",   situation:"Hemodialysis Go-Live was delayed 1 week because locum physicians covering ICU and 8 West were unaware the service was now available.", recommendation:"Expand the communication plan to explicitly include locum and agency staff. Develop a structured Go-Live broadcast that reaches all clinical staff covering relevant units, not just permanent staff." },
-      { type:"Improvement Opportunity", area:"Stakeholder Engagement",   situation:"Stakeholders missed solution design, demo, and sign-off meetings, leading to expensive build-test-adjust cycles.", recommendation:"Establish attendance accountability for solution design and sign-off sessions — include it in the project charter. If a stakeholder misses a demo, document the impact and escalate to sponsor." }
+      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"CRRT equipment acquisition was delayed multiple times because the shared accounting string had insufficient funds remaining across projects.", recommendation:"Avoid shared accounting strings across projects. Confirm the funding balance with Finance before initiating procurement. Isolate project-specific strings at kickoff." },
+      { type:"Improvement Opportunity", area:"Equipment/Cross-Site",     situation:"It was assumed Provident Imaging Tech could operate a C-ARM unit transferred from Stroger — they could not. Project was delayed 2 weeks and required executive escalation.", recommendation:"Never assume equipment compatibility or staff capability across sites. Explicitly verify model specifications and staff certifications before scheduling transfers between Stroger and Provident." },
+      { type:"Best Practice",           area:"Communication Planning",   situation:"Hemodialysis Go-Live was delayed 1 week because locum physicians covering ICU and 8 West were unaware the service was now available.", recommendation:"Expand the communication plan to explicitly include locum and agency staff. Develop a structured Go-Live broadcast that reaches all clinical staff covering relevant units." },
+      { type:"Improvement Opportunity", area:"Stakeholder Engagement",   situation:"Stakeholders missed solution design, demo, and sign-off meetings, leading to expensive build-test-adjust cycles.", recommendation:"Establish attendance accountability for solution design and sign-off sessions — include it in the project charter. Missed demos must be documented and escalated to sponsor." }
     ]
   },
   {
-    project: "Provident PT/OT/SLP",
-    pm: "Julius Ablis",
-    sheetId: "3749902026755972",
+    project: "Provident PT/OT/SLP", pm: "Julius Ablis", sheetId: "3749902026755972",
     lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"Project was initiated without a concrete budget plan or funding source. PMOE had to intervene post-initiation and negotiate a $200k transfer with the CFO to cover technology, furniture, and equipment.", recommendation:"Before initiating any project, sponsors must have a confirmed budget and funding source. Align project initiation with the Cook County budgeting cycle." },
-      { type:"Improvement Opportunity", area:"Space Planning",           situation:"Several furniture pieces and an ice machine ordered could not fit the designated space because dimensions were never measured before ordering.", recommendation:"Measure the space and verify equipment specifications against room dimensions before finalizing any procurement. Add space measurement as a mandatory step in the requirements document." },
-      { type:"Improvement Opportunity", area:"Technical Requirements",   situation:"An assumption was made that WOW (Workstation on Wheels) included a computer — the model ordered was a medication dispensing unit for inpatient nursing, not outpatient therapy.", recommendation:"Specify technology requirements with full model-level detail. Validate vendor quotes against exact specifications before purchase order approval." },
-      { type:"Improvement Opportunity", area:"Scope Management",         situation:"Service owners had unstated expectations about additional items (signage, sharps collectors, sanitizers) never discussed during scoping, surfacing late in the project.", recommendation:"Use a structured requirements document with an explicit 'what is NOT included' section. Walk through it with service owners to surface assumptions before scope is finalized." },
-      { type:"Improvement Opportunity", area:"Task Verification",        situation:"Project contributors reported tasks complete on several occasions without verification — issues were uncovered just days before the baseline Go-Live date.", recommendation:"Verify completion of all tasks with documented evidence (photos, sign-offs, system screenshots). Build a verification step into the project plan for every critical deliverable." }
+      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"Project was initiated without a concrete budget plan or funding source. PMOE had to intervene post-initiation and negotiate a $200k CFO transfer.", recommendation:"Before initiating any project, sponsors must have a confirmed budget and funding source. Align project initiation with the Cook County budgeting cycle." },
+      { type:"Improvement Opportunity", area:"Space Planning",           situation:"Several furniture pieces and an ice machine could not fit the designated space because dimensions were never measured before ordering.", recommendation:"Measure the space and verify equipment specifications against room dimensions before finalizing any procurement. Add space measurement as a mandatory requirements document step." },
+      { type:"Improvement Opportunity", area:"Technical Requirements",   situation:"An assumption was made that WOW units included computers — the model ordered was a medication dispensing unit for inpatient nursing, not outpatient therapy.", recommendation:"Specify technology requirements with full model-level detail. Validate vendor quotes against exact specifications before purchase order approval." },
+      { type:"Improvement Opportunity", area:"Scope Management",         situation:"Service owners had unstated expectations about additional items (signage, sharps collectors, sanitizers) never discussed during scoping.", recommendation:"Use a structured requirements document with an explicit 'what is NOT included' section. Walk through it with service owners to surface assumptions before scope is finalized." },
+      { type:"Improvement Opportunity", area:"Task Verification",        situation:"Project contributors reported tasks complete on several occasions without verification — issues uncovered just days before the baseline Go-Live date.", recommendation:"Verify completion of all tasks with documented evidence (photos, sign-offs, system screenshots). Build a verification step into the plan for every critical deliverable." }
     ]
   },
   {
-    project: "Provident Observation Unit",
-    pm: "Julius Ablis",
-    sheetId: "4739855649034116",
+    project: "Provident Observation Unit", pm: "Julius Ablis", sheetId: "4739855649034116",
     lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Requirements Specification", situation:"Strip and laser printers were not specified during the GE requirements meeting. Provident leaders assumed GE would replicate the ICU installation, but GE sent a different team with no knowledge of prior work — and the Board-approved budget did not cover these items.", recommendation:"Provide itemized, model-level requirements at every vendor requirements meeting. Prohibit 'copy what was done in the ICU' instructions — each project team must specify requirements from scratch regardless of prior vendor relationship." }
+      { type:"Improvement Opportunity", area:"Requirements Specification",situation:"Strip and laser printers were not specified during the GE requirements meeting. Provident leaders assumed GE would replicate the ICU installation, but GE sent a different team with no knowledge of prior work.", recommendation:"Provide itemized, model-level requirements at every vendor requirements meeting. Prohibit 'copy what was done in the ICU' instructions — each project team must specify requirements from scratch." }
     ]
   },
-  {
-    project: "Organizational Consolidations",
-    pm: "Elizabeth Wallish",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Provident Volume",
-    pm: "Elizabeth Wallish",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "ACGME Compliance - Call Room Optimization",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Allied Health Education Agreements Restructure",
-    pm: "Elizabeth Wallish",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Birthday Health Screenings Program",
-    pm: "Elizabeth Wallish",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Bronzeville Health Center",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Care Coordination Transition",
-    pm: "Elizabeth Wallish",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Centralized Credentialing",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Crisis Triage Stabilization Center",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "DGIM - Admin Process Improvement",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Health Care Equity Certification",
-    pm: "Elizabeth Wallish",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Population Health Management - Phase 1",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Primary Care-Managed Care Information Coordination",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Provident Colonoscopy",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Specialty Clinics Expansion at Sengstacke",
-    pm: "Julius Ablis",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "Telehealth Optimization",
-    pm: "Lane Harmon",
-    sheetId: null,
-    lessonsLearned: []
-  },
-  {
-    project: "UniteUS",
-    pm: "Precious Avery",
-    sheetId: null,
-    lessonsLearned: []
-  }
+  { project: "Organizational Consolidations",              pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Provident Volume",                            pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "ACGME Compliance - Call Room Optimization",  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Allied Health Education Agreements Restructure", pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Birthday Health Screenings Program",         pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Bronzeville Health Center",                  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Care Coordination Transition",               pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Centralized Credentialing",                  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Crisis Triage Stabilization Center",         pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "DGIM - Admin Process Improvement",           pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Health Care Equity Certification",           pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Population Health Management - Phase 1",     pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Primary Care-Managed Care Information Coordination", pm: "Julius Ablis", sheetId: null, lessonsLearned: [] },
+  { project: "Provident Colonoscopy",                      pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Specialty Clinics Expansion at Sengstacke",  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Telehealth Optimization",                    pm: "Lane Harmon",       sheetId: null, lessonsLearned: [] },
+  { project: "UniteUS",                                    pm: "Precious Avery",    sheetId: null, lessonsLearned: [] }
 ];
 
 // Cross-cutting themes from real Lessons Learned logs (4 projects, 20 entries)
@@ -2939,7 +2835,6 @@ async function generateCloseoutAI(projectName) {
   const lessons = (closeoutEntry && closeoutEntry.lessonsLearned) || [];
 
   wrapEl.style.display = 'block';
-
   let html = '';
 
   if (lessons.length > 0) {
@@ -2947,41 +2842,40 @@ async function generateCloseoutAI(projectName) {
     const bestPractices = lessons.filter(l => l.type === 'Best Practice');
     const areas = [...new Set(lessons.map(l => l.area))];
 
-    html += `<div style="font-size:12px;color:var(--text3);margin-bottom:12px;">`;
-    html += `<strong>Key Themes Identified:</strong><br>`;
-    html += `&bull; ${areas.join(' &nbsp;&bull;&nbsp; ')}</div>`;
+    html += `<div style="font-size:12px;color:var(--text3);margin-bottom:12px;"><strong>Key Themes Identified:</strong><br>&bull; ${areas.join(' &nbsp;&bull;&nbsp; ')}</div>`;
 
     if (bestPractices.length > 0) {
       html += `<div style="font-weight:600;font-size:13px;color:var(--text);margin:12px 0 8px;">What to Replicate in Future Projects:</div>`;
       bestPractices.forEach(l => {
-        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;">`;
-        html += `<span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
+        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;"><span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
       });
     }
-
     if (improvements.length > 0) {
       html += `<div style="font-weight:600;font-size:13px;color:var(--text);margin:12px 0 8px;">What to Prevent:</div>`;
       improvements.forEach(l => {
-        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;">`;
-        html += `<span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
+        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;"><span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
       });
     }
-
-    const relevance = getCloseoutRelevance(projectName);
-    html += `<div style="margin-top:12px;font-size:12px;color:var(--text3);"><strong>Most Relevant For:</strong> ${relevance}</div>`;
-
+    html += `<div style="margin-top:12px;font-size:12px;color:var(--text3);"><strong>Most Relevant For:</strong> ${getCloseoutRelevance(projectName)}</div>`;
   } else if (hasDoc) {
-    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">`;
-    html += `A closeout report has been filed as a Word document in the PM Process Compliance Audit for <strong>${projectName}</strong>. `;
-    html += `Lessons learned have not been separately logged in the Smartsheet Lessons Learned log for this project.<br><br>`;
-    html += `To access the detailed insights from this project, open the closeout report via the link above.</div>`;
+    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">A closeout report has been filed as a Word document in the PM Process Compliance Audit for <strong>${projectName}</strong>. Lessons learned have not been separately logged in the Smartsheet Lessons Learned log for this project.<br><br>To access the detailed insights from this project, open the closeout report via the link above.</div>`;
   } else {
-    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">`;
-    html += `No closeout report has been filed for <strong>${projectName}</strong> and no lessons learned have been logged in Smartsheet.<br><br>`;
-    html += `This represents an opportunity to capture institutional knowledge. Recommend scheduling a 30-minute retrospective with the PM and key stakeholders to document what worked and what should be done differently.</div>`;
+    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">No closeout report has been filed for <strong>${projectName}</strong> and no lessons learned have been logged in Smartsheet.<br><br>This represents an opportunity to capture institutional knowledge. Recommend scheduling a 30-minute retrospective with the PM and key stakeholders to document what worked and what should be done differently.</div>`;
   }
-
   textEl.innerHTML = html;
+}
+
+function getCloseoutRelevance(projectName) {
+  const n = projectName.toLowerCase();
+  if (n.includes('dialysis') || n.includes('pt/ot') || n.includes('observation') || n.includes('ambulance') || n.includes('cardio') || n.includes('cath'))
+    return 'Any upcoming clinical service launch or facility build-out at Provident or Stroger campuses.';
+  if (n.includes('staffing') || n.includes('physician') || n.includes('recruit'))
+    return 'Any physician or specialist recruitment project with a fixed Go-Live date.';
+  if (n.includes('lab') || n.includes('system') || n.includes('automation') || n.includes('wayfinding'))
+    return 'Any technology implementation, system Go-Live, or clinical informatics project.';
+  if (n.includes('spend') || n.includes('copay') || n.includes('earn') || n.includes('finance'))
+    return 'Any financial optimization, revenue cycle, or budget-dependent project.';
+  return 'Any upcoming operational improvement or service expansion project at Cook County Health.';
 }
 
 function getCloseoutRelevance(projectName) {
