@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: pmoe-dashboard-api
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SMARTSHEET_TOKEN
+        sync: false
