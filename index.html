@@ -2490,6 +2490,8 @@ async function refreshData() {
 
   // ── API server URL — update this after deploying to Render ──────────────
   // Example: 'https://pmoe-api.onrender.com'
+  // ⚙️ UPDATE THIS URL after Render deploys successfully
+  // Find your URL in Render dashboard → your service → top of page (e.g. https://pmoe-api.onrender.com)
   const API_URL = window.PMOE_API_URL || 'https://pmoe-api.onrender.com';
 
   btn.disabled    = true;
@@ -2563,7 +2565,10 @@ async function refreshData() {
 
   } catch (err) {
     console.error('Refresh error:', err);
-    refreshEl.textContent = '⚠ ' + err.message;
+    const isNetworkError = err.message.includes('fetch') || err.message.includes('network') || err.message.includes('Failed');
+    refreshEl.textContent = isNetworkError
+      ? '⚠ Server not reachable — check Render deployment'
+      : '⚠ ' + err.message;
     btn.textContent = '↺ Retry';
     btn.disabled = false;
   }
