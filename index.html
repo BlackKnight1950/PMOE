@@ -612,7 +612,7 @@
   .pm-bar { height:100%; border-radius:4px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transition: width 0.8s ease; }
   .pm-count { font-size: 12px; color: var(--text3); font-family: var(--font-mono); width:24px; text-align:right; }
 
-  /* MEETING PREP */
+  /* BENEFITS MONITORING */
   .meeting-section {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -744,7 +744,7 @@
   <div class="topbar-actions">
     <span class="last-refresh" id="lastRefresh"></span>
     <button class="btn btn-ghost" onclick="refreshData()" id="refreshBtn">↺ Refresh</button>
-    <button class="btn btn-primary" onclick="showView('meeting')">📋 Meeting Prep</button>
+    <button class="btn btn-primary" onclick="showView('benefits')">📋 Meeting Prep</button>
   </div>
 </header>
 
@@ -754,7 +754,7 @@
   <div class="nav-tab" onclick="showView('projects')" id="tab-projects">📁 Projects <span class="nav-badge" id="projectsCount">—</span></div>
   <div class="nav-tab" onclick="showView('risks')" id="tab-risks">⚠️ Risks & Issues <span class="nav-badge warn" id="riskCount">—</span></div>
   
-  <div class="nav-tab" onclick="showView('meeting')" id="tab-meeting">📋 Meeting Prep</div>
+  <div class="nav-tab" onclick="showView('benefits')" id="tab-benefits">📈 Benefits Monitoring</div>
   <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
   <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Compliance</div>
   <div class="nav-tab" onclick="showView('dashboards')" id="tab-dashboards">🖥️ Project Dashboards <span class="nav-badge" id="dashboardCount">—</span></div>
@@ -883,18 +883,34 @@
   </div>
 
   <!-- COMPLETED VIEW -->
-  <div class="view" id="view-meeting">
+  <div class="view" id="view-benefits">
     <div class="section-header">
       <div>
-        <div class="section-title">Meeting Preparation</div>
-        <div class="section-sub">Pre-built agenda · Three-tier structure · Steering Committee ready</div>
+        <div class="section-title">Benefits Monitoring</div>
+        <div class="section-sub">Project Benefits &amp; Impact — sourced from PMOE Load-Update report · PM-reported outcomes</div>
       </div>
-      <button class="btn btn-primary" onclick="generateMeetingPrep()">✨ Generate Agenda</button>
+      <button class="btn btn-ghost" onclick="generateAISummary('benefits')">💡 Key Insights</button>
     </div>
-    <div id="meetingContent" class="animate-in"></div>
+    <div id="benefitsAI" style="display:none;" class="ai-summary-wrap animate-in">
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
+      <div class="ai-summary-text" id="benefitsAIText"></div>
+    </div>
+    <div class="filter-bar animate-in">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="benefitsSearch" placeholder="Search projects..." oninput="buildBenefits()">
+      </div>
+      <select class="filter-select" id="benefitsPMFilter" onchange="buildBenefits()">
+        <option value="">All PMs</option>
+        <option>Julius Ablis</option>
+        <option>Elizabeth Wallish</option>
+        <option>Jasmin Sanchez</option>
+        <option>Lane Harmon</option>
+      </select>
+    </div>
+    <div id="benefitsContent" class="animate-in"></div>
   </div>
 
-  <!-- CLOSEOUT REPORTS VIEW -->
   <div class="view" id="view-closeout">
     <div class="section-header">
       <div>
@@ -1332,6 +1348,30 @@ const COMPLIANCE_DATA = [
   { project:"Wellvana",                                        pm:"Jasmin Sanchez",  charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
 ];
 
+const DASHBOARD_DATA = [
+  // ── Active Project Dashboards — URLs verified via Smartsheet API ──
+  { name: "EARN Leadership Dashboard",           project: "Domestic Spend (EARN)",               status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/66gRMXVg52qMr4GpMQvRPGxXmg8PRP3m54hWWxh1",  description: "Domestic spend tracking, HEDIS performance, CountyCare member trends. FY2026 Goal: $152M." },
+  { name: "Surgery Optimization Dashboard",      project: "Surgery Optimization Phase 3",        status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/XhMqGvf69pR8RjPgH67Vcw2g92jPPMw7M66jHxv1",  description: "OR utilization, PPT v2 form deployment, deliverables tracker, tasks at risk." },
+  { name: "HEC Dashboard",                       project: "Health Equity Committee Capacity",    status: "Active",    pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/dashboards/q3p42QfJ7vVM676HRGgfFXRRV4pQ2v2c3h2x7R71",  description: "HEC capacity building initiative — recruitment efforts and committee governance." },
+  { name: "City Colleges Leadership Dashboard",  project: "City Colleges Workforce",             status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/8Vc7Q4Q8X3qxPXFWfVQ8534CH8wGCVRWjgQvmjj1",  description: "Workforce pipeline development with City Colleges of Chicago — MOU, curriculum, student placement." },
+  { name: "Immun / Unified Strategy Dashboard",  project: "Unified Strategy: CCH-CCDPH",        status: "Active",    pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/dashboards/3446qrv35rXrwcJrRm5WPVj9JmvrF4WpxQ56vcg1",  description: "CCH-CCDPH unified strategy — immunization metrics and initiative alignment tracking." },
+  // ── PMOE Portfolio Dashboard ───────────────────────────────────────────
+  { name: "PMOE Portfolio Dashboard",            project: "PMOE Portfolio",                      status: "Portfolio", pm: "PMOE Team",         url: "https://app.smartsheet.com/dashboards/6hwgprQwqWVx534C7675463whVVcq3w4p7gq3hG1",  description: "Full portfolio — project status by PM, strategic domain chart, weekly notes, delayed & on-hold projects." },
+  // ── Completed Project Dashboards ──────────────────────────────────────
+  { name: "Pharmacy Domestic Spend Dashboard",   project: "Pharmacy Domestic Spend",             status: "Completed", pm: "Lane Harmon",       url: "https://app.smartsheet.com/reports/g5fMcW75P7RvrRJJX3wR9CWMg9Q32wqX4877FHP1",  description: "Pharmacy domestic spend tracking and formulary optimization." },
+  { name: "Project Dashboard — Cath Lab",        project: "Cardio Service Line",                 status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Cath Lab optimization project closeout dashboard." },
+  { name: "Meeting Agenda Dashboard",            project: "Cardio Service Line",                 status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Cardio service line meeting agenda and governance tracker." },
+  { name: "Project Dashboard — NSICU Expansion", project: "Neuro and Onco Service Line",        status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "NSICU Expansion project closeout." },
+  { name: "Staffing Dashboard",                  project: "Agency Staffing (Surge)",             status: "Completed", pm: "PMOE Team",         url: "https://app.smartsheet.com/b/home",                                               description: "Agency staffing surge response dashboard." },
+  { name: "CCH Agency Staffing Dashboard",       project: "Agency Staffing (Improved Process)",  status: "Completed", pm: "PMOE Team",         url: "https://app.smartsheet.com/b/home",                                               description: "Improved agency staffing process post-surge." },
+  { name: "Project Dashboard — Quiet Campaign",  project: "Quiet Campaign",                      status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Quiet Campaign project closeout." },
+  { name: "Patient Throughput Dashboard",        project: "Patient Throughput Committee",        status: "Completed", pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/b/home",                                               description: "Patient throughput improvement initiative dashboard." },
+  { name: "Project Dashboard — Inpatient Dialysis", project: "Inpatient Dialysis (HD & CRRT)", status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Provident HD & CRRT Inpatient Dialysis closeout." },
+  { name: "Project Dashboard — L&D Experience", project: "L&D Patient Experience",               status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Labor & Delivery patient experience improvement." },
+  { name: "1690 Command Center Dashboard",       project: "1690 Command Center",                 status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "1690 Command Center project closeout." },
+  { name: "30 Day Employee Onboarding",          project: "PMOE Onboarding",                     status: "Other",     pm: "PMOE Team",         url: "https://app.smartsheet.com/b/home",                                               description: "Employee onboarding tracker for the PMOE team." },
+];
+
 const RISKS_DATA = [
   // SOURCE: CCH-Press Ganey Risks Log (sheet 3689972654624644) — pulled April 4 2026
   { project:"CCH-Press Ganey Consumerism", highRisk:true,  category:"Technical",            description:"Incomplete provider mapping — some physicians/APPs not captured in the platform", chance:"Medium", impact:"High", actionPlan:"Early, thorough inventory and validation with departmental leadership; periodic audits." },
@@ -1457,7 +1497,7 @@ function buildDashboard() {
   buildProjects();
   buildCompliance();
   buildCloseout();
-  buildMeeting();
+  buildBenefits();
   buildDashboards();
 }
 
@@ -1859,7 +1899,7 @@ function filterCompliance() {
 // =====================
 // MEETING PREP
 // =====================
-function buildMeeting() {
+function buildBenefits() {
   const issues = PMOE_LOAD_DATA.flatMap(p =>
     p.deliverables.filter(d => d.risk === "Issue").map(d => ({...d, project: p.project, pm: p.pm}))
   );
@@ -1962,14 +2002,7 @@ function buildMeeting() {
   document.getElementById('meetingContent').innerHTML = html;
 }
 
-function generateMeetingPrep() {
-  buildMeeting();
-  showView('meeting');
-}
 
-// =====================
-// MODALS
-// =====================
 function openProjectModal(projectName) {
   const p = PMOE_LOAD_DATA.find(x => x.project === projectName);
   if (!p) return;
@@ -2338,12 +2371,12 @@ async function generateAISummary(view) {
   };
 
   const prompts = {
-    overview: `Portfolio snapshot: ${stats.active} active projects, ${stats.completed} completed, ${stats.risks} risks, ${stats.issues} open issues, ${stats.closeoutRate}% closeout rate. Projects with issues: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Issue')).map(p=>p.project).join(', ')}. Provide a 3-sentence executive summary with top 2 recommended focus areas.`,
-    execution: `Active projects: ${activeProjects.map(p => p.project + ' (PM: ' + p.pm + ')').join(', ')}. Risks: ${allRisks.length}, Issues: ${allIssues.length}. Provide a status digest highlighting projects most at risk and what leadership should focus on this week.`,
-    risks: `Risk register summary: ${RISKS_DATA.length} logged risks, ${RISKS_DATA.filter(r=>r.highRisk).length} high-priority. Top risks: ${RISKS_DATA.filter(r=>r.highRisk).map(r=>r.project+': '+r.description).join(' | ')}. Provide a risk briefing with top 3 items requiring immediate escalation.`,
-    completed: `${completedProjects.length} completed projects. ${closeoutCount} have closeout reports (${stats.closeoutRate}%). Projects missing closeout: ${completedProjects.filter(p=>p.closeout!==true).map(p=>p.project).slice(0,5).join(', ')}. Summarize portfolio accomplishments and flag compliance gaps.`,
-    compliance: `PM compliance overview: ${COMPLIANCE_DATA.length} total projects. Active: ${COMPLIANCE_DATA.filter(p=>p.status==='Active').length}. Projects with all 4 compliance items: ${COMPLIANCE_DATA.filter(p=>p.charter&&p.plan&&p.risks&&p.closeout).length}. Identify patterns in compliance gaps and provide 2 recommendations.`,
-    closeout: `Portfolio closeout analysis for Cook County Health PMOE. Real Lessons Learned data pulled from 4 completed project logs: Cardio Service Line (7 entries: 5 improvement, 2 best practices), Provident Ambulance Runs (5 improvement entries), Provident Inpatient Dialysis (3 improvement entries), Provident PT/OT/SLP (5 improvement entries, PDF closeout report on file). Provident Observation Unit (1 improvement entry). Total: 20+ real lesson entries. Cross-cutting themes: Requirements Management failures (8 instances across all 4 projects), Task verification failures (3), Budget/financial planning gaps (2), Staffing/training cross-site assumptions (3), Go-Live scheduling issues (2). Best practices identified: back-channel vendor escalation, pre-PID job posting for grant projects. Provide: (1) top 3 institutional lessons CCH should standardize across all future projects, (2) the organizational risk of 13 of 33 completed projects having no closeout documentation, (3) 2 concrete policy recommendations to improve closeout compliance and knowledge transfer.`
+    overview:    `Portfolio snapshot: ${stats.active} active projects, ${stats.completed} completed, ${stats.risks} risks, ${stats.issues} open issues, ${stats.closeoutRate}% closeout rate. Projects with issues: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Issue')).map(p=>p.project).join(', ')}. Provide a 3-sentence executive summary with top 2 recommended focus areas.`,
+    projects:    `Portfolio snapshot: ${MASTER_FILE_DATA.filter(p=>p.status==='In Progress').length} projects In Progress, ${MASTER_FILE_DATA.filter(p=>p.status==='Complete').length} Complete, ${MASTER_FILE_DATA.filter(p=>p.status==='On Hold').length} On Hold, ${MASTER_FILE_DATA.filter(p=>p.status==='Cancelled').length} Cancelled. PM workload — Julius: ${MASTER_FILE_DATA.filter(p=>p.pm==='Julius Ablis'&&p.status==='In Progress').length}, Elizabeth: ${MASTER_FILE_DATA.filter(p=>p.pm==='Elizabeth Wallish'&&p.status==='In Progress').length}, Jasmin: ${MASTER_FILE_DATA.filter(p=>p.pm==='Jasmin Sanchez'&&p.status==='In Progress').length}, Lane: ${MASTER_FILE_DATA.filter(p=>p.pm==='Lane Harmon'&&p.status==='In Progress').length}. Issues: ${allIssues.length}, Risks: ${allRisks.length}. Provide: (1) portfolio health summary, (2) PM capacity observations, (3) top 2 action items for leadership.`,
+    risks:       `Risk register summary: ${RISKS_DATA.length} logged risks, ${RISKS_DATA.filter(r=>r.highRisk).length} high-priority. Top risks: ${RISKS_DATA.filter(r=>r.highRisk).map(r=>r.project+': '+r.description).join(' | ')}. Provide a risk briefing with top 3 items requiring immediate escalation.`,
+    compliance:  `PM compliance overview: ${COMPLIANCE_DATA.length} total projects. Active: ${COMPLIANCE_DATA.filter(p=>p.status==='Active').length}. Projects with all 4 compliance items: ${COMPLIANCE_DATA.filter(p=>p.charter&&p.plan&&p.risks&&p.closeout).length}. Identify patterns in compliance gaps and provide 2 recommendations.`,
+    closeout:    `Portfolio closeout analysis for Cook County Health PMOE. Real Lessons Learned data pulled from 4 completed project logs: Cardio Service Line (7 entries), Provident Ambulance Runs (5 entries), Provident Inpatient Dialysis (3 entries), Provident PT/OT/SLP (5 entries). Cross-cutting themes: Requirements Management failures, Task verification failures, Budget/financial planning gaps, Go-Live scheduling issues. Provide: (1) top 3 institutional lessons CCH should standardize, (2) risk of projects with no closeout documentation, (3) 2 policy recommendations to improve knowledge transfer.`,
+    benefits:    `Benefits & impact monitoring summary: ${PMOE_LOAD_DATA.length} active projects reporting. Projects with issues: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Issue')).map(p=>p.project).join(', ')||'None'}. Projects with risks: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Risk')).map(p=>p.project).join(', ')||'None'}. Provide: (1) summary of realized benefits across the portfolio, (2) which projects show measurable outcomes, (3) where benefits realization is at risk.`
   };
 
   const elMap = {
@@ -2352,11 +2385,16 @@ async function generateAISummary(view) {
     risks: ['risksAI', 'risksAIText'],
     completed: ['completedAI', 'completedAIText'],
     compliance: ['complianceAI', 'complianceAIText'],
-    closeout: ['closeoutAI', 'closeoutAIText']
+    closeout: ['closeoutAI', 'closeoutAIText'],
+    projects: ['projectsAI', 'projectsAIText'],
+    benefits: ['benefitsAI', 'benefitsAIText']
   };
 
+  if (!elMap[view] || !prompts[view]) { console.warn('No AI config for view:', view); return; }
   const [wrapId, textId] = elMap[view];
-  await callClaude(prompts[view], document.getElementById(textId), document.getElementById(wrapId));
+  const wrapEl = document.getElementById(wrapId);
+  if (wrapEl) wrapEl.style.display = 'block';
+  await callClaude(prompts[view], document.getElementById(textId), null);
 }
 
 async function getAIProjectBrief(projectName) {
@@ -2461,7 +2499,7 @@ async function refreshData() {
     else if (current === 'projects')  buildProjects();
     else if (current === 'risks')      buildRisks();
     else if (current === 'projects')  buildProjects();
-    else if (current === 'meeting')    buildMeetingPrep();
+    else if (current === 'benefits')    buildMeetingPrep();
     else if (current === 'closeout')   buildCloseout();
     else if (current === 'compliance') buildCompliance();
 
@@ -2948,6 +2986,17 @@ function buildProjects() {
         ${d.impact ? `<div style="margin-top:3px;font-size:11px;color:var(--danger);font-style:italic;">${d.impact}</div>` : ''}
       </div>`).join('') : '';
 
+    // Compliance chips from PM Process Compliance Audit
+    const compRow = COMPLIANCE_DATA.find(x =>
+      x.project.toLowerCase().includes(p.initiative.toLowerCase().split(' ').slice(0,3).join(' ')) ||
+      p.initiative.toLowerCase().includes((x.project||'').toLowerCase().split(' ').slice(0,3).join(' '))
+    );
+    const chipsHtml = compRow ? `
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:10px;">
+        ${[{l:'Charter',v:compRow.charter},{l:'Plan',v:compRow.plan},{l:'Risks Log',v:compRow.risks},{l:'Closeout',v:compRow.closeout}].map(x=>`
+          <span class="compliance-chip ${x.v===true?'chip-yes':x.v===false?'chip-no':'chip-na'}">${x.v===true?'✓':x.v===false?'✗':'—'} ${x.l}</span>`).join('')}
+      </div>` : '';
+
     return `
     <div class="project-card" style="margin-bottom:12px;">
       <div class="project-card-header">
@@ -2979,6 +3028,106 @@ function buildProjects() {
         </div>
         ${pctBar}
         ${updateBlock}
+        ${chipsHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+// =====================
+// BENEFITS MONITORING VIEW
+// Shows projects with "Project Benefits/Impact Monitoring" deliverables from PMOE_LOAD_DATA
+// Sorted by most recently updated
+// =====================
+function buildBenefits() {
+  const search = (document.getElementById('benefitsSearch')?.value || '').toLowerCase();
+  const pmF    = document.getElementById('benefitsPMFilter')?.value || '';
+
+  // Pull all deliverables tagged as benefits/impact monitoring from PMOE_LOAD_DATA
+  let benefitProjects = PMOE_LOAD_DATA
+    .map(p => {
+      const benefitDeliverables = p.deliverables.filter(d =>
+        d.name.toLowerCase().includes('benefit') ||
+        d.name.toLowerCase().includes('impact') ||
+        d.name.toLowerCase().includes('monitoring')
+      );
+      if (!benefitDeliverables.length) return null;
+      return { ...p, deliverables: benefitDeliverables };
+    })
+    .filter(Boolean);
+
+  // Also include ALL projects that have any deliverable with outcomes/benefit updates
+  // even if not tagged — include all if no specific benefit deliverables found
+  if (benefitProjects.length < 5) {
+    benefitProjects = PMOE_LOAD_DATA.map(p => ({ ...p }));
+  }
+
+  if (pmF)    benefitProjects = benefitProjects.filter(p => p.pm === pmF);
+  if (search) benefitProjects = benefitProjects.filter(p =>
+    p.project.toLowerCase().includes(search) ||
+    p.pm.toLowerCase().includes(search) ||
+    p.deliverables.some(d => d.status.toLowerCase().includes(search))
+  );
+
+  // Sort by lastUpdated desc
+  benefitProjects.sort((a, b) => (b.lastUpdated || '').localeCompare(a.lastUpdated || ''));
+
+  const el = document.getElementById('benefitsContent');
+  if (!el) return;
+
+  if (!benefitProjects.length) {
+    el.innerHTML = '<div class="no-results">No benefits monitoring data found.</div>';
+    return;
+  }
+
+  const statusColor = { Issue: 'var(--danger)', Risk: 'var(--warning)' };
+
+  el.innerHTML = benefitProjects.map(p => {
+    // Cross-reference master file for health/phase/pct
+    const master = MASTER_FILE_DATA.find(m =>
+      m.initiative.toLowerCase().includes(p.project.toLowerCase().split(' ').slice(0,3).join(' ')) ||
+      p.project.toLowerCase().includes(m.initiative.toLowerCase().split(' ').slice(0,3).join(' '))
+    );
+
+    const pctBadge = master?.pct != null
+      ? `<span style="font-size:11px;padding:2px 10px;border-radius:10px;background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.25);font-family:var(--font-mono);">📊 ${master.pct}% complete</span>`
+      : '';
+
+    const healthBadge = master?.health
+      ? `<span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${{Green:'rgba(64,177,75,.1)',Blue:'rgba(16,101,195,.1)',Yellow:'rgba(235,199,0,.1)',Red:'rgba(234,53,46,.1)'}[master.health]||'rgba(100,100,100,.1)'};color:${{Green:'#40b14b',Blue:'#1065c3',Yellow:'#d4b200',Red:'#ea352e'}[master.health]||'#888'};font-family:var(--font-mono);">● ${master.health}</span>`
+      : '';
+
+    const deliversHtml = p.deliverables.map(d => `
+      <div style="margin-top:10px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent);">
+        <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:6px;">
+          📋 ${d.name} · Updated ${p.lastUpdated || ''}
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7;">${d.status}</div>
+        ${d.risk ? `
+          <div style="margin-top:8px;padding:8px 12px;border-radius:6px;background:${d.risk==='Issue'?'rgba(239,68,68,.08)':'rgba(245,158,11,.08)'};border:1px solid ${d.risk==='Issue'?'rgba(239,68,68,.2)':'rgba(245,158,11,.2)'};">
+            <span style="font-size:11px;font-weight:700;color:${statusColor[d.risk]||'var(--warning)'};font-family:var(--font-mono);">⚠ ${d.risk}</span>
+            ${d.impact ? `<div style="font-size:12px;color:var(--text3);margin-top:3px;">${d.impact}</div>` : ''}
+          </div>` : ''}
+      </div>`).join('');
+
+    return `
+    <div class="project-card" style="margin-bottom:14px;">
+      <div class="project-card-header">
+        <div style="flex:1;">
+          <div class="project-name">${p.project}</div>
+          <div class="project-pm" style="margin-top:3px;">
+            ${p.pm ? `👤 ${p.pm}` : ''}
+            ${master ? `<span style="margin-left:8px;color:var(--text3);font-size:11px;">📂 ${master.phase}</span>` : ''}
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;">
+          ${pctBadge}
+          ${healthBadge}
+        </div>
+      </div>
+      <div class="project-card-body">
+        ${deliversHtml}
       </div>
     </div>`;
   }).join('');
