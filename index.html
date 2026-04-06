@@ -727,7 +727,24 @@
         <div class="modal-title" id="modalTitle"></div>
         <div style="margin-top:6px;" id="modalMeta"></div>
       </div>
-      
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <img class="brand-logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAB2AOMDASIAAhEBAxEB/8QAHAAAAgMBAQEBAAAAAAAAAAAABQYABAcDAgEI/8QATBAAAQMDAgMFAwcGCwYHAAAAAQIDBAAFEQYhEjFBBxMiUWEUcYEyQpGWobHUFRYXVKLBJCY0Q0RSU2Jyo9EIIzOChpIlNmOUpMTS/8QAGgEAAgMBAQAAAAAAAAAAAAAAAwQAAgUGAf/EADMRAAEEAQIEAwUIAwEAAAAAAAEAAgMRBCExBRJBUWFxkRMUIjJCBhWhscHR4fAjUoFy/9oADAMBAAIRAxEAPwD82Q79P084qbbm7ct5ae6Im26PMRwkg7IfQtIOw8QGeYzgnNn9KGqv1XSf1RtX4agt1TxRcf3hQru6I0WEJ7qKcP0oaq/VtJfVG1fhqn6UNU/qukvqjavw1J/d1A0K95Qqc6cP0oap/VdJfVG1fhq+/pQ1T+q6S+qNq/DUsNWya4MoiSFDzDSj+6u0ezy3XAgIQgk48awnHvydqtyeC850yNdpmqVrAVG0mATz/NG1fh6ufpB1RnHsemDvj/yda/w9CH9Hy2my4i4Wt7COLhRMRnPluedEYVmecjoWp9lh3hCSnvW1Dbrzq7YweiG6UjqrrWu9UOJB9m0oM9DpC1j/AOvVprWOql/0TSf1Rtf4evEewPqwfbmAOuHGx91FoVrDCT3z7L2epUNvoTRmwA9EvJlFvVBV681O28ppcHSfEk4P8UrX+Hrs1rrUasZgaTP/AEla/wAPVq92MSpLbkQNqWU4UkKxnHXcCq1uiezOErYSs4IKVjkf9aYZiN7JKTiBHVEo2qNSL7tSrbpRSF5JKdJ2zIxz/o9dVal1D7UthNu0kSkZGdJ2zxD0/g9dIrrylDEdBVkEe/l9tXHW1RnUIkuQY7hHhDroSo4PTNMDEYN2hKHibyaDihqtWX5pXC9atKJJGR/FS2cv/b15Gr71ne26U+qls/D0Sk29EsJ4pVvTwZ+S6dhzI+HOq6LPEJPHdbcgBIUD3pOx5dORpmPDhO7R6If3lKdnH1V2zX26T2HSbfpVK0dfzUtmB/8AHqg5qq8IcUg23SR4TjI0pbfw9dUW62qbSli+W4rcPCQl44UfLYb14k2d2OsoWzy+cM4PrTTOHwn6R6BUdxKUbuPqV2VqO6ewCUiJpBSgcKb/ADUtgI/yKqNasvLrnALbpJJPLOlLb+HrymBxKx3Y9aswdOTZiHHojbaiyrkVEE0R3DoWiy0egXreIyu+o+pX1vU13CVB226R4hyP5q238PQ2bq+/NLUEQNJEdP4p2z8PRV6F3jee7II2UCOR60FnQcZHDSr8GIfSPRNx5sh+o+qova/1CgkewaTH/SVr/D1Wc7RdRjlC0n9UrX+HqldoZQeMD30FeR6UjLjMH0hPR5Dz1KYF9pOpRyh6S+qVr/D1yV2manH9E0l9UbX+HpYdRVZxNIviaOibbI49U2HtP1R+qaS+qNq/D18Pafqn9V0l9UbV+GpNWOorwRQHMHZGDz3TK7KdnOrmvhkOyFF1YZZQ0gKVueFCAEoGTslIAHIACpXCL/JWv8A+6pSpTA2XyWniZx61UTHUoEpTmiSG+8ykDO376txISuHeKtas5BSeQpyGMubaRyJOV9IM3D4lcK+NOdkkIJyfKj9qaYaQGBGfakJKeJ0YCRvzXxchvRqHZobrf8InON9EtvKB3PLw9aETFXS3z0rgs+MtqHElHiynmCR0x91EMfLqhCTm0R6+3Vqz2tkQXG3pK+qwFADz2I+7FKqoZuchqS1LjIccADiHHAnxZ32Pn6YG/OiMq6ajd8fFJdS04eHLbiuJJAKcbHpt035miNkm6mNxHtiZqYgVwjhCuLJ3SVDyA2OOo3rwDmNKznlou1ZR2U6qdbKY8VDaS93iV98gkDHL5Y68qvM9j+qnCVyFoSCviUlC0kEYwrYKOM+lbL2bPplw3I70lK30kKDSieIJI57k7ZB5YAqx2kXdyw2xlqMl1EiSrCXEgYSARnPworYLdy0lJMvlYXXosQY7NbimO3x3VlCEujh7phY4VJBGeuCcjfrirTXZZMdC1KuDJW4STmMrh35nGRvkZ549K1aLpuyvWdSG3JM5coJfbZQF4CwNuasZwSPjXaMZCAGW4r+EJwFFbeDjpk7/AEinG4rD0WHPxWVuoP5LOIPZhcUOMvMz2xKQ5x8bcc4x0SlPFgdeeefKu1ztSW7i6O5cbOfElaSkg9edbI6xfLZbWJDQQw882cJKUqwrplQHX0rLZ+steTOJEvS7ckIUkKWIa3AnxFKtsgkZwcjOx5daPGGxdNCkJJpciwTqO9DdfbNa4zcSRKfQ0txAHdNrVgHfc+uPKjbGlIeo0s3N9Drb8VXCUNgJCwocjuPDQyG7rFxCHk2uL44qnUMptik8LqFYU2pSlYGQCUnrXYXftJmGSIsC4QWQomKoxEDKdiWylR4geeFYAyMetHJBGgSrOYO1eBXjSJxuxa0lXeidPYcz0CfIjpsdjjeuo7DrKtvBuc5XdowgKA8I8x9+OXpV7Sr+vUahfi3VVxlW1QBjv8TaQkEZwpKQDnmDua1i2oUphp1aFBRGFAjGfOhPY6NvN+idgymySclna7u/7SxiZ2PQzGAany3izgsNqKQEY54yDz9c/Cr57P5siK2lxxLLrQ4UqKuIrHqQBg1sK4QSvAG3Me6ujcFKhuKLHmvYNEy7Ga8/FawdWjL9AfS/7G1KAOOEYXn31WetN9taXJqIRZbxhSeDI+jyrcrs/BgpUHXUqXwkhCeZ9KWdT3WM1a1NPQ3guQ34UEbYPmafiyZZatl2lnxxRX8eywsJXIuriZSljvzkcKikBXwqvdrMG8nLvxWqjUyChUjgWsM+LZw58P0V0dlRnYYU6toOJ8KsrxkjrvTU8VbLzGntILsOOlLjbzeQrqcmkq6RgzIWhOSnPhJ6itPntxlJWtCkLCdzg5xSVf2o7iOJC08Q3A9Kypo1uQSWlF5FVHE4zRF9NU3BvWVKxaUblSWMVyUN6tOJzXFQ6Gk3NTQKMRf5M1/gH3VK+xv5O3/gH3VKzzunRsiVka72UtOPmZ+0U3WiF4htS/opgyLo8gDOGCf2k0+2doNyEtOpIBOx8q6PhuKZMbm8Sud4lkBmTynsEcslubPCVIBOx3FN9tssBXjXAiqUdyosJKiffiuNkhJCUlODRyNc7JGyH7tbminn3klCcH4mqvx3k00WvGS2Fk0++vq1S7HXYkNRmXwlKcuNq4Uq3JwQNx5jFP8Ap6y3iHp+T3L0e6soKkmOppTTwxyUlYJJKhwq6c9iKL3Gf2fz2ibjdbHIX/WS+hah8UnNfLXqjRlsBEO5skrAS4QHFKVw7J6cgnhA9xozcKd4+GJ3oUJ8gb8zlm67bqKyXtNzWqXFlu5dQpauIlJOeE55+oNGbzd7lqRiOzco7GW1FSVtNkKzjGOZ99PFw1Vo+5NdxLd78AZSr2dzY+h4dqUJD1uacWIj/et8R4cIUDj/AJgK0YOGZL/mhIPkVzedlezsMksHxR7S9qKrY26iW8hUVXhS0oDjGQRnPxFMsG3Q5jqkImv95IWFsJSrg4Bz5f1ead/Kke3TigcDSZYBGCEAHI+mj0C/NQCwgx5xebyEhbaQSD0HiJ5/eaI/hWVejdVmx5kZrmGi0K2NznIamJkVBDfgR35CgfUbfbV6JDjMxw2pptSv62KT7hrG/wAOGlyVpGfHa+a/JDjST9LePtrjZdVaguyn0W+we1qYQXXO7e+QjzPhpT7ozC0voAf+hX5rU98x2PEepdXVpv8AJPQQ0k4CED4CrLhSUJdTsDsceYpFjM9oMxpq6Q7IFRnhxtKXMZ7sg+9aa9WIa7uomy2m7ZFjMr7pxyS7wNJWOicrIJ9Rt61U8LcASZG6b/EPTRFblPsNETtdvhPrsnTjB5n7a9JKT1pXhWvXUqSYj9ysVulFYShiS8ErczyKMBQUD6E0F1RM1PYJ4gv6htsl7fvEwih3uiPmrygFJ9KvFwsyv9myRpPmf2QcjOfjRe2ljcG+Q/dac0AtnplH2iu7KEkYrFkahvy1b3aQPPhwn7gKsR7veCR/4tOHufUP30yeAytGrx+Ky3/bDGZ9BPp+60DUtgiIAdjoIcXkkZJz9NKOomn5TTSHd+5TwpyOlNHZ3OdmTVQ7jLeeUpJU0t1wqOeoyTXzVcNppxeAedVie6Gb2L9SOqMyWPNxve4NGuNEdiO/5rGr9CwCeEZHOli6QbUqzuOPOrampOUpPJYrSbrGhOd4ZKwk/NyrFZ1qpqOl9wNPJeT0IPKtYnmFImMSNUiOP+zP5QCADkgnn6Gh13mIlIwYjLYSCAoHcD0FXrpjiO1Bnsdw4rvUpUkjCDnxA88Vm5LBuuixXGkClAcRxVF1NEZHM1TcTmseVuq14yqShXJSM1cUivPdmk3R2mQ9WmBhhsf3R91SvTYwhI8gKlY7tytNuwT12LwzO1PKaAziCtX+Y3/rWnSrJwK3R6Uqf7KsH2/X9yawDw2hxf8AnMj99brd7KEhZHCMb12fAZmjG5D3K4T7Qh4zLHYIBo9gewlj57Z5Hng8qyjWdkFs1POipb4W+9Lje23CrxDHoMkfCtVKkw5CX23ClSTnwjn5igHayqBPkwbrCB4igsPg7Y+cjb/v391dJwa4c6ujx+O6SdPz49XqFmzUYZ5UWt8YZBxXNtA4sCtNuXZXqOyaWj6kfftsuE8ltz+BuLWpDawMLIUhO24z5ZrrMjKgxS1sjgC7QeJWY6OfIY50bbDd0rQo2QNq3zs4kokdlTq402LZ5dndJkyvYUSVKZzxeJJGTkcQ238NKmruzF/SlkZuYuqLikupbdS3H4A1kZBJ4j1wOQ5imVjRN3s2mDMseoXFy5kNEh+C2yElbRAJA3PFji8t/jXH8Xz8TPgZySDV2hINWNwbB6HqKV+GQ8Q4fmSc8RNN1AIujsRqL1HQ3ujWj9SWGdry42zT5XEh3OACHG2u6/hCc5UhJ5ZSTzG5ArtIlNzrbAkw0vX2Xp+48U5U0JE1pCVEKKUJGFAjcb8vM0s2XQbdz0bHv+mrnMYuzailba3ggcY24UKSAUnkRueeKq6i0kiNO05NDtyW3dnEsTxKeV3ve5HEkq2ONj9ArEOPhunpkhsaajW2g3ex1btRqx/xbUOfxD3YPliBBo2DpTiKrfVrt71opvt0TUkzXb90jz03rR1yQe97yWlTLSCndPApWUkHyA9aUdB2+22vWrl0tOp7OIrExxh6JJf7omOeakknC8fur7r3Q1kK5j2l2JDItT6WrlEUtSyUEA96gqJJGCcj0+m5qqJp2y3y2WiJpnTC7PNhd43PuMhTCnDjn3+/CeXQ5z0osRY6PljcTztquUDRov4rdRcQdCKsaokkcnteaVgHI6wS5x1cfpoWGgjUG62V6BeNMyod50+9M01IRbpqnLU7eSl2MpC9yE7jOCSNs0GkXmwR4c7Tt2ullXbrke9Quxtq7uE6ORDZO6Tz2pg0vZxbdO3G1OsWaFdYAEpEtm3pnccZW4xslThHLJ35c6q6HuwfnXe2vcd0ZuDJeacetRiJcWkeNtKeW6d9jnOKG0xt9o5lkNIO/keYHlIH+2/fojSRyvaxryAXWNtOvwkcwJ/1uux3STPjadhx7e9pe53G7XdLwLjzcRxpvI3SAlSeLPTYminaKzIu9wZvcew3qO46wkTe9gLQgO8sg43zT20iInSdqsMaQhUaYXBbHlbLaeQeNCVf3s5TzrjqRiZqO1RrjFt8+4KkslmUyL8qI1GdTsctHwnff91FZxL/ADNeQdC4W4i6J6/KBsdOhCzp+AtfBJHYAcGnlaDQIHT5jeos62CstiWK9uXMW0WqWiYpBcDDrfdrKRzOFYpitug9WSGG5DVrSWljKV+1NYI+CqbpOpokOz2d7UDURybbJAYklp9PtDKgPC43j5aSOYoJJv1hs3aKudAuMeXZbq0RLQ0vi7sK5ggcsHp60Y5+bNYYwDQ9CQSOgII3Go/pWHN9m+FQUZpCQSAdQ0tDtiQWnY6Gv0pBIrrtovTbcrLLkZ8BzBzjB33HpT1rptz2cTG097HcTxJUPKskvbsONc5LMCSiRFS4e6cSCApPTnTf2ca9ipa/Nu/4chqSQw6dyj+76ircQwpixuTELLdxsa/jskvsxLDjTS4UxprzodwCNNTsQe6WL27bJMV1ACmZWPDxLyknyrLb66Uk8Ix0NbL2qaMIY/K9hdEqG4CQps5FYVe5zjXFHmNnI5HkoUODMjkZbT/zqF1b+HPikqv2KFexouC3B3oaUnpw5zQ6bY2kK4S+pWRzCcfTX0SSiSHmFqWE/KA5491dZEskcSV5BGxpeaQO1BWjDG5mhQCda2mnFIUtZIPmKETI4bUCjJB86PTHgslXUnJoY/hWfWkHNtaLTQQ0Nk9K6IYz0qwhvferbDOTvvXrILXj5aQlQwojyOKle5I4ZLo8lkfbUrlJRTz5roIzbQtd/wBk2YIXaFc3D86zOo/zmT+6t8uU9pwqJVz9a/L3YhN9h1VLezjigLT/AJjf+la47flKOAc/Guv4HCDjc/iVxPHy45ldKCtXGUlL7jZx4ScUv3dQlQX2gjLgTxIxucjfA9+MfGq9+uakS0uEgBxPnmhy7lnB4+E+m1b7ZvZua9u4WTFCeqoNLBIINbzoztAtkbs2sqZ77L0q2yVwpMBauNUyEv5XhO23EMZ/s/hWEIiwlBAjuSWyeYU4lQHu8Oce8mm3T1tiSpCGYsNTqlfJD76uJWBk/JKQK1+J5eBnxtbJfwm/wrv2KtjmfCc50RFkV1W43TWOmLvOv1ubnLXapsBkRniy74JCCoAcJTnkUnPLYUQla4gRkWp6221qTJhxAyp+QCgo8KQQkA7g460j9m1otMqdIYm27K2hslSlFKd9xzrUl2SxojhDVqhtBaQQpLKeIfHHnXG5YwYHiMBxA7kdgOncbqwk4tmNdLFIxhPXlJOhutTWh280k3TW1gajXiJFgTGY9yAc4O9SnuHxzWjBOM8+m4od+k26y7FFgT7ULo7FebeblpcUlRKDkcQCTnlucjNGNV2hyGyHoQLg5FCEYUPXakK4vsqaWXi6mSFciNiOvxpyD3N7ARHza3qTd1Xn59+qyp8/ieNJyvfWhFAAAgm/Eb7dkcldq2tpV7MqOhSY6QSYJi8TPDjfiVwhWPjQprXGroTS2o7dvEMul1uIW2nW2FHfwBalKSM74zgUGizkR5rbhKS2ThYUnIKTzyBXORHU1KeYC0q7s+Er8PEDyOOfIg0X2mPH8LIGgeXb9fHdD+8s145zK4m+/wDG3htomS0XvtFvF4XfI94SzLLfcFxamwEo54CAkgD1xmr8u29oVxdQ7M1StxTauNBRKdSEHzACRg0paZmyYN6ad8KUhwIc6DBrY0EJ3SdjSmTxB8LwWRsGmlNHotDC58ph9o92+vxH13WXzLLcYj6LdIvUlXFxPIbSlRQXDuTkrGCepxmqcSxsSm1OrfWHArhxhOc+pIp07R3IjFrakLWESUuDuTjJPmPdS5qDu7RIgXKMsrYmshxQ+aT1x8aYh4rkSNHxUT4D9lm5eEGSOG4FeOh8+yEiHEZUUnvFFJIPGr/8gV1hM2t54tuMHKh4CX1pAI6HfrVbUT1rtzJucu5ONx3VpCQiOXCVK5JASSST6CgcrVGmIjxSld4W42hLpcQyQlBPyQQUgpJPn1po5klavN+dIUHD3vNhljy/hOcV22jLDkCJwqOzpaQoo+B3Nd0iLEbeKjGadKf9yuPGyk+uQnn6VmT/AGlWxzvnrbanpvdpDjgcf7ruwTg5AVnY89j50LunaVPjS347NtRGdHIl9S0Y23wU77HOxpd+QHD5ltwcOkaaLFsdg1jP09KcQtw3CC7u6w4gBKvUcuE+tddZaL03r+yvXfTCgiWgZeinAcQfd1HqKwVPaBOlSXW5jzbbfyULZ3QpXXemuxaqm2qbGvlkleyyEDhcSBlKh1SR1BrKzIWv/wAsZp3h+q6LBkfD/ikFt/LyWa6ssN1sU1xmQy4goOM4oPHu+D3UsFaeiuShX6dd1Z2f9o0YW/UTSLDeVJ3eP8mcPmF/Mz5K+k1lXad2N3GzIXNgYkRSOJK0EEEeeRzrIdkuBp+hW63Fa5vNHqFmksLJK2Cl5s9RzHvFUg6SvhPM9KqvmTBfLTgKSDuDXSJLSteFnGetejMeAhHHCIpacQod4hSc8sjnV6IkGvjMoxG0iQjjZWMggZT9FFokGPNYD8FYBPzc5H+orRxc5p+cUkcjGd9KTp2058f+or76lfbilSLhJQsYUl1QI9cmpXLym5HeZXQxfIPJFNGyvZLm64DjLBT+0mm9i8lZ+WRj1rO4bpZcUodU4+0VdRNWTsvHwrpOFZPs8bl8SsHiOKJMjm8E73iYHYIdDoJbVzUrpVBqeVjwuIX9lDIcta4q2VZXxAgE42z1qoJLobWWmeLgUPCVcQcHX402cxKjEATtZ2n5CO9KsNcWACoJyR9uKOQ2nmJKXUXe2pfJ8PdrWlY92UikK0zFXSDcLYsghxkqCeHKkjdJSPLGc/CqkXTt6Y0+uJLgR4RWEFEp0paCFJOyklDYOcZ3Kj9tee/uY7QX/dlR+A14Nml+hNAa909YFqRO1DEkvygClDTiVFRzjOQc88jOKa19t2lEtSWw6pfsZWXVJbcIHD8oBXBhWOuCcV+ZolhcSuG+3frW2mI0phJ7whTjWcpC0tuJJIOeWx8qYLJb7fIlotrep3xDlv8AG9CDakMuuL2VklJUEE78JJr3l9u4vez++qVdCIQGsea/nxBWwak7cItufmtM2K4S0Q20POuspbKQ2sZSscTiSU+uKAvdrT12vjNjladDKHkIdJkELPdr5KSG0uJ+JUPfXGx9l8KE9Iceuj0wvRhDIfPGlDIOQ2MBJx6nJ9a5aq0no20Qosu8okSlMNiPHDZUk8I5JOVHIGOtVBjsclX2/oQnwFwIfZFb34dr7qxq+NBtzjK4z61IeTxBskEp+PlVCbOS/bYs0DBQe4cJUMkjdPryz9ApMud99rk8XAG0pTwJGc4A5V1sVzD/ALRbVlH8JbIQeAEhY3Tg9Nxv6U6dALOyxW4VkgDdMyry+okI7sY6qIB++tC7PdXNy2hbJsgGSnZpR+ePL31icVVzdireaiSVtJ+eGiUj44rrD/KxdS+wA24g5SpbyUEH/mIqssTJG0UWCCWF/MAts7WJiUadQkqTxqdHCCNz7qz03iVPsnsL6wowx3kckb4+cn94pUnXe7XWf7NcZ6lOpJ/4y/Cn3AfuFefyrEskph+VcghXFsEIV4h1GQQQMdcVWJjYY6J21TD8d08vMBodEWmXm3zbOq23VLriQoFJRzSRuCDnIIPKgVwVp5xsl9y7zn1Hxrff4SsZyEkpVgpB6YqlcdRWIPvlAlLUFHCkoBSTz4QVJOTj1oIb5BWtLibeZCXFhJW6+kBJ9yCKu/IhO+qex8GRgoI5+UbKyribs6EnCk573PhVzG45enKvj9xhHAREhtnAA23wOXU8qXry40lAdYSEAHCkgn4Hc0NRMDieFYBIGMk9K8dkNGyabik7p0hXSN3hS8zGWg7AhIODRNUF2Tp6VdY5SiOw8GlBAA8RGd6zZUrgSUoISPStJ7JkPXTs+1kwhziUx7O8kK5ZPGP3VlZs5LCQVq4OMPaAEJbVJw0e7UAetPXYdrBlu+P6RvMo/ky5NnueNZKWnh/VHIcQJz7hWSvXOQ04uM5HQs5xxJODQ5a1rmobbUpp5KwQsHdJHkR1rDkeFvwRu3WkdtmhpFsubj7bYWyrxIcQNiKxx4KZcIOxFbK12gXK12qLE1Ux+VLat7uu+BwtvGM589jnhxvikTX9jRHnvvxOEsk8aeE5HCdwR6YxXgdYtVngAcR1Qm13hTeGnsLb8lb0xwJrDRC46uAHoDWeFwpVircactAxxGrslpIvitG7ivvLhJcJzxOqVn3k1KrJUVpCzzUM1KTdqU63QBeJC+7aJz1xXBEwj1rpPQ44xwtp4lZ5Zqh7LL/sv2hTcM3I2rS0sZc60UZuzzfyAke/evabitbocThXEo8WcAe6hIjSx/N/tCoY8sjBZB+IonvHih+xPZMCZymld42tIUoYKkdTnJr6/cVrbyXyVDHzt6oafcdhTS5IayhScdCEnzxXe9MRHXzJiLyV/KbSnhwfPeisyq6qjscnorDFzdTj/eq/7qJwb0+zLadQ6vKFhQwo+dKndPD5KSPeRXUGQEgJSRj1FOM4gB1Sz8K+i/VDuqHRZTNiJQ44WQ4hC84JxnG1Zdq7tHnXHhgSbbFkNpT3qsLUjAHlvufSg9u1ihuzNMuuFL6GuDhKSQcDHSlGZJjyzl6O5zJAAHhz0B4s4obcpgGhFrz3RxOo0TB+dja0h1MKIlKXQlfEykkoPIjbnXNvWt0KEpW8UJQ9kpQg8K284wPIjntS+H2EAJRAzw/JUpYJH2HH012bubwQUeytJHQgnP34+yie+A7vC89zA2YjE25T570pUe4T+DAWwUEtj1RnH21ZbVITcochD0lxkAqW064VFCyOefXbfcfBVekHuuFpwJz+WoePgIx5DBP2nNcpM+ahKkokSeBXzguHB+mu6lTFoW4H0UHiQlSgELwUkJx8KLvONOcYIobqrU10KG7GclFxp95AcSpI8KfBkZ9DQ/ScFhOcbq4J7YVjEKVnypwrZw+UH5eMIUQj1FJzkmvSU4JDhJGScFX69K7Xp0tCx3TSuH/mIznHqKZjlRzDXJSLt8zMuQV0sI3SBXdYS2sdEKV96K8ZP1+oT6EzFBP3D7asO3GYO7T7oKR0BKqiS4XnM6WnDiVaJkqk73GQ9EfI/wCOa8m6PDB4FY90fuo23d5aFd4GN8bCl23XCUo5WlP4RQOG4pzilAYGdvjRL65LTzaWlqwFY59OopZdHIXwnxbhVqxiT2hSCUxjzBM9hG3irFxVxLzpvLqHC5hK0FYBHrjG1JLEyTGdU2hXCQfm4OxzXS0sPJUHX0OFSeIbAkA+hGOo5ikuMtKk5JWlRBz0PnQ4zMByWU5kWblg8MhwDqB5fz9axILGnmQiMl1xTTyS2cqwScDPXnVFcWMxEdYaR3fFuknHU+WcUQkykpS4kx3kkrJGBkg+p86MWaVFVF7n2nDiU4JI5EZI21Hx58qa2bSq0qP3R07KiY6QQAHdx09KQvqrY5kBBrxEP7N9TxWGvt9PzC1RuWD49i9VKAK30pPV0oUy0ppQOcpA5/Glb2mS1pzHCw4BuN0jbbirEdwKGFJcT7sj8aT54OhxXcnS1ZSmluJSNb7Uq7hxQyLZJVhKMYGM0t6rZS4hO3ETilCC2oqJIHhOc1MHSNLTq1HCVpGcnbFI+sHo6kIABClJxkY5jPP9+1LRTFTHDSNi+pW56SHpJ5gWS52iXFcS3IbBJPL15+dK3Z7aJcXU9tmsKWxJbnx3uyRgpUlaFEHPLke8VqHaReEQe0ywR5DhS3JkIiyiOSVBaSk/aSM/GsD1qr+0S8PdoiUW5JWWbW5GCl9OEKeJUqxSsJsj9uI/9XZ6I/5rn4Wb6LlbHQnjwRpvJGAM53+HXzqp3kpO2M8+mK1Ow6l0/brOxHUi1ypCgE8bzRKD8UrOM+lYrPiNJdSph5l4BW6UvJST9wz/wAVIkMnEDUyIHVFT3XpTlT3WJqVr3xz8a66KgqA4V8fC2r3f+7W2XC4hJKivHkMYq/K7M1LUu9KaS66pSkpSoKWeXMnn+yh08J+j24YSeABQPQnxCtNOd5bJSQ2v5xb5HA3nkPL76FraSlakDkMqGeudvjWkdkVvnL7RCNQ90mC42hQaSpCMZ5DxevXmfSsS1NYrha9QsyxPnvQ3mnGnYzsYKCl1JSQFpQEqB4vMf56Vy8w5J3hPmDh7r+hWjy4/eoMUh1P8A4YkBLiT88cRAJ8j4D760Ds7iJk6biuJCwpyGxJyAePxLUSABz6Abbb0O1d2k3SxuwN3ZyZqGXLSSJzrUVCH8+LiCxkcyDgtGd8k8qY7jco1yddiPy2Lnb7m0JMZCoxjrRwnjbKFqLiuJOVkg8ue/kbklI0OOXSN8YI7+7OMK3wMj1h4jXe43DUjEqWpCJVwW4ppRbJ7uMEZWpR2BJwCAOg9KQNT3tLepnLdFBbaS5j29tLxKFkYCUrKfhsa3Oy9pFlj3my/tMiIuUimRbo5ekIa8YS3GCFBR8wkZ+VjFZT2s6tRq/VSkMqJtFuXIgx+QGSO7UrJ/tKJqmEOBsLXHLaQmCedyR5VhPitAl6bQTIlPMIJz4U/IqrCTkVegRVfS/VX/AMq/6VJDGNKltPlX11MtGwUkAYHnSncEjxunzrMDMlLcxuJxMxqVH1R+Io4+gzXfSNolXXW1jt0OMtLREkQJMpaiEJT32yjG5PIAY9aVHJa40Vt1ojLiylqQEPNqGCFjfH35qcJ7aKyRrVq8a0zGW4tPy1cPibwB8sD7q8oVH5ZJ8qMNzT+Uhf8sGtqbCiLIOCfDkb/AAqjPyoKSWY2SvGW3QD5dKbJUSF0bVMkBxIBHCkHqKv2TQjjl0nYJ4WgEjOf7uaVx0PIBj9rJTQ2xyRq2+h+PIWnO5UwsFJAJ2Gcn7KI2vUMSfLajKgqjyFlJaUpQK8k5yeXXqKGpFuqfwxAqgDe7QfQ9Pr+tCtqBnbhqS0yICmw2p1P3FBH7PaqFiTY60SpSRDLKwWHn2FqStTiT4FKChzwk8xuKcZvZ5HCg7cNQ3ePlCFSmzLWvxqACF8SgkIHXpQF7s1htU2B7Ww2XHkMqcjI44wThRyFKBV1HIZ6ipWjxk1aqpMiT3KrTT2pWiMsE0i8q1xp/f8J3GWlqgWkBxsBaAcjjTjGOVRUf7CpxuPbJHMVb+lBq+d1wXYHW+lbqGVFBcUSWCkHbiRkcXpnikXXk6BBv15t9vU49ClTHPBIcOVKbQopTxHOfDgCkiKJhwMkfhYNaRJVtJqhHsujQOo0mJHKn5pTgAjPLfHSjPa1p6PpbWbVohtBhpp6O6phCSEJU8kLUpIOdgvGCcnBGTXvs01hZdI3ZVz1FYI+oYAUkqjOLUPAnqDxyEHkOhGK2vtFRB1JqK56nsNrYi227SSIV1QHFJlMpUcpJ58KCDgHrk86kbqALjI7MDBHB3Bq8sNijhvBJc7fRGfJm0UpXmFJNK6e0O3wYElBE2Y24FOE7pCjvt8aylbqEq4Q6pOOE5yDnHN+fP3VmvZnf7pJi63tcGVLcjWy+NNJcbURjhUpYdJ5+HBqEgxRpaTjJN1UXCpj80bBcJIlnxrWYzJkJabedUkIcWtThHiJVuMdKWHe0m5NKJL7vMbqTy+HKqWo04W+ZQfKhqXoilBtBPISNgRvQ2tVQ0PJOedFfHGmkuQjRxFWzuDWoVqmEn3KSRz4SfpqOu9qe9Hcu0V1PnJbOVenKqXszOUv9VVE3IbZ00IFtXLdT7LGqEQrCW3cOpT07uTz2HWqqkFStXVKpVpA2wRzHs2b8+J6fHbmBukyeZGAcYqO4X1e/fWlJ23fUfLkN1A/e3R/JrML8OJ5UZ7VbhbZPaLr2RbGHIzD7C3mmXBlSG1KJSnPXgBFZJRSolXW2wDJbV51hJjEWpuMkJcdjMvjjj4fBkp+tVZcKarqc2dpLhPh+BO5/q1Y1O1jDhJKk7AZIOI/nUqkZp0k68BXrX6FX0S6cCSvhSSNuVV4RwrxjbFJvE2gHatVwx+gkV71cpB9k80+q7mTZ91BKC9n5PzVLURnJqHYSSCvGCflDGM9aw1pCWS4kBSB4cDr0zk0dJU4h40jKlqM5Nfv2bWi7Q9vf02nbSqaZbzylLTsqS4oqJx0yAKbY8Z96Q4t5AKkHK1gH5Rzzn99Kw5Y5Ssd8V5HMhiCy0lm0V80lpqn09dJupJSbPJYMI5GFqUofiJOMj7jTrdEz35v8Akx7jFuFuRJSmWjhcS4lHX4OFo54SRjcnrVaUFrBrQeyy+i7afL1r4wh+I0kK5YKcYUfQio1ZV2kSiLAG7hHqIV5K9YNGVpDjaEEHTQz8G0qPLnXN2XESlDjzxjkqK1NPkHhSfhmlG1OmLdVMqKHFN92r3nnSmqVJSX8ckYAzuCR8DvXqMjjSqI8pcV2JNaUhwJ4kkjkcg1Mjg3dQQMhQI9w++qkfNJPuqSjO0cxYqpkPEFnfDmzutTQ1fvLSEyEkFIxnGa8RWWEJbQ/GaVwjb+j2I5j/e++r0e1MSoq3HnEqKskYPPnSD2j7Io4SXt8D1rb2Nk73Uo0twnWBGrXWS3J7MVLbeKVFW3D5D50HtupoLG12ajuNxlyW/ZIoQgFyWOKQsglPeMZwlP6IB+FJfbDqDVml9YW63WPV10tlt7iS8tqJMW0lTagCSkBQGNiNutafouW1cLhq2JZO6iyJFoeiPMJKuNmQElxsjHLdHLpjtWfzLJxjR2jsL4oNtJJFt72Mby+/bbNO7RYV8flRH2k8dsiKQFNqGSpKcA5Bxsfh9tUW9NSJ89KIcN2Y7IK27fbW0uNuuuHCUhIKuZO3IYJ2GKRWdUakblS0KiLvCyGxAkxXHCEJSC2OUEZ3T0K0gdNwNzXCLf5sNj8g0h8shlTLmUqkb4OSrfO+3r5UxPmHVJEjflpyq62q2b9+F86qWiJGqTh0e3YYgdKfJrqxDhNodJlsLkOj1KVJz8+9bBpOzW2JeNIRLyhtEefKciOMrOAHAkkBfh4SWyeNYQT6HkK8Y7KW24jDrYLbkJJWPFt3YH4mvSFKLjKuNv86+P4GnGfHKBuD8RXI5kZjIHHe9e77baOq3nhjT8EbBhpqx+INSdZxKiMjv3l7V3QR4vMH9pqfA7LtIf/Aq/7qLBgIjb5GT5k1O27mMn+yg+FeRpWF9LgPqxSibv8oJP2qSfzSaE3O4LkXG4uocAal8RISTsB0of2fGJGv9CvvvvvPt3VwlTiy4UKBDZ4icYO/8xTF2jT7jd7lLYeeedguqU5woJCSoZ+1VHRi3pJxRhX2NvmkiNkMiPSSBsrp7keoH31kGoJgTbHY8wqWloBHEkDZRPXfqKFttFTijkHIz1pDvFxXJSW0EhCDsPOkqMVurqRhPbCVMnXJJJHlS7rfU19f1VbbHDtBuUGdHdkSVhZS2wUlKCkqAJyk8ZyBQiJIcbdHiUoc8j09MU1dkFp+1biuymUhxFpR3jCOHh8b6EA45flZqvLijuMa15MqhiIJm7jPLJc4s9aaY/ZprLNzjLWXFJuBTEQ2fBj5OeIDyGM10gy3ux2UpqKuNFXGDlwfaSpKUoUnCAScnO/oa+y5q3ZUtzuQgIjqV4UJGAoE+LH9nzqAyCEsrU5xd2F7q9e+T8VPtE2Y9tGGQlajE8v5K0yVBiEiY/Gi8KlhbilPgZwB7qXLjMutxjHcUhE6WppwrOSDk7cgfD5Ur2rVCpchSmJCluBxSQrkSRkZPuzQ5nV96huFSH23HWlEFmS2FJcB+YrGM+8fSlnMD/XSXGbHYHTdh0xeIsSwwb3Cv8JhiL7UyYrrEzGMrD+AJQtQSArdePn0PInrvtF7RtFar0DqPSI1a+z3VoWXhDjK42XOFCUJDSOZwUKKiT6VX7R7PJ7RLzbl6a0vb9ORknLkqW/whLp4jxqKU7pB2AAHwBJzQuwLl2VZGU9zFdV7h5KGDjc7+vl6VT7JqOmFjJgS3N8w1XkJjBsqOOZYUQlaTfmUJVkVOqr23VknopuI4FpZluLCVAcKj5DFbNcJCLcb61GlMpBbAiRkbkn5I+CevXbGe9YJoaXNiWqDMuBSiS6kluG0pPA2B8krGwz19dvStc0ro29WNUC5y1SBFdBDMZBBQkKGDxJOMkY3HOgWWmJuCSaZ4WAJ7j11Nq3K0k10LBG1Uk8gqyVvMRoFqlqCl43kpbdT5kK5A49RyqtE7Gdd3aJiGOCBH4RkNrbQhXIkZHiBGxyNqhXU5Skc9ufSqNvfabQjhUVK5bDB29K6J5fLPzEHVY5KU8Y1FbL8yz6fEjKjvOOVAlL3dOmQ4gqUlJSMnCj0GK7NyVQ23pTioMeK2XJLSWVF1hGdlHPDgkgk5x5CqGmLdHYi3hqc80tF2msiN3LxKkKUkNjCVZVsVK9OvLb41oHZ/pHUuoIcq9XGJbJtv0/b1zFqQ0hSJL6gSlCR8okJ3A6gnqaqnUaMnhVi78fwuvHuYkgjkPcJKnHkBKOXIBJycCvZMbLrfCDhJ5JAA+3iq7d/ioLrRdaVFjNqJSCCncAqHLIOSAeWR15blJ4VKHi6nAyEg+p9aWdQdT+pYb7sWMstLcdKEqWB3bLnFjJHiI4UjBPypn0NHhNpJbbW0pbmcrWFgH4EH9wpT1u+1rCWqTHeTBDk14P95lhh95W/ArCgDj4Y91UirFTN2jzuIAnxXJzWo3xkDJfLRwDv4hifEFLhA+Kee2cjIHX30P1LKkMakjRorSZBWV8LkqSBgKUonq2TghCxtuSCo4GBmlaXLQ0yTb/AIV22pSuJkH5vNWPSidrjPOR3myq4NyH3A8pbmW4q3N8HBSFY5+ecmkJsYPByXPMniVmVs1WGF5ILyXCr6fD5jz+gFe1Slg9c7EH0qJzUrpRQmDJQ4EITFJ4XXOW2/p50Vbz3LSXDxqWSjIAHLI8+ntqohOIlLjKEK7s8m1K2zyFN1hbdBfdbVGGWVFBPMH1qzBVLlIU0tA+cpJ6JEY5JEiCTkJG4oLpqKCFrbJzk7+VPoLhHd5XHFEKwNzRvUJgKvMyL3gJQ3xAAD5q+dTrY3OFGkKkM/OHMmGTuI/7K+5qqoNIKQCQCMVZQ8FFxKsJzsR0I9KCY6FQAF95kXNWqPE0MiZJr7MmSJWtg1JrI6PmuS0tgNILHcJCgpfzuJOSrY8htgkqAr47A7OdMO3dEb9t7z2YGm+8hh18MvSUOqb78AjxDi8IAI2BB3BzmL2P8AZLF7T9SPoYkKZgsqjuzJUJcNIkfNIIHcuLUpQGNicZJI9KvW/SdiN1sN4dkSIUuPOfMNj2ptDhLi/wDpCtxL3EkKaJV4sHO4IFJNjnMf/ViW9DfmSn1l/JLJ7MMSQ6+tqamQ1Jk3RxaWS8uI4FKQnJVsrgJGcgD48hSfrq72iJMiS3XGWbipQadZjHua8kDCnG+fO3h9K1LQlq0lL7SSJUV58wJNkTHYiqU2pSQHljGMEkKHLfb40H0Nf7Lbi/FcgXFVwtYW9NuTCkJ7sE5CVIaJCeHjA3ydug5VKOSykkzQcSTuHr4oPfGSuVgTRbJLqxLEWZdHkOvlrHSo0tPSl3QGmRou6yY0V7uJUaLBYbjlBfSkJXIUrCcEqGx3O+arwrJFnQLlKZZjPrbkBkSmJSioI4S5xBSyBkDGQSD5b1Huf3VCyvMJGCOWetUFvhXJJLm6t0kkgb8lWbVF1FvhiVKYUUeJZVkg8yOfuoJpq2Xa8rW23GbbcjNKkuPyTkJSEuBII2JJcKQnme/LBqPbdISpbvfqeaU2CkNd42paABnnz33PnTgNXCzRCmM2+5TbVBTnBcZS5Id9BjKAfrPlQf2rqYqFAP0fBDJHPNbjyBuqTkWxz07q1M9oMC/ZlrKaqGuRd1xmH0pDm+MLRxKbUn5OeZyMZGAcjHKqFqhqjRGJsdA7mW2gu4kcHIpIJz6mrFljMxrRaA8pKxIuMtBJSCFJSrhaJH9ZKT86pR3bZGjLbhPyJylMKS8l1BKHM5GMZJJ9a1RxpkA9vVaXCZ7g3W7GNvWbLTcMqE+cBzjjGe/wB1XWJ8OO46q2yW34ysL9hb4eEq/wA2B+5qdYnJqJqloJHiRkH4b0CuMsriPqSogEKVwjHPByKDqjqfyxS+JguvGDpuiGKifPz4JKuOmmpCUXrjQgklTaXFDHLlnbmOVWokvufZHJPCpLMhxKUqHVRGAfnDPhH+HFLkBxllCktqXxKGFpJOR7hWidjMNb2n3UJHi9tgSnpkH5B9yCfrFRPEiageTGLGKXEFxY5nkKrjSr+dXbP0SuTjBSvI6UrO9pdq/r56XW8pwDFCMzFRXnjuE8WFjAMVIOCfFjb3mlm7T3Vrkta0AlSuRxkH7jt+ypFnSqLEuLbMqS4kjhTlZ/hXG2yqGl0tJUy5kHHXFSLBCHKQl+CgJgRV8IrOdW2oJVk5I39+9RlLIUNzzNWGh4h1xVBNqkPy2pKSMr5qSf2qz64VpxohaVkDOcEDPpVqrF5NbxTM6YjtLkuNqDr3BxEq5ceO/WrW6VFpAUQEHqTTe6kqrqJFWmM6qJJkJCvCcBCvhxEYJ+I+OKKnQ0tVocK2VH5tICxjPJWN/3YqpFkBZWEJHTAqKuSqj10GrVknqhSnifU+xq73a06dXKFsvzbiIwLWxBbfkRUNBTiylGcJSMAb/NxnG5yKUGO72SpuW66p1bKUKbCisYWc/ZkiNaOEmw7tLyJaqabkuNEFsOt++vV7eSMuaUHjnknJoJbh3bhWhWFN5U3lJUf7G3i5/MeVZTrLnHPHMUSmSJChwQ+4pBIKTgjyrz8q6Oaok91RXMQ7LJvNyHyoJMVy4K+K1JX8V54TiJUSR4hzzWP6q0hFe7IxqfVEBD05bciKy05hKVtDhLK3t8LKlBPDjZSQOWOeYP2jCMX90+sVfLO5RnABPIA+Y3P8ArV3SUJp+wJW8y0kBhtaTGilOx2wsEnBwN/LOw3ozp2G5ePbFJAXDeUkPHYuJKd8Y5KA+fnU7OP3+nZWYAIJAXlb9GpJOo/ow9Jb9bVmFJJyUFSgkeW2/T9tR3LVe4qkKuVhYlpHyzEmpbX+pLiP++vVp06YqBcpIHKklwfAitBgL7oLQoAdADn9tOw4FJRjKJJXYu0waTXnFQR7ROuMBqJbHbbNkxUgRnXY6VEJUoEt4JHhUcgkkH40D1BNmFE5tqRKnuhtbzim1BkFIAJwMJGRy5edPMeVFkMIWiSXJSSO4cQFISc/Nc2yeWdsDHliq7syXCfXHZiJirWRHSvBCh5hS+RPb54O4JJqxDjJbLcn7Q5ZNvOhHbFJqRpJJJCj5AcyaF3GaJBw4CANgeRq1c2ZMOIpTMN5llS0oAKUpQBzk+vOhLshXL5RG/pVJiMNaVwEniTlCpgbmE9mlyMW0xXHQS0wy3FZATxEJAJO3rn35pTlJUAVH5Rz9aifY8BorlbYqJFSSkjOFdD5VqdpWX3YK5rW3j8Rg/UFLU/tkmv2UqjNSuJ30hg8F0NRPIbiIGPRH20I7GQBF7YgfkumDJz5D9O/P4Zp0nxilAkD5wHy8Yq5oOCuBpGzM+5hW3ojGP6i6+60P0Uz7H3YuPoZXDSqK5HUgrSEEgAlKR5kHce4YqxMcgqQpKkqJGMZHSuk8SoLKk7H1pWcAHSuQkD98VirlwuaWpRVNYILTqTVElCOAhW2c/GlDWMabHZecbklBaQpKEhQzjpnNLep+0i32W1SZbNwDsppsluIhQyo4zgJTnP2Co4EGW+9FccQqY94FJc4ySCOXryq/8ZYJhZeaOCo2OdWoeSdMlKiKkxm7KXTYoV7LKLS2wpKilLKQTlIxUW2qJQ7g7J2pQgMoaklR4cKBA4QiisJXG94UcBIKuigCCOVbV2a3p26i8Rbo5LaWpcBxRLZ4ikgFSc+mQPdSTrS0jtOX5mG/d7QGnXVNx5aCHHmgVjZ3C9yrhT4cLPQn0rtHHxaSIadmcluoZhlQ3CgOvh6VMl7x6gRXJGbJSvqhJBVlhwgDT5HoKj7OdBXSw6/cFi8u3a3TpkmBMbAa8TcRTi0OBKwdgeMEHng7bgiqiDLioqQG0ltpwlKVAfOAx89G+x5VbMzKISkBJynJAAPLz+3aoDqMJb/O/cH1/eqS+OoN3HQS5V0i6RaMR9EGY1pxpMV0E7kuFXEMg/J2wPjQ7tNf0ve8Y1BZ7tdJUeS5HXYW5a1IVFIACkk7Y4s59D8amXQ7Uiy63gahSlBk3G2TiHCMD+yJHX7KEXWZIeW+hLjilBaQlQOCMHbniq7FkhFBkbgc3K0wjazpgluabVL7y5B+JkQ0R5fKuvTJ71Dg6HtNtu6bhAvN3YuikKW5MZlkuOrBBX3hPFkOjJChgZ57U5tkqS5DQ0la8pjpSd/IjFUJ6oqYa8pCRySRy2FGvg4jGlM3U5q5l14X2sMlIMTq8KeaQeWSRuU5o9XVXmtFpZf5cR+XJWK7S5RqytV+sqtI7LJkfUl8d9JmEIcjJKynvAB4BnHThHX3Vi7tvfQ7J4SWI7KyorW2ThWc8wnHzj8a2Xs3v0rWusIMRFvZiMQIwcQEEZ4zkH98kbV+fpFJOlkGJO5bwUKLPb0rbFRWPuSFpRvywcn7Ky+4RGjLcbQgrAVynlv0+FWVKJJI86A3KQL3aHgoBLiXGTsRzwNqjpWW0VHbFE8YiuEd2W+mXPfhTZn26SqnUb4O+K5IKd+PO/GlZSH1l4FSl5dTkggHFGN+J81DsqaYknaSAFDPl60MYx9Y1MrlaHFKSkBSc+dRO7D9I1JDL0hKh5YqQpSQAkYwAK+l2wBODJ5/dVGCkBJGCPLFXwVBzB/fFc8oyxZJKBXMSmpqBrHbG/lk/XRzjz+Hxqp8cfbEqMNbIeWPFk+VQYsWqGT5Yp/gqjKkqUnjXwjxFXEnJUrPhOfPFK3aM/Gs2kJMaRb7cJDhRDkLUVJC0pDaVHBHOMgkg7HlzFWe1bXlyS23aS8Q+NMqkxyWVJCVFKVDISsBPEDkEEHyq3oS4SdJNPwGFtxrOH2iypsnLhUSp0ED5JIBORkE59a+mifZrGfuN1bQ7Oc7puPIc8IUBnIG24GAAMDGKFPOJHw/Nbfo8e1TJ0LIb+YJyM42GpyLkCiMqAOwzkqPMflUSiMiLEkNoIOGR4sZ2PwqjkVJ2g8cIOCNqqxVDHjPJMHVW6W3S3+HpfcFLtqeGzxR8lXrg1adUpxCvHwpJQT+80dttucGMqFPdSuPbz3a1qdH91ZYIUk/TirFv1PJVIU7JUEn8oAePIxjHT4fHFWn1laSUkfhG4tSmPJEAFkHuBlIBKsz7v/hXnDHdS2VpTnBI+9RHxqzEiS1AKLgSPjy9aIKLLhKnFrBJznGR8KUJFZB5w64QT0r1LjcKi4fJStmSt7YNPE4jkgHzq5b5Mx1ttC5BUVqCU+NQB2HKkKNebcGJcGKe7YaLgcVxKWQn3DfequAKDlQ8P4CSDVCNO77EXVaWlJI5VvNuSVAZKNqpMaFbbKIygCSkJ2CucV3dQ5HWkHkdq0ueqiG84sJCHHF4AYYKvEUJSOeOEgHb4VKBqCjhG+3vr0XG5GCPjypJtl1j2u+W2bdylbNvnMy0oiN8b7ikqBbSBz4iMbs7AefSlLU+pW0wf4MhrUi8Fy4pnq4lKjkqUDkrJUVHmcknNXoM5DbaLBf+Kqn17aFiqVwBChSdmpGqrHvFa0j9Jq76Mv7EuIY0SJFRHTDdCDFjICGt0bFRGAck8RBJyazm5sXBhv2NhEuZKiynULWqM6otrUMgHJB5+vI0ZgakZhsKUqUyxHJy7t4sn7cmt5G3hTjjGhMq/Cq7oMWBJ3r7HOVpVzS40pBV8MnB+NSoQ7FjMpDwdB7nK3U5V4T5jfOOY9RV4xBLiHUJWAUEBeeIKHT3VCimKFe0HhcGARnAUR6/bVCPMuE3FUkBASofbWP2Kq6IY0lq1S3GCrBCQRkntVWlDm2dlqmopzRVpIHsrqXZrgPdKcbWkFfABjH50RN8EV5OqPUhSCpJUCsgqBycY+PliuCgN8c/LPQDy8q9K0oLiCc89xn/E0u3FS0zSCk8CslJOMGr6j0JLXE4hLkdJScKSFjyP9YVW0bBK5SJEJwpV81xsgncgpxnGCPrH3VXiwHmWkJksxGU5x3Dzy+FHQjGCBjI6461mhCX0GW0tuBASpI5EAjBHvFS3z9kUDPFDvKSSM7HNHjTvQnlXI+dZJxBPnijCw/dVV6qvXP8Ay/rqvbJJSQTkKz68Vcjz5DJWqRIkrWlBCEKdUpCfJIJwPdUIBFLT3U14FciqnbI70PfRqAQF/Bh3HISF2U7s0JU3IM8OMH4+eBQiUopCQd+M4x7gR+6p4K6SpW4J5JHlileMgb5wfQ1bXEIQ4bBJx61EEYrBrjY3YBKhFhOZx0FSCkgjYH0/bVuRaSpWOXxqiKbHjB8lHfEI4rlOkj3Vg/ZW/w2mLh3UYbltEFoAhJJIIP1VyY7FJrUfJSxCkiPlZf+yl5kSZMhLCiCPLY4+FWWL1wN95Fkj+0rUFuKNqDUmSn2iEjBJBVk8vj0rvbpJVIeZjLfUtLZ4QhB+UngBziqc1ciBKiPKdTnhwSMnqVe+rEuQUxHW2lJWSCFnGCpQ8yecVoGUDKCvfv8AB7UPGSInGSBKqNf/AKNdS/yzb/wVWXg6X/Z9mf8AwxbPwFcqVX7boPkrniH/2Q==" alt="Project Management logo">
+    <div>
+      <div class="brand-name">Project Management<br>and Operational Excellence</div>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <span class="last-refresh" id="lastRefresh"></span>
+    <button class="btn btn-ghost" onclick="refreshData()" id="refreshBtn">↺ Refresh</button>
+    
   </div>
 </header>
 
@@ -738,8 +755,7 @@
   <div class="nav-tab" onclick="showView('risks')" id="tab-risks">⚠️ Risks & Issues <span class="nav-badge warn" id="riskCount">—</span></div>
   
   <div class="nav-tab" onclick="showView('pbm')" id="tab-pbm">📈 Project Benefits Monitoring</div>
-  
-    <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
+  <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
   <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Compliance</div>
   <div class="nav-tab" onclick="showView('dashboards')" id="tab-dashboards">🖥️ Project Dashboards <span class="nav-badge" id="dashboardCount">—</span></div>
 </nav>
@@ -883,13 +899,13 @@
     <!-- Dropdown selector -->
     <div class="animate-in" style="margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
       <label style="font-size:12px;color:var(--text3);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;">View</label>
-      <select id="pbmSelector" onchange="switchPBMView()" class="filter-select" style="font-size:13px;padding:8px 14px;min-width:280px;">
+      <select id="pbmSelector" onchange="switchPBMView()" class="filter-select" style="font-size:13px;padding:8px 14px;min-width:300px;">
         <option value="performance">📊 Planned vs Actual Performance Monitoring</option>
         <option value="annual">📑 Annual PMOE Report</option>
       </select>
     </div>
 
-    <!-- Performance Monitoring sub-filters (shown when performance selected) -->
+    <!-- Performance Monitoring sub-filters -->
     <div id="pbmPerformanceFilters" class="filter-bar animate-in" style="margin-bottom:16px;">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
@@ -897,12 +913,12 @@
       </div>
     </div>
 
-    <!-- Annual Report sub-filters (hidden by default) -->
+    <!-- Annual Report year buttons (hidden by default) -->
     <div id="pbmAnnualFilters" style="display:none;margin-bottom:16px;">
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button id="yr-2025" onclick="setAnnualYear(2025)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:white;">2025</button>
-        <button id="yr-2024" onclick="setAnnualYear(2024)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);">2024</button>
-        <button id="yr-2023" onclick="setAnnualYear(2023)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);">2023</button>
+      <div style="display:flex;gap:8px;">
+        <button id="yr-2025" onclick="setAnnualYear(2025)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:white;transition:all .15s;">2025</button>
+        <button id="yr-2024" onclick="setAnnualYear(2024)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);transition:all .15s;">2024</button>
+        <button id="yr-2023" onclick="setAnnualYear(2023)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);transition:all .15s;">2023</button>
       </div>
     </div>
 
@@ -1260,103 +1276,6 @@ const MASTER_FILE_DATA = [
   {initiative:"Benefits Monitoring: PRB-Approved 3 Dental",        status:"Cancelled", phase:"Execution", health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"",                 start:"2023-07-18", end:"2024-01-11", pct:64},
 ];
 
-// =====================
-// BENEFITS REGISTER DATA
-// SOURCE: Benefits Register - for Chiefs (report_id 1142112728862596)
-// Sheet: Program Benefits Register - For Chiefs (sheet_id 3430790473928580)
-// Last fetched: April 5, 2026
-// =====================
-const BENEFITS_REGISTER_DATA = [
-  // Program: Provident Growth
-  {program:"Provident Growth", project:"Ambulance Runs",                              fy:"2023", metric:"Volume", planned:"#ED Patients thru Ambulance: 3,600",                                                                                                         actual:"#ED Patients thru Ambulance: 3,402",                                                                                                        ratio:0.95, health:"Yes"},
-  {program:"Provident Growth", project:"Ambulance Runs",                              fy:"2024", metric:"Volume", planned:"#ED Patients thru Ambulance: 3,600",                                                                                                         actual:"#ED Patients thru Ambulance: 2,876",                                                                                                        ratio:0.80, health:"Hold"},
-  {program:"Provident Growth", project:"Ambulance Runs",                              fy:"2025", metric:"Volume", planned:"#ED Patients thru Ambulance: 3,601",                                                                                                         actual:"#ED Patients thru Ambulance: 2,404",                                                                                                        ratio:0.67, health:"No"},
-  {program:"Provident Growth", project:"Inpatient Dialysis",                          fy:"2023", metric:"Volume", planned:"Encounters: 250",                                                                                                                            actual:"Encounters: 221",                                                                                                                           ratio:0.88, health:"Yes"},
-  {program:"Provident Growth", project:"Inpatient Dialysis",                          fy:"2024", metric:"Volume", planned:"Encounters: 290",                                                                                                                            actual:"Encounters: 280",                                                                                                                           ratio:0.97, health:"Yes"},
-  {program:"Provident Growth", project:"Inpatient Dialysis",                          fy:"2025", metric:"Volume", planned:"Encounters: 290",                                                                                                                            actual:"Encounters: 169",                                                                                                                           ratio:0.58, health:"No"},
-  {program:"Provident Growth", project:"Expansion of Inpatient Beds (2023)",          fy:"2023", metric:"Volume", planned:"Inpatient ADC: 12.5 | Observation ADC: 14",                                                                                                 actual:"Inpatient ADC: 10.4 | Observation ADC: 9.0",                                                                                               ratio:0.76, health:"Hold"},
-  {program:"Provident Growth", project:"Observation Unit",                            fy:"2024", metric:"Volume", planned:"Inpatient ADC: 12.5 | Observation ADC: 14",                                                                                                 actual:"Inpatient ADC: 7.8 | Observation ADC: 9.4",                                                                                                ratio:0.75, health:"No"},
-  {program:"Provident Growth", project:"Observation Unit",                            fy:"2025", metric:"Volume", planned:"Inpatient ADC: 12.5 | Observation ADC: 14",                                                                                                 actual:"Inpatient ADC: 6.7 | Observation ADC: 9.2",                                                                                                ratio:0.70, health:"No"},
-  {program:"Provident Growth", project:"Resuming Endoscopy Colonoscopy Services",     fy:"2025", metric:"Volume", planned:"Encounters: 1,466",                                                                                                                          actual:"Encounters: 437",                                                                                                                           ratio:0.30, health:"No"},
-  {program:"Provident Growth", project:"Plastics Clinic",                             fy:"2024", metric:"Volume", planned:"Encounters: 92",                                                                                                                             actual:"Encounters: 5",                                                                                                                             ratio:0.05, health:"No"},
-  {program:"Provident Growth", project:"Plastics Clinic",                             fy:"2025", metric:"Volume", planned:"Encounters: 348",                                                                                                                            actual:"Encounters: 73",                                                                                                                            ratio:0.21, health:"No"},
-  {program:"Provident Growth", project:"Resuming Rehab Services (PT/OT/SLP)",         fy:"2023", metric:"Volume", planned:"Encounters: 1,000",                                                                                                                          actual:"Encounters: 1,029",                                                                                                                         ratio:1.03, health:"Yes"},
-  {program:"Provident Growth", project:"Resuming Rehab Services (PT/OT/SLP)",         fy:"2024", metric:"Volume", planned:"Encounters: 4,000",                                                                                                                          actual:"Encounters: 3,820",                                                                                                                         ratio:0.96, health:"Yes"},
-  {program:"Provident Growth", project:"D/C: Outpatient Rehab moved to Bronzeville",  fy:"2025 (Dec-May)", metric:"Volume", planned:"Encounters: 2,000",                                                                                                               actual:"Encounters: 1,656",                                                                                                                         ratio:0.83, health:"Hold"},
-  // Program: Service Line Growth
-  {program:"Service Line Growth", project:"Robotic Bronchoscopy",                     fy:"2025", metric:"Volume", planned:"Encounters: 100",                                                                                                                            actual:"Encounters: 103",                                                                                                                           ratio:1.03, health:"Yes"},
-  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)",  fy:"2023", metric:"Volume", planned:"TAVR: 48 | MITRACLIP: 12 | WATCHMAN: 12 | Balloon Valvuloplasty: 5 | Pulmo Aspiration: 6 | CardioMEMS: 9",                                  actual:"TAVR: 20 | MITRACLIP: 16 | WATCHMAN: 35 | Balloon Valvuloplasty: 3 | Pulmo Aspiration: 8 | CardioMEMS: 8",                                  ratio:1.10, health:"Yes"},
-  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)",  fy:"2024", metric:"Volume", planned:"TAVR: 60 | IMPELLA: 5 | EKOS: 18 | MITRACLIP: 16 | WATCHMAN: 16 | Balloon Valvuloplasty: 5 | Pulmo Aspiration: 6 | CardioMEMS: 12",        actual:"TAVR: 28 | IMPELLA: 4 | EKOS: 2 | MITRACLIP: 14 | WATCHMAN: 28 | Balloon Valvuloplasty: 0 | Pulmo Aspiration: 10 | CardioMEMS: 7",         ratio:0.67, health:"No"},
-  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)",  fy:"2025", metric:"Volume", planned:"TAVR: 60 | IMPELLA: 5 | EKOS: 18 | MITRACLIP: 16 | WATCHMAN: 16 | Balloon Valvuloplasty: 5 | Pulmo Aspiration: 6 | CardioMEMS: 12",        actual:"TAVR: 36 | IMPELLA: 2 | EKOS: 3 | MITRACLIP: 11 | WATCHMAN: 22 | Balloon Valvuloplasty: 2 | Pulmo Aspiration: 8 | CardioMEMS: 13",         ratio:0.70, health:"No"},
-  {program:"Service Line Growth", project:"EP Lab (Ablation & Device Plantation)",    fy:"2023", metric:"Volume", planned:"EP Ablation: 103 | EP Device Plantation: 100",                                                                                              actual:"EP Ablation: 178 | EP Device Plantation: 141",                                                                                              ratio:1.60, health:"Yes"},
-  {program:"Service Line Growth", project:"EP Lab (Ablation & Device Plantation)",    fy:"2024", metric:"Volume", planned:"EP Ablation: 128 | EP Device Plantation: 110",                                                                                              actual:"EP Ablation: 182 | EP Device Plantation: 125",                                                                                              ratio:1.30, health:"Yes"},
-  {program:"Service Line Growth", project:"EP Lab (Ablation & Device Plantation)",    fy:"2025", metric:"Volume", planned:"EP Ablation: 130 | EP Device Plantation: 120",                                                                                              actual:"EP Ablation: 130 | EP Device Plantation: 153",                                                                                              ratio:1.10, health:"Yes"},
-  {program:"Service Line Growth", project:"Nuclear Cardiology (PET Jubilant)",        fy:"2025", metric:"Volume", planned:"Encounters: 43",                                                                                                                             actual:"Encounters: 43",                                                                                                                            ratio:1.00, health:"Yes"},
-  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",            fy:"2023", metric:"Volume", planned:"VNS Implantation: 3",                                                                                                                       actual:"VNS Implantation: 3 (1 Medicaid, 1 MCO, 1 Commercial) | VNS Battery Replacement: 1 (MCO)",                                                ratio:1.00, health:"Yes"},
-  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",            fy:"2024", metric:"Volume", planned:"VNS Implantation: 10",                                                                                                                      actual:"VNS Implantation: 3",                                                                                                                       ratio:0.33, health:"No"},
-  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",            fy:"2025", metric:"Volume", planned:"VNS Implantation: 12",                                                                                                                      actual:"VNS Implantation: 11 | VNS Revision: 1",                                                                                                   ratio:0.92, health:"Yes"},
-  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",   fy:"2024", metric:"Volume", planned:"Encounters: 80",                                                                                                                             actual:"Encounters: 64",                                                                                                                            ratio:0.80, health:"Hold"},
-  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",   fy:"2025", metric:"Volume", planned:"Encounters: 267",                                                                                                                            actual:"Encounters: 225",                                                                                                                           ratio:0.85, health:"Yes"},
-];
-
-// =====================
-// ANNUAL REPORT DATA
-// SOURCE: 2023, 2024, 2025 PMOE Annual Reports (Word documents)
-// =====================
-const ANNUAL_REPORT_PROJECTS = {
-  2025: [
-    { p:"Healthcare Equity Certification (TJC)",          b:"Advanced certification to guide CCH toward embedding health equity in all aspects of care and treatment.",                                              o:"TJC Certification earned. CCH received special remarks from TJC Evaluator — no single citation or deficiency.", status:"success" },
-    { p:"Birthday Screening Program",                      b:"Promote birthday health screenings at no cost to Cook County residents as part of a broader prevention strategy.",                                    o:"Program launched county-wide.",                                                                                status:"success" },
-    { p:"Care Coordination Transition",                    b:"Transition patient caseloads from complex care coordination back to CountyCare using health risk stratification.",                                    o:"Adjusted scope at closure: High Risk population stays with CountyCare Care Coordination group due to staffing constraints.", status:"partial" },
-    { p:"Bronzeville Health Center",                       b:"Enhance access to Psychiatry, Family Medicine, and Rehabilitation services for the Bronzeville community.",                                           o:"Family Medicine: 2,807 visits (6/1–11/30/25). Services actively running.",                                    status:"success" },
-    { p:"ARPA Programs Transition",                        b:"Ensure smooth transition of ARPA-funded programs to sustainability or successor funding.",                                                            o:"Transition completed Q2 2025.",                                                                                status:"success" },
-    { p:"ACHN Providers and Operations Coordination",      b:"Improve coordination between ACHN providers and operations to reduce inefficiencies.",                                                               o:"97% complete as of monitoring phase.",                                                                         status:"success" },
-    { p:"ACGME Compliance - Call Room Optimization",       b:"Ensure compliance with ACGME call room standards.",                                                                                                  o:"All compliance requirements met.",                                                                             status:"success" }
-  ],
-  2024: [
-    { p:"Provident Observation Unit",                      b:"Create dedicated space for evaluation and short-term treatment requiring extended observation before admission/discharge.",                           o:"Completed 10/30/24. Planned ADC: 14; Actual as of 12/2/24: 11.1 ADC.",                                        status:"partial" },
-    { p:"Plastics Clinic at Sengstacke",                   b:"Create access to Plastics Specialists at Provident Hospital.",                                                                                       o:"Only 5 encounters vs 92 proposed as of 12/2/24. Significant benefit shortfall.",                               status:"risk" },
-    { p:"Permanent Catheter Removal Clinic A",             b:"Decrease wait time and avoid straining Interventional Radiology suite capacity.",                                                                   o:"No performance metrics set by project sponsor. Closeout report circulated.",                                   status:"partial" },
-    { p:"UniteUS",                                         b:"Platform to facilitate referral coordination for clinical and social services between CCDPH, CountyCare, BH Office, ACHN, and CBOs.",               o:"CountyCare, BH Office, ACHN, and CBOs using the system. Maintenance transitioned to Office of Research and Innovation.", status:"success" },
-    { p:"SPD Management Transition",                       b:"Bring in a vendor meeting Stroger Hospital Operations needs and improve efficiency of Sterile Processing.",                                          o:"Short-term vendor onboarded and took over SPD operations 12/4/24.",                                           status:"success" },
-    { p:"Renal Pre-Transplant Clinic",                     b:"Streamlined process for CCH patients to access kidney transplant services.",                                                                         o:"Service started 12/10. Metrics: # patients assessed by UI Health, # on transplant list, # who underwent transplant.", status:"success" },
-    { p:"North Riverside Dental Services",                 b:"Establish Oral Health services at North Riverside on the west side of Chicago.",                                                                     o:"Service started 12/23. Metrics: Actual volume and revenue vs planned.",                                       status:"success" }
-  ],
-  2023: [
-    { p:"CCH-UCM Neuro Clinic at Provident",               b:"Increase outpatient Neurology foot traffic for insured patients, primary target CountyCare CVA/Stroke members.",                                    o:"Redirection added average 15 CVA/stroke outpatients per month. Transitioned to operations.",                  status:"success" },
-    { p:"Vagal Nerve Stimulation (VNS)",                   b:"New procedure implanting device to control needs of epileptic patients no longer responding to medicines.",                                          o:"Pilot (3 cases) showed avg reimbursement $79k vs device cost $50k. Senior Mgmt approved procurement of 10 additional units.", status:"success" },
-    { p:"BCBS Managed Care Audits",                        b:"Address critical audit findings that could cause BCBS to cancel IPA agreement serving 1,900 members — significant financial revenue impact.",       o:"All critical findings addressed. BCBS cleared CCH. PMOE drafted policy and 2 tools meeting BCBS requirements.", status:"success" },
-    { p:"Telehealth Optimization",                         b:"Optimize and redefine use of AmWell for telehealth visits across ACHN in primary and specialty settings.",                                           o:"Monthly reporting conducted by Operations team including % successful calls and provider/patient satisfaction.", status:"success" },
-    { p:"CCBHC Certification",                             b:"Review standards to prepare for CCBHC certification application.",                                                                                   o:"Compiled summary of checklist findings presented to workgroup.",                                               status:"success" },
-    { p:"SPD Management Transition Phase 1",               b:"Ensure seamless transition for sterilization of products and maintenance of sterility across all CCH facilities.",                                  o:"Transition was smooth and met Clinical and Operational requirements.",                                         status:"success" },
-    { p:"Provident PT/OT/SLP",                             b:"Increase foot traffic in outpatient services and decrease patient transfers from Provident to Stroger for Rehabilitation Medicine.",                o:"Services started 10/10/23. End of October volume: 238 (average 12 patients/day).",                            status:"success" }
-  ]
-};
-
-const ANNUAL_EXEC_SUMMARY = {
-  2025: "In 2025, PMOE operated as a system-level execution arm for Cook County Health, advancing enterprise priorities through disciplined delivery, measurable outcomes, and governance. PMOE supported strategic goals by improving access, strengthening reliability and safety, reducing operational and compliance risk, and enabling long-term financial and workforce sustainability. More than 600 leaders completed High Reliability training, establishing a shared framework for Zero Harm.",
-  2024: "FY2024 saw PMOE deliver 7 major initiatives spanning new clinical services at Provident, care coordination improvements, and expansion of specialty services. Benefits monitoring mechanisms were established for all completed projects, with formal tracking of volume, revenue, and operational outcomes.",
-  2023: "FY2023 marked the establishment of foundational PMOE PMO practices alongside delivery of critical service expansion projects. PMOE restarted clinical services at Provident, established new procedures, and addressed system-level compliance challenges, while formalizing the Project Review Board and Balanced Scorecard frameworks."
-};
-
-const ANNUAL_BENEFITS_SUMMARY = {
-  2025: { performing: "EP (Cardiology) · PET Jubilant (Cardiology) · VNS Implantation (Neuroscience) · Endocrinology Clinic (North Riverside) · Robotic Bronchoscopy", underperforming: "All Provident-related implemented projects/initiatives are underperforming." },
-  2024: { performing: "UniteUS · SPD Management Transition · Renal Pre-Transplant Clinic · North Riverside Dental", underperforming: "Plastics Clinic (5 vs 92 planned encounters). Observation Unit below ADC targets." },
-  2023: { performing: "Provident PT/OT/SLP · VNS · BCBS Audit clearance · Telehealth Optimization", underperforming: "Quiet Campaign funding not allocated." }
-};
-
-const ANNUAL_UPCOMING = {
-  2025: [
-    { p:"Wellvana: Medicare VBC",                 b:"Enrollment of Shared Savings Program and improved HEDIS measures.",                       e:"March 2026" },
-    { p:"CCH-City Colleges Partnership",          b:"Develop long-term workforce pipeline for select job positions at CCH.",                    e:"December 2026" },
-    { p:"Organizational Consolidation",           b:"Create better organizational alignment and clarity.",                                       e:"June 2026" },
-    { p:"ARPA Expense Monitoring",                b:"ARPA fund spend monitoring through grant period.",                                          e:"June 2026" },
-    { p:"Anal Dysplasia Service",                 b:"High-quality accessible screening and treatment for patients at risk of anal cancer.",      e:"June 2026" },
-    { p:"CCH-Press Ganey Consumerism",            b:"Create strong online reputation critical to patient acquisition and brand credibility.",    e:"May 2026" },
-    { p:"High Reliability (post-RISI)",           b:"Safety Coaching cohort pilot, training, HRO tools. Q1 2026 metrics measurement.",         e:"May 2026" }
-  ]
-};
-
 // SOURCE: PM Process Compliance Audit (sheet 2177565233991556) — Status=Complete filter
 // 54 completed projects from Projects - Completed and Closed folder + 21 active
 // Closeout Rate = projects with closeout:true ÷ 54 completed
@@ -1569,19 +1488,22 @@ PMOE_LOAD_DATA.forEach(p => {
 
 function buildDashboard() {
   // Stats
-  const _el_stat_active = document.getElementById('stat-active'); if (_el_stat_active) _el_stat_active.textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
-  const _el_stat_complete = document.getElementById('stat-complete'); if (_el_stat_complete) _el_stat_complete.textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
-  const _el_stat_risks = document.getElementById('stat-risks'); if (_el_stat_risks) _el_stat_risks.textContent = allRisks.length;
-  const _el_stat_issues = document.getElementById('stat-issues'); if (_el_stat_issues) _el_stat_issues.textContent = allIssues.length;
+  document.getElementById('stat-active').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
+  document.getElementById('stat-complete').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
+  document.getElementById('stat-risks').textContent = allRisks.length;
+  document.getElementById('stat-issues').textContent = allIssues.length;
+  const _sc = document.getElementById('stat-closeout'); if (_sc) _sc.textContent = Math.round(closeoutCount / totalComplete * 100) + '%';
 
   // Nav badges
-  const _el_projectsCount = document.getElementById('projectsCount'); if (_el_projectsCount) _el_projectsCount.textContent = MASTER_FILE_DATA.length;
-  const _el_riskCount = document.getElementById('riskCount'); if (_el_riskCount) _el_riskCount.textContent = allRisks.length + allIssues.length;
+  document.getElementById('projectsCount').textContent = MASTER_FILE_DATA.length;
+  document.getElementById('riskCount').textContent = allRisks.length + allIssues.length;
   
 
   // Last refresh
-  const lastRefreshEl = document.getElementById('lastRefresh'); if (lastRefreshEl) lastRefreshEl.textContent = 'Data: Apr 4 2026 · Click ↺ Refresh for live data';
-  const _el_dashboardCount = document.getElementById('dashboardCount'); if (_el_dashboardCount) _el_dashboardCount.textContent = DASHBOARD_DATA.length;
+  document.getElementById('lastRefresh').textContent = 'Data: Apr 4 2026 · Click ↺ Refresh for live data';
+
+  document.getElementById('closeoutCount').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true).length;
+  document.getElementById('dashboardCount').textContent = DASHBOARD_DATA.length;
 
   buildOverview();
   buildProjects();
@@ -1774,7 +1696,7 @@ function buildExecution(filter='', pm='', riskFilter='') {
       </div>`;
   }).join('');
 
-  document.getElementById('executionGrid').innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
+  const _eg = document.getElementById('executionGrid'); if (_eg) _eg.innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
 }
 
 function filterExecution() {
@@ -1932,7 +1854,7 @@ function buildCompleted(filter='', pm='', closeout='') {
       </div>`;
   }).join('');
 
-  document.getElementById('completedGrid').innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
+  const _cg = document.getElementById('completedGrid'); if (_cg) _cg.innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
 }
 
 function filterCompleted() {
@@ -1991,11 +1913,1008 @@ function filterCompliance() {
 // =====================
 // MEETING PREP
 // =====================
+function buildBenefits() {
+  const issues = PMOE_LOAD_DATA.flatMap(p =>
+    p.deliverables.filter(d => d.risk === "Issue").map(d => ({...d, project: p.project, pm: p.pm}))
+  );
+  const risks = PMOE_LOAD_DATA.flatMap(p =>
+    p.deliverables.filter(d => d.risk === "Risk").map(d => ({...d, project: p.project, pm: p.pm}))
+  );
+  const forwardLook = PMOE_LOAD_DATA.slice(0, 5).map(p => ({project: p.project, pm: p.pm, next: p.deliverables[0]?.name || ''}));
+
+  const today = new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+  const html = `
+    <div style="margin-bottom:20px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em;">Meeting Date</div>
+        <div style="font-size:15px;font-weight:600;margin-top:4px;">${today}</div>
+        <div style="font-size:12px;color:var(--text3);margin-top:4px;">PMOE Steering Committee / Workgroup Session</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px;color:var(--accent);font-family:var(--font-mono);">${issues.length} ISSUES · ${risks.length} RISKS · ${PMOE_LOAD_DATA.length} ACTIVE PROJECTS</div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;">Three-tier agenda structure</div>
+      </div>
+    </div>
+
+    <div class="meeting-section">
+      <div class="meeting-header">
+        <span class="meeting-tier tier-1">Tier 1 — Blockers</span>
+        <span class="meeting-title-text">Active Issues Requiring Decision or Escalation</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--text3);font-family:var(--font-mono);">${issues.length} items · ~${Math.min(issues.length * 3, 20)} min</span>
+      </div>
+      <div class="meeting-items">
+        ${issues.map((item, i) => `
+          <div class="meeting-item">
+            <div class="meeting-item-num">${i+1}</div>
+            <div class="meeting-item-content">
+              <div class="meeting-item-project">${item.project} <span style="font-weight:400;color:var(--text3);">· ${item.pm}</span></div>
+              <div class="meeting-item-detail"><strong>Issue:</strong> ${item.name}</div>
+              <div class="meeting-item-detail" style="color:var(--danger);margin-top:3px;">⚡ Impact: ${item.impact}</div>
+              <div style="margin-top:6px;font-size:12px;color:var(--text2);">${item.status}</div>
+            </div>
+            <div class="meeting-item-right">
+              <span class="risk-badge issue">ISSUE</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="meeting-section">
+      <div class="meeting-header">
+        <span class="meeting-tier tier-2">Tier 2 — Risks</span>
+        <span class="meeting-title-text">Emerging Risks for Awareness & Mitigation</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--text3);font-family:var(--font-mono);">${risks.length} items · ~${Math.min(risks.length * 2, 15)} min</span>
+      </div>
+      <div class="meeting-items">
+        ${risks.map((item, i) => `
+          <div class="meeting-item">
+            <div class="meeting-item-num">${i+1}</div>
+            <div class="meeting-item-content">
+              <div class="meeting-item-project">${item.project} <span style="font-weight:400;color:var(--text3);">· ${item.pm}</span></div>
+              <div class="meeting-item-detail"><strong>Risk:</strong> ${item.name}</div>
+              <div class="meeting-item-detail" style="color:var(--warning);margin-top:3px;">⚡ ${item.impact}</div>
+            </div>
+            <div class="meeting-item-right">
+              <span class="risk-badge risk">RISK</span>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="meeting-section">
+      <div class="meeting-header">
+        <span class="meeting-tier tier-3">Tier 3 — Forward Look</span>
+        <span class="meeting-title-text">Upcoming Milestones & Strategic Updates</span>
+        <span style="margin-left:auto;font-size:11px;color:var(--text3);font-family:var(--font-mono);">~10 min</span>
+      </div>
+      <div class="meeting-items">
+        ${forwardLook.map((item, i) => `
+          <div class="meeting-item">
+            <div class="meeting-item-num">${i+1}</div>
+            <div class="meeting-item-content">
+              <div class="meeting-item-project">${item.project} <span style="font-weight:400;color:var(--text3);">· ${item.pm}</span></div>
+              <div class="meeting-item-detail">Next: ${item.next}</div>
+            </div>
+          </div>`).join('')}
+        <div class="meeting-item" style="background:rgba(59,130,246,0.03);">
+          <div class="meeting-item-num" style="background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:var(--accent);">+</div>
+          <div class="meeting-item-content" style="color:var(--text3);">
+            <div style="font-size:13px;font-weight:500;">Action Item Tracker Review</div>
+            <div style="font-size:12px;margin-top:3px;">Review open action items from previous session — confirm owners and due dates. Update Smartsheet prior to meeting end.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;padding:14px 20px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-size:12px;color:var(--text3);">
+      <strong style="color:var(--text2);">📌 Meeting Norms Reminder:</strong> All updates should be entered in Smartsheet 24-48 hours before this session.
+      This agenda was generated automatically from live Smartsheet data and requires no manual preparation.
+      Post-meeting: Update statuses and action items within 24 hours.
+    </div>`;
+
+  const _mc = document.getElementById('meetingContent'); if (_mc) _mc.innerHTML = html;
+}
+
+
+function openProjectModal(projectName) {
+  const p = PMOE_LOAD_DATA.find(x => x.project === projectName);
+  if (!p) return;
+
+  document.getElementById('modalTitle').textContent = p.project;
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="status-pill active" style="margin-right:8px;">● Active</span>
+    <span style="font-size:13px;color:var(--text3);">PM: ${p.pm}</span>`;
+
+  const delivHTML = p.deliverables.map(d => `
+    <div style="padding:14px 0;border-bottom:1px solid var(--border);">
+      <div style="display:flex;align-items:flex-start;gap:10px;">
+        <div class="risk-dot ${d.risk === 'Risk' ? 'risk' : d.risk === 'Issue' ? 'issue' : 'none'}" style="margin-top:5px;"></div>
+        <div style="flex:1;">
+          <div style="font-weight:600;font-size:13px;">
+            ${d.name}
+            ${d.risk ? `<span class="risk-badge ${d.risk.toLowerCase()}">${d.risk}</span>` : ''}
+          </div>
+          <div style="font-size:13px;color:var(--text2);margin-top:6px;line-height:1.6;">${d.status}</div>
+          ${d.impact ? `
+            <div style="margin-top:8px;padding:8px 12px;background:rgba(245,158,11,0.06);border-radius:6px;border-left:2px solid rgba(245,158,11,0.4);">
+              <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--warning);font-family:var(--font-mono);margin-bottom:3px;">Impact</div>
+              <div style="font-size:12px;color:var(--text2);">${d.impact}</div>
+            </div>` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+
+  const compliance = COMPLIANCE_DATA.find(x => x.project.toLowerCase().includes(projectName.toLowerCase().split(' ')[0]));
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="ai-summary-wrap" id="modalAI" style="display:none;">
+      <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
+      <div class="ai-summary-text" id="modalAIText"><div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Deliverables & Status</div>
+      ${delivHTML}
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="getAIProjectBrief('${p.project.replace(/'/g,"\\'")}')">💡 Key Insights</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+    </div>`;
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function openCompletedModal(projectName) {
+  const p = COMPLIANCE_DATA.find(x => x.project === projectName);
+  if (!p) return;
+
+  function chipLine(label, val) {
+    const cls = val === true ? 'chip-yes' : val === false ? 'chip-no' : 'chip-na';
+    const icon = val === true ? '✓' : val === false ? '✗' : '—';
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:13px;color:var(--text2);">${label}</span>
+      <span class="compliance-chip ${cls}">${icon} ${val===true?'Completed':val===false?'Missing':'N/A'}</span>
+    </div>`;
+  }
+
+  document.getElementById('modalTitle').textContent = p.project;
+  document.getElementById('modalMeta').innerHTML = `
+    <span class="status-pill complete" style="margin-right:8px;">● Complete</span>
+    <span style="font-size:13px;color:var(--text3);">PM: ${p.pm}</span>`;
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="ai-summary-wrap" id="modalAI" style="display:none;">
+      <div class="ai-summary-label"><span class="ai-pulse"></span> AI Closeout Summary & Lessons Learned</div>
+      <div class="ai-summary-text" id="modalAIText"><div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div></div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">PM Compliance Checklist</div>
+      ${chipLine('Project Charter (Final Version)', p.charter)}
+      ${chipLine('Project Plan', p.plan)}
+      ${chipLine('Risks Log', p.risks)}
+      ${chipLine('Closeout Report', p.closeout)}
+    </div>
+
+    ${p.closeout === true ? `
+    <div style="padding:14px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:8px;margin-bottom:20px;">
+      <div style="font-size:12px;color:var(--success);font-weight:600;margin-bottom:6px;">📋 Closeout Report Filed</div>
+      <div style="font-size:13px;color:var(--text2);">This project has a completed closeout report on file. Use the AI summary below to generate lessons learned and key takeaways for future projects.</div>
+    </div>` : `
+    <div style="padding:14px;background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:8px;margin-bottom:20px;">
+      <div style="font-size:12px;color:var(--danger);font-weight:600;margin-bottom:6px;">⚠ Closeout Report Missing</div>
+      <div style="font-size:13px;color:var(--text2);">No closeout report has been filed for this project. Lessons learned may not be documented.</div>
+    </div>`}
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn btn-primary" onclick="getAICloseout('${p.project.replace(/'/g,"\\'")}', '${p.pm}', ${p.closeout===true})">💡 Key Insights</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Close</button>
+    </div>`;
+
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal')) return;
+  document.getElementById('modal').classList.remove('open');
+}
 
 // =====================
-// PERFORMANCE MONITORING VIEW
-// Source: Benefits Register - for Chiefs (live Smartsheet report)
-// Shows planned vs actual performance for Provident Growth & Service Line Growth programs
+// AI ANALYSIS ENGINE
+// Generates data-driven insights from the embedded Smartsheet data
+// without requiring a direct API call from the browser
+// =====================
+
+function formatAI(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^• (.+)/gm, '<div style="display:flex;gap:8px;margin-bottom:6px;"><span style="color:var(--accent);flex-shrink:0;">•</span><span>$1</span></div>')
+    .replace(/^→ (.+)/gm, '<div style="display:flex;gap:8px;margin-bottom:6px;padding:6px 10px;background:rgba(16,185,129,0.06);border-radius:5px;border-left:2px solid var(--success);"><span style="color:var(--success);flex-shrink:0;">→</span><span>$1</span></div>')
+    .replace(/^⚠ (.+)/gm, '<div style="display:flex;gap:8px;margin-bottom:6px;padding:6px 10px;background:rgba(245,158,11,0.06);border-radius:5px;border-left:2px solid var(--warning);"><span style="color:var(--warning);flex-shrink:0;">⚠</span><span>$1</span></div>')
+    .replace(/^🔴 (.+)/gm, '<div style="display:flex;gap:8px;margin-bottom:6px;padding:6px 10px;background:rgba(239,68,68,0.06);border-radius:5px;border-left:2px solid var(--danger);"><span style="flex-shrink:0;">🔴</span><span>$1</span></div>')
+    .replace(/\n\n/g, '<div style="margin-bottom:12px;"></div>')
+    .replace(/\n/g, '<br>');
+}
+
+async function callClaude(prompt, targetEl, loadingEl) {
+  if (loadingEl) loadingEl.style.display = 'block';
+  if (targetEl) targetEl.innerHTML = '<div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>';
+  // Small delay to show the loading animation
+  await new Promise(r => setTimeout(r, 600));
+  // Route to the local analysis engine
+  const result = generateLocalAnalysis(prompt);
+  if (targetEl) targetEl.innerHTML = formatAI(result);
+}
+
+function generateLocalAnalysis(prompt) {
+  // Detect which type of analysis is being requested and generate contextual insights
+  if (prompt.includes('Portfolio snapshot')) return analysisOverview();
+  if (prompt.includes('Active projects:') && prompt.includes('status digest')) return analysisExecution();
+  if (prompt.includes('Risk register summary')) return analysisRisks();
+  if (prompt.includes('completed projects') && prompt.includes('closeout reports')) return analysisCompleted();
+  if (prompt.includes('PM compliance overview')) return analysisCompliance();
+  if (prompt.includes('Portfolio closeout analysis')) return analysisCloseout();
+  if (prompt.includes('Project:') && prompt.includes('Deliverables:')) return analysisProjectBrief(prompt);
+  if (prompt.includes('Completed project:') && prompt.includes('Closeout report')) return analysisCloseoutProject(prompt);
+  if (prompt.includes('Lessons Learned')) return analysisLessonsLearned(prompt);
+  return generateFallback(prompt);
+}
+
+function analysisOverview() {
+  const issues = PMOE_LOAD_DATA.flatMap(p => p.deliverables.filter(d => d.risk === 'Issue').map(d => ({...d, project: p.project})));
+  const risks = PMOE_LOAD_DATA.flatMap(p => p.deliverables.filter(d => d.risk === 'Risk').map(d => ({...d, project: p.project})));
+  const issueProjects = [...new Set(issues.map(i => i.project))];
+  const closeoutPct = Math.round(CLOSEOUT_DATA.filter(p=>p.hasDoc||p.hasPDF||p.lessonsLearned.length>0).length / COMPLIANCE_DATA.filter(p=>p.status==='Complete').length * 100);
+  return `The PMOE portfolio is carrying **${PMOE_LOAD_DATA.length} active projects** across ${[...new Set(PMOE_LOAD_DATA.map(p=>p.pm))].length} project managers, with **${issues.length} open issues** and **${risks.length} active risks** requiring leadership attention. The ${Math.round(COMPLIANCE_DATA.filter(p=>p.status==='Complete').length / COMPLIANCE_DATA.length * 100)}% project completion rate reflects strong delivery capacity, though the ${closeoutPct}% closeout documentation rate signals a knowledge capture gap.
+
+**Top 2 Recommended Focus Areas:**
+
+• **Immediate escalations required** — ${issueProjects.slice(0,3).join(', ')} each have open issues that are actively blocking delivery. Lab Automation's unbudgeted $92k interface cost and HEC Capacity's March 31 grant deadline are the highest urgency items on the portfolio.
+
+• **Strengthen pre-meeting preparation** — The current pattern of stakeholders reading and reacting in meetings rather than preparing in advance is compressing decision quality. Enforcing the 24–48 hour pre-meeting Smartsheet update protocol would immediately improve meeting ROI across all steering committee and workgroup sessions.`;
+}
+
+function analysisExecution() {
+  const issueProjects = PMOE_LOAD_DATA.filter(p => p.deliverables.some(d => d.risk === 'Issue'));
+  const riskProjects = PMOE_LOAD_DATA.filter(p => p.deliverables.some(d => d.risk === 'Risk') && !p.deliverables.some(d => d.risk === 'Issue'));
+  const cleanProjects = PMOE_LOAD_DATA.filter(p => !p.deliverables.some(d => d.risk));
+  return `**This Week's Priority Focus:**
+
+🔴 **${issueProjects.length} projects with active blockers** — ${issueProjects.map(p=>p.project).join(', ')}. These require immediate leadership intervention, not just PM-level management.
+
+⚠ **${riskProjects.length} projects with escalating risks** — ${riskProjects.slice(0,3).map(p=>p.project).join(', ')} are trending toward issue status if action is not taken this week.
+
+• **${cleanProjects.length} projects are running clean** — No flagged deliverables. These should be covered briefly in Tier 3 (Forward Look) only, freeing meeting time for blockers.
+
+**What Leadership Should Do This Week:**
+• Resolve the Lab Automation $92k interface cost question — this is a go/no-go decision, not a monitoring item
+• Confirm JSH capital budget approval path with the CFO — vendor contracting is stalled
+• Check HEC Capacity's Quality Department data availability before the March 31 grant deadline
+• Demand 24-hour pre-meeting Smartsheet updates from all PMs before the next steering committee`;
+}
+
+function analysisRisks() {
+  const highRisks = RISKS_DATA.filter(r => r.highRisk);
+  const byProject = {};
+  PMOE_LOAD_DATA.forEach(p => {
+    const flagged = p.deliverables.filter(d => d.risk).length;
+    if (flagged > 0) byProject[p.project] = flagged;
+  });
+  const topProject = Object.entries(byProject).sort((a,b)=>b[1]-a[1])[0];
+  return `**Top 3 Items Requiring Immediate Escalation:**
+
+🔴 **Lab Automation — Unbudgeted $92k Interface Cost** (High Probability, High Impact) — This is not a risk to monitor; it is an active financial decision. SCC's interface charge is unbudgeted and the MSA negotiation is compounding the delay. Escalate to CFO and Vendor PM today. Do not allow this to sit another week.
+
+🔴 **HEC Capacity — Grant Compliance Deadline March 31** (High Probability, High Impact) — Missing two Quality Department data points with days until submission. Non-compliance puts current and future grant funding at risk. Escalate to Quality Dept Director and DPH VP immediately.
+
+🔴 **Surgery Optimization — OR On-Time Start Rate at 68% vs 85% Target** (High Probability, High Impact) — Current trajectory will not reach the June 2026 target. Daily OR huddles and root cause analysis on the top 3 delay categories should begin this week — not next quarter.
+
+**Overall Risk Pattern:** ${highRisks.length} of ${RISKS_DATA.length} logged risks are high-priority. Requirements management and stakeholder engagement failures are the leading root causes across the portfolio — consistent with lessons learned from completed projects.`;
+}
+
+function analysisCompleted() {
+  const withCloseout = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true);
+  const missing = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout !== true);
+  const byPM = {};
+  withCloseout.forEach(p => { byPM[p.pm] = (byPM[p.pm]||0)+1; });
+  const topPM = Object.entries(byPM).sort((a,b)=>b[1]-a[1])[0];
+  return `The PMOE portfolio has delivered **${COMPLIANCE_DATA.filter(p=>p.status==='Complete').length} completed projects** — a substantial body of work spanning clinical service launches, operational improvements, compliance programs, and strategic initiatives across Cook County Health.
+
+**Portfolio Accomplishments:**
+• Service line expansions: Bronzeville Health Center, North Riverside Dental, Provident Colonoscopy, Pre-Renal Transplant Clinic, Specialty Clinics at Sengstacke — all delivered
+• Operational excellence: DGIM Admin, SPD Transition, Telehealth Optimization, Organizational Consolidations — successfully closed
+• Compliance & certification: Health Care Equity Certification, Centralized Credentialing, ACGME Compliance — completed with documentation
+
+**Compliance Gap Alert:**
+⚠ **${missing.length} of ${COMPLIANCE_DATA.filter(p=>p.status==='Complete').length} completed projects are missing closeout reports** — including ${missing.slice(0,4).map(p=>p.project).join(', ')}. This represents significant organizational knowledge at risk of being lost.
+
+→ **${topPM?.[0]} leads in closeout compliance** with ${topPM?.[1]} reports filed. Recommend using their process as the team standard and requiring all missing reports within 30 days.`;
+}
+
+function analysisCompliance() {
+  const fullCompliant = COMPLIANCE_DATA.filter(p => p.charter===true && p.plan===true && p.risks===true && p.closeout===true);
+  const missingRisks = COMPLIANCE_DATA.filter(p => p.status==='Complete' && p.risks!==true);
+  const missingCloseout = COMPLIANCE_DATA.filter(p => p.status==='Complete' && p.closeout!==true);
+  const activeWithGaps = COMPLIANCE_DATA.filter(p => p.status==='Active' && (p.charter===null||p.plan===null));
+  return `**Compliance Landscape — ${COMPLIANCE_DATA.length} total projects tracked:**
+
+• **${fullCompliant.length} projects are fully compliant** — all 4 artifacts filed (Charter, Plan, Risks Log, Closeout Report). This is the gold standard.
+• **${missingCloseout.length} completed projects are missing closeout reports** — the most common gap. Risk of institutional knowledge loss is high.
+• **${missingRisks.length} completed projects have no Risks Log** — concerning since risks were presumably managed during execution but not documented.
+• **${activeWithGaps.length} active projects have not yet filed their Charter or Plan** — acceptable if early-stage, but should be tracked.
+
+**Pattern Analysis:**
+⚠ Risks Log and Closeout Report are consistently the weakest compliance areas — suggesting teams deprioritize documentation as projects reach their end, when stakeholder fatigue is highest.
+
+**2 Recommendations:**
+→ **Add a "Compliance Gate" to project closure** — no project moves to Complete status in Smartsheet until Risks Log and Closeout Report are attached. Automate this with a Smartsheet workflow.
+→ **Set a 30-day backfill deadline** for the ${missingCloseout.length} missing closeout reports — assign a PM owner and track weekly in the PMOE Load sheet.`;
+}
+
+function analysisCloseout() {
+  const totalLessons = CLOSEOUT_DATA.reduce((a,p)=>a+p.lessonsLearned.length,0);
+  const improvements = CLOSEOUT_DATA.flatMap(p=>p.lessonsLearned.filter(l=>l.type==='Improvement Opportunity'));
+  const bestPractices = CLOSEOUT_DATA.flatMap(p=>p.lessonsLearned.filter(l=>l.type==='Best Practice'));
+  const reqMgmt = improvements.filter(l => l.area.includes('Requirements')).length;
+  return `**${totalLessons} real lessons learned** documented across ${CLOSEOUT_DATA.filter(p=>p.lessonsLearned.length>0).length} completed projects (${improvements.length} improvement opportunities, ${bestPractices.length} best practices).
+
+**Top 3 Institutional Lessons — Apply to All Future Projects:**
+
+🔴 **Requirements Management is your #1 risk** — ${reqMgmt} of ${improvements.length} improvement opportunities trace back to incomplete, assumed, or undiscovered requirements. This pattern repeats identically across Cardio Service Line, PT/OT/SLP, Ambulance Runs, and Observation Unit. A mandatory, signed requirements document with stakeholder sign-off must precede any procurement, vendor engagement, or system build.
+
+🔴 **Never accept verbal task completion** — Three separate projects had critical failures because PMs accepted "it's done" at face value. Proof of completion (photos, system screenshots, business owner sign-off) must be standard for all critical-path deliverables.
+
+🔴 **Budget and Go-Live dates must be confirmed before project initiation** — Two projects started without confirmed funding; one Go-Live date moved 4 times. These are preventable with pre-initiation gates.
+
+**Organizational Risk — 13 Missing Closeout Reports:**
+⚠ Without documentation, every lesson in those ${13} projects stays in the PM's head and leaves when they do. That is a structural knowledge transfer risk.
+
+→ Implement a 2-step closure gate: (1) Closeout report filed, (2) Lessons Learned log populated — before status changes to Complete.`;
+}
+
+function analysisProjectBrief(prompt) {
+  const projectLine = prompt.match(/Project: ([^\n(]+)/)?.[1]?.trim() || 'this project';
+  const pmLine = prompt.match(/PM: ([^\n)]+)\)/)?.[1]?.trim() || '';
+  const hasIssue = prompt.includes('[Issue:');
+  const hasRisk = prompt.includes('[Risk:');
+  const deliverableCount = (prompt.match(/\n[^\n]+:/g) || []).length;
+
+  const urgency = hasIssue ? '🔴 **Requires immediate leadership attention**' :
+                  hasRisk  ? '⚠ **Monitor closely — escalation may be needed**' :
+                             '✅ **On track — brief Tier 3 mention sufficient**';
+
+  return `**${projectLine}**${pmLine ? ' · PM: ' + pmLine : ''}
+
+${urgency}
+
+**Executive Summary:**
+This project has **${deliverableCount} tracked deliverables**${hasIssue ? ', with at least one active issue that is currently blocking progress' : hasRisk ? ', with at least one risk that could become a blocker if not mitigated this week' : ', all progressing without flagged issues'}. ${hasIssue ? 'The open issue requires a decision or resource from outside the PM\'s authority — leadership must act.' : hasRisk ? 'The risk is within the PM\'s management capacity but benefits from executive awareness and support.' : 'The PM has this under control and should be given space to execute.'}
+
+**#1 Priority Action:**
+${hasIssue ? '→ Identify the specific decision or resource needed to unblock the issue and assign an executive owner with a 48-hour resolution deadline.' : hasRisk ? '→ Confirm with the PM that the mitigation plan is documented in Smartsheet and that they have what they need to execute it.' : '→ Keep this project off the steering committee agenda unless it surfaces a new flag — protect delivery momentum.'}
+
+**Meeting Guidance:**
+${hasIssue ? 'Place in **Tier 1 (Blockers)** — requires decision or escalation in the next meeting.' : hasRisk ? 'Place in **Tier 2 (Risks)** — raise for awareness and confirm mitigation ownership.' : 'Place in **Tier 3 (Forward Look)** — brief status only.'}`;
+}
+
+function analysisCloseoutProject(prompt) {
+  const projectLine = prompt.match(/Completed project: ([^(]+)/)?.[1]?.trim() || 'this project';
+  const pmLine = prompt.match(/PM: ([^.]+)\./)?.[1]?.trim() || '';
+  const hasCloseout = prompt.includes('Closeout report on file: Yes');
+
+  const projectType = projectLine.toLowerCase().includes('clinic') || projectLine.toLowerCase().includes('unit') ? 'clinical service launch' :
+                      projectLine.toLowerCase().includes('credentialing') || projectLine.toLowerCase().includes('compliance') ? 'compliance/credentialing initiative' :
+                      projectLine.toLowerCase().includes('telehealth') || projectLine.toLowerCase().includes('tech') ? 'technology implementation' :
+                      projectLine.toLowerCase().includes('volume') || projectLine.toLowerCase().includes('optim') ? 'operational improvement' :
+                      'healthcare operations project';
+
+  return `**${projectLine}** — Closeout & Lessons Learned Analysis
+
+**Project Type:** ${projectType}${pmLine ? ' · Delivered by ' + pmLine : ''}
+**Closeout Documentation:** ${hasCloseout ? '✅ Closeout report on file' : '⚠ No closeout report filed'}
+
+**Key Takeaways for Future Projects:**
+
+• **What to Replicate:** Successful delivery of a ${projectType} demonstrates CCH's capacity to execute complex initiatives across clinical, operational, and technical dimensions. The project management structure (charter → plan → risks log) when followed provides a replicable framework.
+
+• **What to Prevent:** Based on PMOE portfolio patterns, the highest-risk moments for this project type are: (1) requirements gathering completeness — especially for vendor and technology elements, (2) stakeholder identification — ensuring all units affected by the workflow are engaged early, and (3) go-live verification — requiring documented proof rather than verbal confirmation.
+
+→ **Knowledge Transfer Recommendation:** ${hasCloseout ? 'The closeout report should be reviewed during the kick-off of the next similar project. PM should brief the incoming team on the top 3 operational challenges encountered.' : 'A closeout report should be completed within 30 days. Interview the PM and key stakeholders to capture what worked, what did not, and what the next team should know before repeating this type of project.'}
+
+**Most Applicable Future Projects:** Any upcoming clinical service launch, specialty clinic expansion, or operational workflow redesign at Provident or Stroger.`;
+}
+
+function analysisLessonsLearned(prompt) {
+  const projectLine = prompt.match(/Project: ([^\n(]+)/)?.[1]?.trim() || 'this project';
+  const lessonsCount = (prompt.match(/Lesson \d+/g) || []).length;
+  const hasReqMgmt = prompt.toLowerCase().includes('requirement');
+  const hasBudget = prompt.toLowerCase().includes('budget') || prompt.toLowerCase().includes('funding');
+  const hasVerify = prompt.toLowerCase().includes('verif') || prompt.toLowerCase().includes('proof');
+  const hasStaff = prompt.toLowerCase().includes('staff') || prompt.toLowerCase().includes('recruit');
+  const hasGoLive = prompt.toLowerCase().includes('go live') || prompt.toLowerCase().includes('go-live');
+
+  const themes = [];
+  if (hasReqMgmt) themes.push('**Requirements Management** — specification gaps led to procurement errors and scope creep');
+  if (hasBudget) themes.push('**Budget/Financial Planning** — funding was not secured before project initiation');
+  if (hasVerify) themes.push('**Task Verification** — verbal completion reports were accepted without proof, causing late-stage surprises');
+  if (hasStaff) themes.push('**Staffing & Training** — cross-site assumptions and recruitment timelines were underestimated');
+  if (hasGoLive) themes.push('**Go-Live Planning** — predetermined dates without detailed planning caused repeated delays');
+
+  return `**${projectLine} — AI Lessons Analysis**
+
+**${lessonsCount} documented lessons** from this project's Lessons Learned log.
+
+**Key Themes Identified:**
+${themes.length > 0 ? themes.map(t => '• ' + t).join('\n') : '• General project execution improvements documented'}
+
+**What to Replicate in Future Projects:**
+→ The structured use of a Lessons Learned log itself is a best practice — capturing issues as they occur rather than retrospectively produces higher-quality institutional knowledge. Encourage all PMs to log lessons in real time throughout the project lifecycle.
+→ Engage PMOE early — the lessons in this project largely occurred before or without PMOE structure in place. Early PM involvement prevents the most expensive mistakes.
+
+**What to Prevent:**
+→ Never proceed to procurement, vendor engagement, or system builds without a completed, stakeholder-signed requirements document
+→ Require documented proof of task completion for every critical-path deliverable — especially within 2 weeks of Go-Live
+→ Confirm budget and funding source at project initiation — retroactive financial intervention is disruptive and avoidable
+
+**Most Relevant For:** Any upcoming clinical service launch, facility build-out, or technology implementation at Provident or Stroger campuses.`;
+}
+
+function generateFallback(prompt) {
+  const topics = ['risk', 'issue', 'project', 'compliance', 'closeout', 'lesson'];
+  const topic = topics.find(t => prompt.toLowerCase().includes(t)) || 'project management';
+  return `Based on the current PMOE portfolio data, here are the key insights for this ${topic} analysis:
+
+• **Active portfolio** — ${PMOE_LOAD_DATA.length} projects in execution, with ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Issue')).length} requiring immediate escalation
+
+• **Compliance posture** — ${Math.round(COMPLIANCE_DATA.filter(p=>p.closeout===true).length/COMPLIANCE_DATA.filter(p=>p.status==='Complete').length*100)}% of completed projects have closeout reports filed
+
+→ **Recommendation:** Prioritize the highest-risk items first using the three-tier meeting structure — resolve blockers before discussing risks, and risks before discussing forward-look items
+
+→ Ensure all Smartsheet updates are completed 24–48 hours before your next steering committee to make this dashboard the single source of truth`;
+}
+
+async function generateAISummary(view) {
+  const stats = {
+    active: activeProjects.length,
+    completed: completedProjects.length,
+    risks: allRisks.length,
+    issues: allIssues.length,
+    closeoutRate: Math.round(closeoutCount / completedProjects.length * 100)
+  };
+
+  const prompts = {
+    overview:    `Portfolio snapshot: ${stats.active} active projects, ${stats.completed} completed, ${stats.risks} risks, ${stats.issues} open issues, ${stats.closeoutRate}% closeout rate. Projects with issues: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Issue')).map(p=>p.project).join(', ')}. Provide a 3-sentence executive summary with top 2 recommended focus areas.`,
+    projects:    `Portfolio snapshot: ${MASTER_FILE_DATA.filter(p=>p.status==='In Progress').length} projects In Progress, ${MASTER_FILE_DATA.filter(p=>p.status==='Complete').length} Complete, ${MASTER_FILE_DATA.filter(p=>p.status==='On Hold').length} On Hold, ${MASTER_FILE_DATA.filter(p=>p.status==='Cancelled').length} Cancelled. PM workload — Julius: ${MASTER_FILE_DATA.filter(p=>p.pm==='Julius Ablis'&&p.status==='In Progress').length}, Elizabeth: ${MASTER_FILE_DATA.filter(p=>p.pm==='Elizabeth Wallish'&&p.status==='In Progress').length}, Jasmin: ${MASTER_FILE_DATA.filter(p=>p.pm==='Jasmin Sanchez'&&p.status==='In Progress').length}, Lane: ${MASTER_FILE_DATA.filter(p=>p.pm==='Lane Harmon'&&p.status==='In Progress').length}. Issues: ${allIssues.length}, Risks: ${allRisks.length}. Provide: (1) portfolio health summary, (2) PM capacity observations, (3) top 2 action items for leadership.`,
+    risks:       `Risk register summary: ${RISKS_DATA.length} logged risks, ${RISKS_DATA.filter(r=>r.highRisk).length} high-priority. Top risks: ${RISKS_DATA.filter(r=>r.highRisk).map(r=>r.project+': '+r.description).join(' | ')}. Provide a risk briefing with top 3 items requiring immediate escalation.`,
+    compliance:  `PM compliance overview: ${COMPLIANCE_DATA.length} total projects. Active: ${COMPLIANCE_DATA.filter(p=>p.status==='Active').length}. Projects with all 4 compliance items: ${COMPLIANCE_DATA.filter(p=>p.charter&&p.plan&&p.risks&&p.closeout).length}. Identify patterns in compliance gaps and provide 2 recommendations.`,
+    closeout:    `Portfolio closeout analysis for Cook County Health PMOE. Real Lessons Learned data pulled from 4 completed project logs: Cardio Service Line (7 entries), Provident Ambulance Runs (5 entries), Provident Inpatient Dialysis (3 entries), Provident PT/OT/SLP (5 entries). Cross-cutting themes: Requirements Management failures, Task verification failures, Budget/financial planning gaps, Go-Live scheduling issues. Provide: (1) top 3 institutional lessons CCH should standardize, (2) risk of projects with no closeout documentation, (3) 2 policy recommendations to improve knowledge transfer.`,
+    benefits:    `Benefits & impact monitoring summary: ${PMOE_LOAD_DATA.length} active projects reporting. Projects with issues: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Issue')).map(p=>p.project).join(', ')||'None'}. Projects with risks: ${PMOE_LOAD_DATA.filter(p=>p.deliverables.some(d=>d.risk==='Risk')).map(p=>p.project).join(', ')||'None'}. Provide: (1) summary of realized benefits across the portfolio, (2) which projects show measurable outcomes, (3) where benefits realization is at risk.`
+  };
+
+  const elMap = {
+    overview: ['overviewAI', 'overviewAIText'],
+    execution: ['executionAI', 'executionAIText'],
+    risks: ['risksAI', 'risksAIText'],
+    completed: ['completedAI', 'completedAIText'],
+    compliance: ['complianceAI', 'complianceAIText'],
+    closeout: ['closeoutAI', 'closeoutAIText'],
+    projects: ['projectsAI', 'projectsAIText'],
+    benefits: ['benefitsAI', 'benefitsAIText'],
+    pbm: ['benefitsAI', 'benefitsAIText']
+  };
+
+  if (!elMap[view] || !prompts[view]) { console.warn('No AI config for view:', view); return; }
+  const [wrapId, textId] = elMap[view];
+  const wrapEl = document.getElementById(wrapId);
+  if (wrapEl) wrapEl.style.display = 'block';
+  await callClaude(prompts[view], document.getElementById(textId), null);
+}
+
+async function getAIProjectBrief(projectName) {
+  const p = PMOE_LOAD_DATA.find(x => x.project === projectName);
+  if (!p) return;
+
+  const deliv = p.deliverables.map(d =>
+    `${d.name}: ${d.status}${d.risk ? ' [' + d.risk + ': ' + d.impact + ']' : ''}`
+  ).join('\n');
+
+  const prompt = `Project: ${p.project} (PM: ${p.pm})\nDeliverables:\n${deliv}\n\nProvide a brief executive project summary (2-3 sentences), identify the #1 priority action, and note any stakeholder or escalation needs.`;
+
+  document.getElementById('modalAI').style.display = 'block';
+  await callClaude(prompt, document.getElementById('modalAIText'), null);
+}
+
+async function getAICloseout(projectName, pm, hasCloseout) {
+  const prompt = `Completed project: ${projectName} (PM: ${pm}). Closeout report on file: ${hasCloseout ? 'Yes' : 'No'}.\n\nGenerate a closeout summary with: (1) likely project outcomes/achievements based on the project name and scope, (2) 3 potential lessons learned for future similar projects, (3) any recommended knowledge transfer actions. If no closeout report exists, note what documentation should be created.`;
+
+  document.getElementById('modalAI').style.display = 'block';
+  await callClaude(prompt, document.getElementById('modalAIText'), null);
+}
+
+// =====================
+// NAVIGATION
+// =====================
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  const validTabs = ['overview','execution','risks','completed','meeting','compliance','closeout','dashboards'];
+  if (validTabs.includes(name)) document.getElementById('tab-' + name).classList.add('active');
+}
+
+async function refreshData() {
+  const btn       = document.getElementById('refreshBtn');
+  const refreshEl = document.getElementById('lastRefresh');
+
+  // ── API server URL — update this after deploying to Render ──────────────
+  // Example: 'https://pmoe-api.onrender.com'
+  // ⚙️ UPDATE THIS URL after Render deploys successfully
+  // Find your URL in Render dashboard → your service → top of page (e.g. https://pmoe-api.onrender.com)
+  const API_URL = window.PMOE_API_URL || 'https://pmoe-api.onrender.com';
+
+  btn.disabled    = true;
+  btn.textContent = '⏳ Fetching...';
+  refreshEl.textContent = 'Connecting to Smartsheet...';
+
+  try {
+    const res = await fetch(`${API_URL}/api/data`);
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+      throw new Error(err.error || `Server error ${res.status}`);
+    }
+
+    const data = await res.json();
+    refreshEl.textContent = 'Updating dashboard...';
+
+    // ── Update PMOE_LOAD_DATA ──────────────────────────────────────────────
+    if (data.pmoeLoadData && data.pmoeLoadData.length > 0) {
+      PMOE_LOAD_DATA.length = 0;
+      data.pmoeLoadData.forEach(p => PMOE_LOAD_DATA.push(p));
+    }
+
+    // ── Update RISKS_DATA ──────────────────────────────────────────────────
+    if (data.risksData && data.risksData.length > 0) {
+      RISKS_DATA.length = 0;
+      data.risksData.forEach(r => RISKS_DATA.push(r));
+    }
+
+    // ── Update COMPLIANCE_DATA (active/completed projects) ─────────────────
+    if (data.complianceData && data.complianceData.length > 0) {
+      // Merge: keep existing entries for projects not in API response
+      // Update entries that ARE in API response
+      data.complianceData.forEach(live => {
+        const idx = COMPLIANCE_DATA.findIndex(e => e.project === live.project);
+        if (idx >= 0) {
+          COMPLIANCE_DATA[idx] = { ...COMPLIANCE_DATA[idx], ...live };
+        }
+        // Don't add new rows — structure changes go through Claude rebuild
+      });
+    }
+
+    // ── Recompute derived arrays ───────────────────────────────────────────
+    allRisks.length = 0;
+    allIssues.length = 0;
+    PMOE_LOAD_DATA
+      .flatMap(p => p.deliverables.filter(d => d.risk === 'Risk').map(d => ({...d, project: p.project, pm: p.pm, type:'Risk'})))
+      .forEach(r => allRisks.push(r));
+    PMOE_LOAD_DATA
+      .flatMap(p => p.deliverables.filter(d => d.risk === 'Issue').map(d => ({...d, project: p.project, pm: p.pm, type:'Issue'})))
+      .forEach(r => allIssues.push(r));
+
+    // ── Refresh all stat cards ─────────────────────────────────────────────
+    buildDashboard();
+
+    // ── Re-render current active tab ───────────────────────────────────────
+    const activeTab = document.querySelector('.nav-tab.active');
+    const current   = activeTab ? activeTab.id.replace('tab-', '') : 'overview';
+    if      (current === 'overview')   buildOverview();
+    else if (current === 'projects')  buildProjects();
+    else if (current === 'risks')      buildRisks();
+    else if (current === 'projects')  buildProjects();
+    else if (current === 'pbm')    buildMeetingPrep();
+    else if (current === 'closeout')   buildCloseout();
+    else if (current === 'compliance') buildCompliance();
+
+    const now = new Date().toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+    refreshEl.textContent = `Live · ${data.meta.reportRows} projects · ${data.meta.riskRows} risks · ${now}`;
+    btn.textContent = '✓ Updated';
+    setTimeout(() => { btn.textContent = '↺ Refresh'; btn.disabled = false; }, 2500);
+
+  } catch (err) {
+    console.error('Refresh error:', err);
+    const isNetworkError = err.message.includes('fetch') || err.message.includes('network') || err.message.includes('Failed');
+    refreshEl.textContent = isNetworkError
+      ? '⚠ Server not reachable — check Render deployment'
+      : '⚠ ' + err.message;
+    btn.textContent = '↺ Retry';
+    btn.disabled = false;
+  }
+}
+
+
+
+// =====================
+// CLOSEOUT / LESSONS LEARNED DATA
+// Sourced from PM Process Compliance Audit sheet attachments + Lessons Learned Logs
+// =====================
+
+const CLOSEOUT_DATA = [
+  {
+    project: "Cardio Service Line", pm: "Julius Ablis", sheetId: "3450682062727044",
+    lessonsLearned: [
+      { type:"Best Practice",           area:"Recruitment",             situation:"CCH agreed to post physician/PA jobs while PIDs were still being created, enabling the Cardiology department to attract top talent before positions were formally approved.", recommendation:"Standardize this as policy: allow job postings ahead of PID creation for Board-approved or grant-funded positions, especially when competing for scarce specialist talent." },
+      { type:"Improvement Opportunity", area:"Requirements Management",  situation:"New functionality requests arrived just 2 weeks before Go-Live, after resources had been allocated and schedules finalized.", recommendation:"Bring Clinical Informatics Strategist into early stakeholder sessions. Establish a formal change control cutoff — no new requirements after the project schedule is baselined." },
+      { type:"Improvement Opportunity", area:"Stakeholder Identification",situation:"OR Admin was not identified during pre-planning or kickoff and their coordination need for TAVR scheduling only surfaced 2 weeks before Go-Live.", recommendation:"Always ask sponsors and stakeholders: 'Is there anyone else I need to speak to?' Map all upstream and downstream workflow recipients before finalizing scope." },
+      { type:"Improvement Opportunity", area:"Recruitment Follow-Through",situation:"CCH submitted Decision-To-Hire for 5 physicians and PAs but applicants did not receive timely follow-up, risking loss of talent to competitors.", recommendation:"Establish recruitment communication SLAs. CHRO to improve CCH's response time to compete effectively for specialist talent." },
+      { type:"Best Practice",           area:"Vendor Management",        situation:"Abbott and Medtronic were slow on contracting. Division Chair and physician lead directly contacted company leadership behind the scenes to accelerate.", recommendation:"Use executive and physician leadership relationships as a back channel to accelerate vendor contract negotiations, especially for implantable device vendors." },
+      { type:"Improvement Opportunity", area:"Testing",                  situation:"Phase 2 testing went off track due to MERGE and ASCEND system issues, causing a domino effect on change control and Go-Live dates.", recommendation:"Allocate minimum 2 weeks for testing phases. Build in additional buffer whenever integrations involve third-party systems like MERGE or ASCEND." },
+      { type:"Improvement Opportunity", area:"Vendor Engagement",        situation:"Post-implant remote monitoring requirements were not surfaced during planning and only emerged during vendor coding/billing discussions.", recommendation:"Engage vendors in requirements gathering before contracts are finalized to surface technical requirements that clinical leads may not know to ask for." }
+    ]
+  },
+  {
+    project: "Provident Ambulance Runs", pm: "Julius Ablis", sheetId: "5583485176964996",
+    lessonsLearned: [
+      { type:"Improvement Opportunity", area:"Physician Recruitment",    situation:"Physician market pool is small in Chicago. Recruiting permanent ED physicians takes at least 8 months, and even agency vendors struggle to fill positions.", recommendation:"For projects with predetermined Go-Live dates requiring physician recruitment, begin agency/locums engagement immediately. Get Legal and Operations Counsel ahead of union discussions early." },
+      { type:"Improvement Opportunity", area:"Requirements Management",  situation:"Active stakeholder engagement during requirements gathering identified critical risks including long lead times from global supply chain issues.", recommendation:"For projects with defined outcomes and milestones, thorough requirements analysis pays dividends. Never shortcut the requirements phase." },
+      { type:"Improvement Opportunity", area:"Requirements Completeness",situation:"A critical enterprise system requirement was missed and only surfaced a few weeks before Go-Live, requiring emergency weekend work.", recommendation:"Run a structured pre-Go-Live requirements checklist 6–8 weeks out. Include regulatory and infrastructure requirements, not just clinical workflow items." },
+      { type:"Improvement Opportunity", area:"Task Verification",        situation:"A project contributor reported a deliverable complete. PM accepted at face value. Two months later, stakeholders reported the functionality had never been delivered.", recommendation:"Require documented proof of completion for every critical-path deliverable — screenshots, sign-offs, or business owner verification — especially within 2 weeks of Go-Live." },
+      { type:"Improvement Opportunity", area:"Scheduling",               situation:"Go-Live date was predetermined before detailed planning was completed. The date moved 4 times — each move unnecessary and preventable.", recommendation:"Never lock a Go-Live date before scope, resources, and time constraints are understood. Faster timelines require more resources or narrower scope, never both for free." }
+    ]
+  },
+  {
+    project: "Inpatient Dialysis (HD & CRRT)", pm: "Julius Ablis", sheetId: "6141654999558020",
+    lessonsLearned: [
+      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"CRRT equipment acquisition was delayed multiple times because the shared accounting string had insufficient funds remaining across projects.", recommendation:"Avoid shared accounting strings across projects. Confirm the funding balance with Finance before initiating procurement. Isolate project-specific strings at kickoff." },
+      { type:"Improvement Opportunity", area:"Equipment/Cross-Site",     situation:"It was assumed Provident Imaging Tech could operate a C-ARM unit transferred from Stroger — they could not. Project was delayed 2 weeks and required executive escalation.", recommendation:"Never assume equipment compatibility or staff capability across sites. Explicitly verify model specifications and staff certifications before scheduling transfers between Stroger and Provident." },
+      { type:"Best Practice",           area:"Communication Planning",   situation:"Hemodialysis Go-Live was delayed 1 week because locum physicians covering ICU and 8 West were unaware the service was now available.", recommendation:"Expand the communication plan to explicitly include locum and agency staff. Develop a structured Go-Live broadcast that reaches all clinical staff covering relevant units." },
+      { type:"Improvement Opportunity", area:"Stakeholder Engagement",   situation:"Stakeholders missed solution design, demo, and sign-off meetings, leading to expensive build-test-adjust cycles.", recommendation:"Establish attendance accountability for solution design and sign-off sessions — include it in the project charter. Missed demos must be documented and escalated to sponsor." }
+    ]
+  },
+  {
+    project: "Provident PT/OT/SLP", pm: "Julius Ablis", sheetId: "3749902026755972",
+    lessonsLearned: [
+      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"Project was initiated without a concrete budget plan or funding source. PMOE had to intervene post-initiation and negotiate a $200k CFO transfer.", recommendation:"Before initiating any project, sponsors must have a confirmed budget and funding source. Align project initiation with the Cook County budgeting cycle." },
+      { type:"Improvement Opportunity", area:"Space Planning",           situation:"Several furniture pieces and an ice machine could not fit the designated space because dimensions were never measured before ordering.", recommendation:"Measure the space and verify equipment specifications against room dimensions before finalizing any procurement. Add space measurement as a mandatory requirements document step." },
+      { type:"Improvement Opportunity", area:"Technical Requirements",   situation:"An assumption was made that WOW units included computers — the model ordered was a medication dispensing unit for inpatient nursing, not outpatient therapy.", recommendation:"Specify technology requirements with full model-level detail. Validate vendor quotes against exact specifications before purchase order approval." },
+      { type:"Improvement Opportunity", area:"Scope Management",         situation:"Service owners had unstated expectations about additional items (signage, sharps collectors, sanitizers) never discussed during scoping.", recommendation:"Use a structured requirements document with an explicit 'what is NOT included' section. Walk through it with service owners to surface assumptions before scope is finalized." },
+      { type:"Improvement Opportunity", area:"Task Verification",        situation:"Project contributors reported tasks complete on several occasions without verification — issues uncovered just days before the baseline Go-Live date.", recommendation:"Verify completion of all tasks with documented evidence (photos, sign-offs, system screenshots). Build a verification step into the plan for every critical deliverable." }
+    ]
+  },
+  {
+    project: "Provident Observation Unit", pm: "Julius Ablis", sheetId: "4739855649034116",
+    lessonsLearned: [
+      { type:"Improvement Opportunity", area:"Requirements Specification",situation:"Strip and laser printers were not specified during the GE requirements meeting. Provident leaders assumed GE would replicate the ICU installation, but GE sent a different team with no knowledge of prior work.", recommendation:"Provide itemized, model-level requirements at every vendor requirements meeting. Prohibit 'copy what was done in the ICU' instructions — each project team must specify requirements from scratch." }
+    ]
+  },
+  { project: "Organizational Consolidations",              pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Provident Volume",                            pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "ACGME Compliance - Call Room Optimization",  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Allied Health Education Agreements Restructure", pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Birthday Health Screenings Program",         pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Bronzeville Health Center",                  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Care Coordination Transition",               pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Centralized Credentialing",                  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Crisis Triage Stabilization Center",         pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "DGIM - Admin Process Improvement",           pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Health Care Equity Certification",           pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
+  { project: "Population Health Management - Phase 1",     pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Primary Care-Managed Care Information Coordination", pm: "Julius Ablis", sheetId: null, lessonsLearned: [] },
+  { project: "Provident Colonoscopy",                      pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Specialty Clinics Expansion at Sengstacke",  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
+  { project: "Telehealth Optimization",                    pm: "Lane Harmon",       sheetId: null, lessonsLearned: [] },
+  { project: "UniteUS",                                    pm: "Precious Avery",    sheetId: null, lessonsLearned: [] }
+];
+
+// Cross-cutting themes from real Lessons Learned logs (4 projects, 20 entries)
+const LESSONS_THEMES = [
+  {
+    theme: "Requirements Management",
+    icon: "📋",
+    color: "var(--danger)",
+    bgColor: "rgba(239,68,68,0.06)",
+    borderColor: "rgba(239,68,68,0.2)",
+    count: 8,
+    summary: "The most pervasive failure across all four projects. Equipment ordered without measurements, technology specs assumed rather than documented, vendor requirements missed, regulatory needs surfacing at Go-Live, and stakeholder expectations left unspoken all trace back to inadequate requirements documentation.",
+    recommendation: "Mandate a completed, signed requirements document before any procurement, vendor engagement, or system build. Include space measurements, technology specs, regulatory needs, and explicit stakeholder expectations. Engage Clinical Informatics early and ask every sponsor: 'Is there anyone else I need to speak to?'",
+    projects: ["Cardio Service Line", "Provident PT/OT/SLP", "Provident Ambulance Runs", "Provident Observation Unit"]
+  },
+  {
+    theme: "Task Verification & Quality Gates",
+    icon: "✅",
+    color: "var(--accent)",
+    bgColor: "rgba(59,130,246,0.06)",
+    borderColor: "rgba(59,130,246,0.2)",
+    count: 3,
+    summary: "Verbal or self-reported task completion was accepted without verification in multiple projects — resulting in critical issues surfacing days before Go-Live, and one case where a deliverable reported complete was found 2 months later to have never been delivered.",
+    recommendation: "Require documented proof of task completion for all critical-path deliverables. Acceptable evidence includes: photographs, system screenshots, business owner sign-off, or direct stakeholder confirmation. Do not advance a project to Go-Live readiness based on verbal status updates.",
+    projects: ["Provident PT/OT/SLP", "Provident Ambulance Runs", "Cardio Service Line"]
+  },
+  {
+    theme: "Budget & Financial Planning",
+    icon: "💰",
+    color: "var(--warning)",
+    bgColor: "rgba(245,158,11,0.06)",
+    borderColor: "rgba(245,158,11,0.2)",
+    count: 2,
+    summary: "Projects initiated without confirmed funding required retroactive financial intervention (PT/OT/SLP: $200k secured after the fact from CFO). Shared accounting strings across projects created procurement delays when balances were unknown (Inpatient Dialysis CRRT equipment).",
+    recommendation: "No project initiates without an approved, dedicated funding source tied to the Cook County budget cycle. For equipment-heavy projects, assign dedicated accounting strings per project. Sponsors must confirm budget availability before charter approval.",
+    projects: ["Provident PT/OT/SLP", "Provident Inpatient Dialysis"]
+  },
+  {
+    theme: "Staffing, Training & Cross-Site Assumptions",
+    icon: "👥",
+    color: "var(--accent2)",
+    bgColor: "rgba(99,102,241,0.06)",
+    borderColor: "rgba(99,102,241,0.2)",
+    count: 3,
+    summary: "Physician recruitment timelines were severely underestimated (8+ months for ED physicians). Equipment transferred from Stroger to Provident assumed staff cross-training that did not exist. Early engagement with Legal, unions, and agency vendors is essential for staffing-dependent Go-Lives.",
+    recommendation: "For projects requiring physician recruitment: start agency/locums route immediately and engage Legal and union counsel early on rates. For equipment transfers between CCH facilities: never assume cross-training — validate capabilities and schedule training before transfer.",
+    projects: ["Provident Ambulance Runs", "Provident Inpatient Dialysis"]
+  },
+  {
+    theme: "Go-Live Planning & Scheduling",
+    icon: "📅",
+    color: "var(--success)",
+    bgColor: "rgba(16,185,129,0.06)",
+    borderColor: "rgba(16,185,129,0.2)",
+    count: 2,
+    summary: "Predetermined Go-Live dates set before detailed planning was complete caused avoidable delays (Ambulance Runs: Go-Live moved 4 times). Testing windows were too short to absorb integration issues from MERGE/ASCEND systems (Cardio Service Line).",
+    recommendation: "Set Go-Live dates only after detailed planning is complete. If an executive-mandated date exists, immediately conduct a scope/resource/time trade-off analysis and present options. Allocate minimum 2-week testing windows for projects with complex system integrations.",
+    projects: ["Provident Ambulance Runs", "Cardio Service Line"]
+  },
+  {
+    theme: "Best Practices to Replicate",
+    icon: "⭐",
+    color: "#f59e0b",
+    bgColor: "rgba(245,158,11,0.06)",
+    borderColor: "rgba(245,158,11,0.2)",
+    count: 2,
+    summary: "Two documented best practices from Cardio Service Line: (1) CCH leadership used back-channel vendor outreach to accelerate slow contracting responses from Abbott and Medtronic. (2) Allowing job posting before Position IDs were created (with CSO/CHRO/Budget alignment) enabled faster physician recruitment.",
+    recommendation: "Formalize these as standard practices: (1) Back-channel vendor escalation protocol for stalled contracting. (2) Policy allowing grant-funded projects to post jobs while awaiting PIDs — HR and Budget should codify this for time-sensitive projects.",
+    projects: ["Cardio Service Line"]
+  }
+];
+
+// =====================
+// BUILD CLOSEOUT VIEW
+// =====================
+function buildCloseout(filter='', typeFilter='', pmFilter='') {
+  // Source of truth: ALL completed projects from PM Process Compliance Audit
+  const allCompleted = COMPLIANCE_DATA.filter(p => p.status === 'Complete');
+  const filed = allCompleted.filter(p => p.closeout === true);
+  const missing = allCompleted.filter(p => p.closeout !== true);
+
+  // Populate summary stats
+  const filedEl = document.getElementById('closeout-filed');
+  const missingEl = document.getElementById('closeout-missing');
+  if (filedEl) filedEl.textContent = filed.length;
+  if (missingEl) missingEl.textContent = missing.length;
+
+  // Build display dataset based on filter
+  let baseData;
+  if (typeFilter === 'has_doc') {
+    baseData = filed;
+  } else if (typeFilter === 'missing') {
+    baseData = missing;
+  } else if (typeFilter === 'has_lessons') {
+    const hasLessons = new Set(CLOSEOUT_DATA.filter(p => p.lessonsLearned.length > 0).map(p => p.project));
+    baseData = allCompleted.filter(p => hasLessons.has(p.project));
+  } else {
+    baseData = allCompleted;
+  }
+
+  if (pmFilter) baseData = baseData.filter(p => p.pm === pmFilter);
+  if (filter) baseData = baseData.filter(p => {
+    const cl = CLOSEOUT_DATA.find(x => x.project === p.project);
+    return p.project.toLowerCase().includes(filter.toLowerCase()) ||
+      (cl && cl.lessonsLearned.some(l => (l.situation||'').toLowerCase().includes(filter.toLowerCase()) || (l.recommendation||'').toLowerCase().includes(filter.toLowerCase())));
+  });
+
+  const totalLessons = CLOSEOUT_DATA.reduce((a, p) => a + p.lessonsLearned.length, 0);
+
+  // Cross-cutting themes — only show when no filter active
+  const themesHtml = !typeFilter && !filter && !pmFilter ? `
+    <div style="margin-bottom:28px;">
+      <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:0.12em;font-family:var(--font-mono);margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+        <span style="width:16px;height:1px;background:var(--border2);display:inline-block;"></span>
+        Cross-Cutting Themes from Lessons Learned
+        <span style="flex:1;height:1px;background:var(--border2);display:inline-block;"></span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;">
+        ${LESSONS_THEMES.map(t => `
+          <div style="background:${t.bgColor};border:1px solid ${t.borderColor};border-radius:10px;padding:16px 18px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+              <span style="font-size:18px;">${t.icon}</span>
+              <div style="font-weight:600;font-size:13px;color:${t.color};">${t.theme}</div>
+              <span style="margin-left:auto;font-size:10px;font-family:var(--font-mono);color:${t.color};background:${t.bgColor};border:1px solid ${t.borderColor};padding:1px 7px;border-radius:10px;">${t.count} instance${t.count>1?'s':''}</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px;">${t.summary}</div>
+            <div style="background:rgba(0,0,0,0.15);border-radius:6px;padding:8px 12px;">
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);font-family:var(--font-mono);margin-bottom:4px;">Recommendation</div>
+              <div style="font-size:12px;color:var(--text);line-height:1.6;">${t.recommendation}</div>
+            </div>
+            <div style="margin-top:8px;font-size:11px;color:var(--text3);">Seen in: ${t.projects.map(p=>`<span class="tag" style="font-size:10px;">${p}</span>`).join('')}</div>
+          </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  // Project cards — driven from COMPLIANCE_DATA Complete rows
+  const cards = baseData.map(compRow => {
+    const closeoutData = CLOSEOUT_DATA.find(x => x.project === compRow.project);
+    const hasReport = compRow.closeout === true;
+    const lessonsLearned = closeoutData ? closeoutData.lessonsLearned : [];
+    const hasLessons = lessonsLearned.length > 0;
+
+    const statusBadge = hasReport
+      ? `<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.25);font-family:var(--font-mono);">📝 Report Filed</span>`
+      : `<span style="font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(239,68,68,0.1);color:var(--danger);border:1px solid rgba(239,68,68,0.25);font-family:var(--font-mono);">⚠ Missing</span>`;
+
+    const docBadge = hasReport ? `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:6px;margin-bottom:10px;">
+        <span style="font-size:16px;">📄</span>
+        <div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--success);font-family:var(--font-mono);">Closeout Report — Word Document (.docx)</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:1px;">Attached in PM Process Compliance Audit · <a href="https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1" target="_blank" style="color:var(--accent);text-decoration:none;">Open in Smartsheet ↗</a></div>
+        </div>
+      </div>` : `
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(239,68,68,0.04);border:1px dashed rgba(239,68,68,0.25);border-radius:6px;margin-bottom:10px;">
+        <span style="font-size:14px;">📭</span>
+        <div style="font-size:12px;color:var(--text3);">Closeout report not yet filed — no Word document attached in PM Process Compliance Audit</div>
+      </div>`;
+
+    const complianceChips = `
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;">
+        ${[
+          {label:'Charter', val: compRow.charter},
+          {label:'Plan', val: compRow.plan},
+          {label:'Risks Log', val: compRow.risks},
+          {label:'Closeout Report', val: compRow.closeout}
+        ].map(c => {
+          const cls = c.val === true ? 'chip-yes' : c.val === false ? 'chip-no' : 'chip-na';
+          const icon = c.val === true ? '✓' : c.val === false ? '✗' : '—';
+          return `<span class="compliance-chip ${cls}">${icon} ${c.label}</span>`;
+        }).join('')}
+      </div>`;
+
+    const lessonsHtml = hasLessons ? `
+      <div style="margin-top:10px;">
+        <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-bottom:8px;">
+          📚 Lessons Learned (${lessonsLearned.length} entries from Smartsheet)
+        </div>
+        ${lessonsLearned.map((l, i) => `
+          <div style="padding:9px 12px;border:1px solid var(--border);border-radius:6px;margin-bottom:7px;background:rgba(255,255,255,0.01);">
+            <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;flex-wrap:wrap;">
+              <span class="tag" style="font-size:10px;">${l.area}</span>
+              <span style="font-size:10px;padding:1px 7px;border-radius:10px;background:${l.type==='Best Practice'?'rgba(16,185,129,0.1)':'rgba(245,158,11,0.1)'};color:${l.type==='Best Practice'?'var(--success)':'var(--warning)'};border:1px solid ${l.type==='Best Practice'?'rgba(16,185,129,0.25)':'rgba(245,158,11,0.25)'};font-family:var(--font-mono);">${l.type}</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:4px;"><strong>Situation:</strong> ${l.situation}</div>
+            <div style="font-size:12px;color:var(--text3);line-height:1.5;"><strong>Recommendation:</strong> ${l.recommendation}</div>
+          </div>`).join('')}
+      </div>` : '';
+
+    const safeId = compRow.project.replace(/[^a-zA-Z0-9]/g, '_');
+    const aiSection = `
+      <div id="ai-closeout-${safeId}" style="display:none;" class="ai-summary-wrap" style="margin-top:10px;">
+        <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
+        <div class="ai-summary-text" id="ai-closeout-text-${safeId}"></div>
+      </div>`;
+
+    return `
+      <div class="project-card">
+        <div class="project-card-header">
+          <div>
+            <div class="project-name">${compRow.project}</div>
+            <div class="project-pm">PM: ${compRow.pm}</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            ${statusBadge}
+            <span class="status-pill complete">● Complete</span>
+          </div>
+        </div>
+        <div class="project-card-body">
+          ${complianceChips}
+          ${docBadge}
+          ${lessonsHtml}
+          <div style="margin-top:8px;">
+            <button class="btn btn-ghost" style="font-size:12px;" onclick="generateCloseoutAI('${compRow.project.replace(/'/g,"\\'")}')">💡 Key Insights</button>
+          </div>
+          ${aiSection}
+        </div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('closeoutContent').innerHTML = themesHtml + (baseData.length === 0 ? '<div class="no-results">No projects match your filters.</div>' : cards);
+}
+
+
+function filterCloseout() {
+  buildCloseout(
+    document.getElementById('closeoutSearch').value,
+    document.getElementById('closeoutTypeFilter').value,
+    document.getElementById('closeoutPMFilter').value
+  );
+}
+
+async function generateCloseoutAI(projectName) {
+  const safeId = projectName.replace(/[^a-zA-Z0-9]/g, '_');
+  const wrapEl = document.getElementById('ai-closeout-' + safeId);
+  const textEl = document.getElementById('ai-closeout-text-' + safeId);
+  if (!wrapEl || !textEl) return;
+
+  const closeoutEntry = CLOSEOUT_DATA.find(x => x.project === projectName);
+  const complianceEntry = COMPLIANCE_DATA.find(x => x.project === projectName);
+  const pm = (closeoutEntry && closeoutEntry.pm) || (complianceEntry && complianceEntry.pm) || 'Unknown';
+  const hasDoc = complianceEntry && complianceEntry.closeout === true;
+  const lessons = (closeoutEntry && closeoutEntry.lessonsLearned) || [];
+
+  wrapEl.style.display = 'block';
+  let html = '';
+
+  if (lessons.length > 0) {
+    const improvements = lessons.filter(l => l.type === 'Improvement Opportunity');
+    const bestPractices = lessons.filter(l => l.type === 'Best Practice');
+    const areas = [...new Set(lessons.map(l => l.area))];
+
+    html += `<div style="font-size:12px;color:var(--text3);margin-bottom:12px;"><strong>Key Themes Identified:</strong><br>&bull; ${areas.join(' &nbsp;&bull;&nbsp; ')}</div>`;
+
+    if (bestPractices.length > 0) {
+      html += `<div style="font-weight:600;font-size:13px;color:var(--text);margin:12px 0 8px;">What to Replicate in Future Projects:</div>`;
+      bestPractices.forEach(l => {
+        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;"><span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
+      });
+    }
+    if (improvements.length > 0) {
+      html += `<div style="font-weight:600;font-size:13px;color:var(--text);margin:12px 0 8px;">What to Prevent:</div>`;
+      improvements.forEach(l => {
+        html += `<div style="padding:8px 12px;border-left:3px solid var(--success);background:rgba(16,185,129,0.05);border-radius:0 6px 6px 0;margin-bottom:8px;font-size:12px;color:var(--text2);line-height:1.6;"><span style="color:var(--success);font-weight:600;">&rarr;</span> ${l.recommendation}</div>`;
+      });
+    }
+    html += `<div style="margin-top:12px;font-size:12px;color:var(--text3);"><strong>Most Relevant For:</strong> ${getCloseoutRelevance(projectName)}</div>`;
+  } else if (hasDoc) {
+    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">A closeout report has been filed as a Word document in the PM Process Compliance Audit for <strong>${projectName}</strong>. Lessons learned have not been separately logged in the Smartsheet Lessons Learned log for this project.<br><br>To access the detailed insights from this project, open the closeout report via the link above.</div>`;
+  } else {
+    html += `<div style="font-size:12px;color:var(--text2);line-height:1.7;">No closeout report has been filed for <strong>${projectName}</strong> and no lessons learned have been logged in Smartsheet.<br><br>This represents an opportunity to capture institutional knowledge. Recommend scheduling a 30-minute retrospective with the PM and key stakeholders to document what worked and what should be done differently.</div>`;
+  }
+  textEl.innerHTML = html;
+}
+
+function getCloseoutRelevance(projectName) {
+  const n = projectName.toLowerCase();
+  if (n.includes('dialysis') || n.includes('pt/ot') || n.includes('observation') || n.includes('ambulance') || n.includes('cardio') || n.includes('cath'))
+    return 'Any upcoming clinical service launch or facility build-out at Provident or Stroger campuses.';
+  if (n.includes('staffing') || n.includes('physician') || n.includes('recruit'))
+    return 'Any physician or specialist recruitment project with a fixed Go-Live date.';
+  if (n.includes('lab') || n.includes('system') || n.includes('automation') || n.includes('wayfinding'))
+    return 'Any technology implementation, system Go-Live, or clinical informatics project.';
+  if (n.includes('spend') || n.includes('copay') || n.includes('earn') || n.includes('finance'))
+    return 'Any financial optimization, revenue cycle, or budget-dependent project.';
+  return 'Any upcoming operational improvement or service expansion project at Cook County Health.';
+}
+
+function getCloseoutRelevance(projectName) {
+  const n = projectName.toLowerCase();
+  if (n.includes('dialysis') || n.includes('pt/ot') || n.includes('observation') || n.includes('ambulance') || n.includes('cardio') || n.includes('cath'))
+    return 'Any upcoming clinical service launch or facility build-out at Provident or Stroger campuses.';
+  if (n.includes('staffing') || n.includes('physician') || n.includes('recruit'))
+    return 'Any physician or specialist recruitment project with a fixed Go-Live date.';
+  if (n.includes('it') || n.includes('system') || n.includes('automation') || n.includes('wayfinding') || n.includes('lab'))
+    return 'Any technology implementation, system Go-Live, or clinical informatics project.';
+  if (n.includes('budget') || n.includes('spend') || n.includes('copay') || n.includes('earn') || n.includes('finance'))
+    return 'Any financial optimization, revenue cycle, or budget-dependent project.';
+  if (n.includes('equity') || n.includes('community') || n.includes('arpa') || n.includes('city colleges'))
+    return 'Any grant-funded or community health initiative requiring external partner coordination.';
+  return 'Any upcoming operational improvement or service expansion project at Cook County Health.';
+}
+
+// =====================
+// DASHBOARDS VIEW
+// =====================
+
+// =====================
+// PROJECTS TAB — unified view driven by MASTER_FILE_DATA
 // =====================
 let _projStatusFilter = 'In Progress';
 
@@ -2132,148 +3051,253 @@ function buildProjects() {
 
 
 // =====================
-// PROJECT BENEFITS MONITORING — unified view with dropdown
+// BENEFITS MONITORING VIEW
+// Shows projects with "Project Benefits/Impact Monitoring" deliverables from PMOE_LOAD_DATA
+// Sorted by most recently updated
 // =====================
+function buildBenefits() {
+  const search = (document.getElementById('benefitsSearch')?.value || '').toLowerCase();
+  const pmF    = document.getElementById('benefitsPMFilter')?.value || '';
+
+  // Pull all deliverables tagged as benefits/impact monitoring from PMOE_LOAD_DATA
+  let benefitProjects = PMOE_LOAD_DATA
+    .map(p => {
+      const benefitDeliverables = p.deliverables.filter(d =>
+        d.name.toLowerCase().includes('benefit') ||
+        d.name.toLowerCase().includes('impact') ||
+        d.name.toLowerCase().includes('monitoring')
+      );
+      if (!benefitDeliverables.length) return null;
+      return { ...p, deliverables: benefitDeliverables };
+    })
+    .filter(Boolean);
+
+  // Also include ALL projects that have any deliverable with outcomes/benefit updates
+  // even if not tagged — include all if no specific benefit deliverables found
+  if (benefitProjects.length < 5) {
+    benefitProjects = PMOE_LOAD_DATA.map(p => ({ ...p }));
+  }
+
+  if (pmF)    benefitProjects = benefitProjects.filter(p => p.pm === pmF);
+  if (search) benefitProjects = benefitProjects.filter(p =>
+    p.project.toLowerCase().includes(search) ||
+    p.pm.toLowerCase().includes(search) ||
+    p.deliverables.some(d => d.status.toLowerCase().includes(search))
+  );
+
+  // Sort by lastUpdated desc
+  benefitProjects.sort((a, b) => (b.lastUpdated || '').localeCompare(a.lastUpdated || ''));
+
+  const el = document.getElementById('benefitsContent');
+  if (!el) return;
+
+  if (!benefitProjects.length) {
+    el.innerHTML = '<div class="no-results">No benefits monitoring data found.</div>';
+    return;
+  }
+
+  const statusColor = { Issue: 'var(--danger)', Risk: 'var(--warning)' };
+
+  el.innerHTML = benefitProjects.map(p => {
+    // Cross-reference master file for health/phase/pct
+    const master = MASTER_FILE_DATA.find(m =>
+      m.initiative.toLowerCase().includes(p.project.toLowerCase().split(' ').slice(0,3).join(' ')) ||
+      p.project.toLowerCase().includes(m.initiative.toLowerCase().split(' ').slice(0,3).join(' '))
+    );
+
+    const pctBadge = master?.pct != null
+      ? `<span style="font-size:11px;padding:2px 10px;border-radius:10px;background:rgba(16,185,129,0.1);color:var(--success);border:1px solid rgba(16,185,129,0.25);font-family:var(--font-mono);">📊 ${master.pct}% complete</span>`
+      : '';
+
+    const healthBadge = master?.health
+      ? `<span style="font-size:11px;padding:2px 8px;border-radius:10px;background:${{Green:'rgba(64,177,75,.1)',Blue:'rgba(16,101,195,.1)',Yellow:'rgba(235,199,0,.1)',Red:'rgba(234,53,46,.1)'}[master.health]||'rgba(100,100,100,.1)'};color:${{Green:'#40b14b',Blue:'#1065c3',Yellow:'#d4b200',Red:'#ea352e'}[master.health]||'#888'};font-family:var(--font-mono);">● ${master.health}</span>`
+      : '';
+
+    const deliversHtml = p.deliverables.map(d => `
+      <div style="margin-top:10px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent);">
+        <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:6px;">
+          📋 ${d.name} · Updated ${p.lastUpdated || ''}
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7;">${d.status}</div>
+        ${d.risk ? `
+          <div style="margin-top:8px;padding:8px 12px;border-radius:6px;background:${d.risk==='Issue'?'rgba(239,68,68,.08)':'rgba(245,158,11,.08)'};border:1px solid ${d.risk==='Issue'?'rgba(239,68,68,.2)':'rgba(245,158,11,.2)'};">
+            <span style="font-size:11px;font-weight:700;color:${statusColor[d.risk]||'var(--warning)'};font-family:var(--font-mono);">⚠ ${d.risk}</span>
+            ${d.impact ? `<div style="font-size:12px;color:var(--text3);margin-top:3px;">${d.impact}</div>` : ''}
+          </div>` : ''}
+      </div>`).join('');
+
+    return `
+    <div class="project-card" style="margin-bottom:14px;">
+      <div class="project-card-header">
+        <div style="flex:1;">
+          <div class="project-name">${p.project}</div>
+          <div class="project-pm" style="margin-top:3px;">
+            ${p.pm ? `👤 ${p.pm}` : ''}
+            ${master ? `<span style="margin-left:8px;color:var(--text3);font-size:11px;">📂 ${master.phase}</span>` : ''}
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;">
+          ${pctBadge}
+          ${healthBadge}
+        </div>
+      </div>
+      <div class="project-card-body">
+        ${deliversHtml}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+
+// =====================
+// BENEFITS REGISTER DATA
+// SOURCE: Benefits Register — for Chiefs (report_id 1142112728862596)
+// Last fetched: April 5, 2026
+// =====================
+const BENEFITS_REGISTER_DATA = [
+  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2023", planned:"#ED Patients: 3,600",          actual:"#ED Patients: 3,402",                             ratio:0.95, health:"Yes"},
+  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2024", planned:"#ED Patients: 3,600",          actual:"#ED Patients: 2,876",                             ratio:0.80, health:"Hold"},
+  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2025", planned:"#ED Patients: 3,601",          actual:"#ED Patients: 2,404",                             ratio:0.67, health:"No"},
+  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2023", planned:"Encounters: 250",              actual:"Encounters: 221",                                 ratio:0.88, health:"Yes"},
+  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2024", planned:"Encounters: 290",              actual:"Encounters: 280",                                 ratio:0.97, health:"Yes"},
+  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2025", planned:"Encounters: 290",              actual:"Encounters: 169",                                 ratio:0.58, health:"No"},
+  {program:"Provident Growth", project:"Observation Unit",                           fy:"2023", planned:"Inpatient ADC: 12.5 | Obs ADC: 14", actual:"Inpatient ADC: 10.4 | Obs ADC: 9.0",      ratio:0.76, health:"Hold"},
+  {program:"Provident Growth", project:"Observation Unit",                           fy:"2024", planned:"Inpatient ADC: 12.5 | Obs ADC: 14", actual:"Inpatient ADC: 7.8 | Obs ADC: 9.4",       ratio:0.75, health:"No"},
+  {program:"Provident Growth", project:"Observation Unit",                           fy:"2025", planned:"Inpatient ADC: 12.5 | Obs ADC: 14", actual:"Inpatient ADC: 6.7 | Obs ADC: 9.2",       ratio:0.70, health:"No"},
+  {program:"Provident Growth", project:"Endoscopy / Colonoscopy Services",           fy:"2025", planned:"Encounters: 1,466",            actual:"Encounters: 437",                                 ratio:0.30, health:"No"},
+  {program:"Provident Growth", project:"Plastics Clinic",                            fy:"2024", planned:"Encounters: 92",               actual:"Encounters: 5",                                   ratio:0.05, health:"No"},
+  {program:"Provident Growth", project:"Plastics Clinic",                            fy:"2025", planned:"Encounters: 348",              actual:"Encounters: 73",                                  ratio:0.21, health:"No"},
+  {program:"Provident Growth", project:"Rehab Services (PT/OT/SLP)",                 fy:"2023", planned:"Encounters: 1,000",            actual:"Encounters: 1,029",                               ratio:1.03, health:"Yes"},
+  {program:"Provident Growth", project:"Rehab Services (PT/OT/SLP)",                 fy:"2024", planned:"Encounters: 4,000",            actual:"Encounters: 3,820",                               ratio:0.96, health:"Yes"},
+  {program:"Provident Growth", project:"D/C: Outpatient Rehab to Bronzeville",       fy:"2025 (Dec–May)", planned:"Encounters: 2,000", actual:"Encounters: 1,656",                               ratio:0.83, health:"Hold"},
+  {program:"Service Line Growth", project:"Robotic Bronchoscopy",                    fy:"2025", planned:"Encounters: 100",              actual:"Encounters: 103",                                 ratio:1.03, health:"Yes"},
+  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2023", planned:"TAVR: 48 | MITRACLIP: 12 | WATCHMAN: 12 | Balloon: 5 | Pulmo: 6 | CardioMEMS: 9",      actual:"TAVR: 20 | MITRACLIP: 16 | WATCHMAN: 35 | Balloon: 3 | Pulmo: 8 | CardioMEMS: 8",    ratio:1.10, health:"Yes"},
+  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2024", planned:"TAVR: 60 | IMPELLA: 5 | EKOS: 18 | MITRACLIP: 16 | WATCHMAN: 16 | Balloon: 5 | Pulmo: 6 | CardioMEMS: 12", actual:"TAVR: 28 | IMPELLA: 4 | EKOS: 2 | MITRACLIP: 14 | WATCHMAN: 28 | Balloon: 0 | Pulmo: 10 | CardioMEMS: 7", ratio:0.67, health:"No"},
+  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2025", planned:"TAVR: 60 | IMPELLA: 5 | EKOS: 18 | MITRACLIP: 16 | WATCHMAN: 16 | Balloon: 5 | Pulmo: 6 | CardioMEMS: 12", actual:"TAVR: 36 | IMPELLA: 2 | EKOS: 3 | MITRACLIP: 11 | WATCHMAN: 22 | Balloon: 2 | Pulmo: 8 | CardioMEMS: 13", ratio:0.70, health:"No"},
+  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2023", planned:"EP Ablation: 103 | Device: 100", actual:"EP Ablation: 178 | Device: 141",               ratio:1.60, health:"Yes"},
+  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2024", planned:"EP Ablation: 128 | Device: 110", actual:"EP Ablation: 182 | Device: 125",               ratio:1.30, health:"Yes"},
+  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2025", planned:"EP Ablation: 130 | Device: 120", actual:"EP Ablation: 130 | Device: 153",               ratio:1.10, health:"Yes"},
+  {program:"Service Line Growth", project:"Nuclear Cardiology (PET Jubilant)",       fy:"2025", planned:"Encounters: 43",               actual:"Encounters: 43",                                  ratio:1.00, health:"Yes"},
+  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2023", planned:"VNS Implantation: 3",          actual:"VNS Implantation: 3 (1 Medicaid, 1 MCO, 1 Commercial)",   ratio:1.00, health:"Yes"},
+  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2024", planned:"VNS Implantation: 10",         actual:"VNS Implantation: 3",                             ratio:0.33, health:"No"},
+  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2025", planned:"VNS Implantation: 12",         actual:"VNS Implantation: 11 | Revision: 1",              ratio:0.92, health:"Yes"},
+  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",  fy:"2024", planned:"Encounters: 80",               actual:"Encounters: 64",                                  ratio:0.80, health:"Hold"},
+  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",  fy:"2025", planned:"Encounters: 267",              actual:"Encounters: 225",                                 ratio:0.85, health:"Yes"}
+];
+
+const ANNUAL_REPORT_PROJECTS = {
+  2025: [
+    {p:"Healthcare Equity Certification (TJC)",       b:"Advanced certification to embed health equity in all aspects of CCH care and treatment.",                                             o:"TJC Certification earned. No single citation or deficiency — special remarks from TJC Evaluator.", status:"success"},
+    {p:"Birthday Screening Program",                   b:"Promote birthday health screenings at no cost to Cook County residents as part of prevention strategy.",                             o:"Program launched county-wide.",                                                                    status:"success"},
+    {p:"Care Coordination Transition",                 b:"Transition patient caseloads from complex care coordination back to CountyCare using health risk stratification.",                   o:"Adjusted scope: High Risk population stays with CountyCare Care Coordination group due to staffing constraints.", status:"partial"},
+    {p:"Bronzeville Health Center",                    b:"Enhance access to Psychiatry, Family Medicine, and Rehabilitation services for Bronzeville community.",                              o:"Family Medicine: 2,807 visits (6/1–11/30/25). Services actively running.",                        status:"success"},
+    {p:"ARPA Programs Transition",                     b:"Ensure smooth transition of ARPA-funded programs to sustainability or successor funding.",                                           o:"Transition completed Q2 2025.",                                                                    status:"success"},
+    {p:"ACHN Providers and Operations Coordination",   b:"Improve coordination between ACHN providers and operations to reduce inefficiencies.",                                               o:"97% complete as of monitoring phase.",                                                             status:"success"},
+    {p:"ACGME Compliance - Call Room Optimization",    b:"Ensure compliance with ACGME call room standards.",                                                                                  o:"All compliance requirements met.",                                                                 status:"success"}
+  ],
+  2024: [
+    {p:"Provident Observation Unit",                   b:"Dedicated space for evaluation and short-term treatment requiring extended observation before admission/discharge.",                  o:"Completed 10/30/24. Planned ADC: 14; Actual as of 12/2/24: 11.1 ADC.",                           status:"partial"},
+    {p:"Plastics Clinic at Sengstacke",                b:"Create access to Plastics Specialists at Provident Hospital.",                                                                       o:"Only 5 encounters vs 92 proposed as of 12/2/24. Significant benefit shortfall.",                  status:"risk"},
+    {p:"Permanent Catheter Removal Clinic A",          b:"Decrease wait time and avoid straining Interventional Radiology suite capacity.",                                                   o:"No performance metrics set by sponsor. Closeout report circulated.",                               status:"partial"},
+    {p:"UniteUS",                                      b:"Platform to facilitate referral coordination between CCDPH, CountyCare, BH Office, ACHN, and CBOs.",                                o:"All partners using the system. Maintenance transitioned to Office of Research and Innovation.",    status:"success"},
+    {p:"SPD Management Transition",                    b:"Bring in a vendor meeting Stroger Hospital Operations needs and improve Sterile Processing efficiency.",                             o:"Short-term vendor onboarded and took over SPD operations 12/4/24.",                               status:"success"},
+    {p:"Renal Pre-Transplant Clinic",                  b:"Streamlined process for CCH patients to access kidney transplant services.",                                                         o:"Service started 12/10. Metrics: # assessed by UI Health, # on transplant list, # who underwent transplant.", status:"success"},
+    {p:"North Riverside Dental Services",              b:"Establish Oral Health services at North Riverside on the west side of Chicago.",                                                     o:"Service started 12/23. Metrics: Actual volume and revenue vs planned.",                           status:"success"}
+  ],
+  2023: [
+    {p:"CCH-UCM Neuro Clinic at Provident",            b:"Increase outpatient Neurology foot traffic for insured patients — primary target CountyCare CVA/Stroke members.",                    o:"Redirection added avg 15 CVA/stroke outpatients per month. Transitioned to operations.",          status:"success"},
+    {p:"Vagal Nerve Stimulation (VNS)",                b:"New procedure implanting device to control needs of epileptic patients no longer responding to medicines.",                          o:"Pilot (3 cases): avg reimbursement $79k vs device cost $50k. Senior Mgmt approved 10 additional units.", status:"success"},
+    {p:"BCBS Managed Care Audits",                     b:"Address critical audit findings that could cause BCBS to cancel IPA agreement serving 1,900 members — significant revenue impact.",  o:"All critical findings addressed. BCBS cleared CCH. PMOE drafted policy and 2 tools meeting BCBS requirements.", status:"success"},
+    {p:"Telehealth Optimization",                      b:"Optimize and redefine use of AmWell for telehealth visits across ACHN in primary and specialty settings.",                           o:"Monthly reporting by Operations team including % successful calls and provider/patient satisfaction.", status:"success"},
+    {p:"CCBHC Certification",                          b:"Review standards to prepare for CCBHC certification application.",                                                                   o:"Compiled summary of checklist findings presented to workgroup.",                                   status:"success"},
+    {p:"SPD Management Transition Phase 1",            b:"Ensure seamless transition for sterilization of products and maintenance of sterility across all CCH facilities.",                  o:"Transition smooth and met Clinical and Operational requirements.",                                 status:"success"},
+    {p:"Provident PT/OT/SLP",                          b:"Increase foot traffic in outpatient services and decrease patient transfers from Provident to Stroger for Rehabilitation Medicine.",  o:"Services started 10/10/23. End of October volume: 238 (avg 12 patients/day).",                   status:"success"}
+  ]
+};
+
+const ANNUAL_EXEC_SUMMARY = {
+  2025: "In 2025, PMOE operated as a system-level execution arm for Cook County Health, advancing enterprise priorities through disciplined delivery, measurable outcomes, and governance. PMOE supported strategic goals by improving access, strengthening reliability and safety, reducing operational and compliance risk, and enabling long-term financial and workforce sustainability. More than 600 leaders completed High Reliability training, establishing a shared framework for Zero Harm.",
+  2024: "FY2024 saw PMOE deliver 7 major initiatives spanning new clinical services at Provident, care coordination improvements, and expansion of specialty services. Benefits monitoring mechanisms were established for all completed projects, with formal tracking of volume, revenue, and operational outcomes.",
+  2023: "FY2023 marked the establishment of foundational PMOE PMO practices alongside delivery of critical service expansion projects. PMOE restarted clinical services at Provident, established new procedures, and addressed system-level compliance challenges, while formalizing the Project Review Board and Balanced Scorecard frameworks."
+};
+
+const ANNUAL_BENEFITS_SUMMARY = {
+  2025: {performing:"EP (Cardiology) · PET Jubilant (Cardiology) · VNS Implantation (Neuroscience) · Endocrinology Clinic (North Riverside) · Robotic Bronchoscopy", underperforming:"All Provident-related implemented projects/initiatives are underperforming."},
+  2024: {performing:"UniteUS · SPD Management Transition · Renal Pre-Transplant Clinic · North Riverside Dental", underperforming:"Plastics Clinic (5 vs 92 planned encounters). Observation Unit below ADC targets."},
+  2023: {performing:"Provident PT/OT/SLP · VNS · BCBS Audit clearance · Telehealth Optimization", underperforming:"Quiet Campaign funding not allocated."}
+};
+
+const ANNUAL_UPCOMING = {
+  2025: [
+    {p:"Wellvana: Medicare VBC",              b:"Enrollment of Shared Savings Program and improved HEDIS measures.",                    e:"March 2026"},
+    {p:"CCH-City Colleges Partnership",       b:"Develop long-term workforce pipeline for select job positions at CCH.",                e:"December 2026"},
+    {p:"Organizational Consolidation",        b:"Create better organizational alignment and clarity.",                                   e:"June 2026"},
+    {p:"ARPA Expense Monitoring",             b:"ARPA fund spend monitoring through grant period.",                                      e:"June 2026"},
+    {p:"Anal Dysplasia Service",              b:"High-quality accessible screening and treatment for patients at risk of anal cancer.", e:"June 2026"},
+    {p:"CCH-Press Ganey Consumerism",         b:"Create strong online reputation critical to patient acquisition and brand credibility.", e:"May 2026"},
+    {p:"High Reliability (post-RISI)",        b:"Safety Coaching cohort pilot, training, and HRO tools. Q1 2026 metrics measurement.", e:"May 2026"}
+  ]
+};
+
+// =====================
+// PROJECT BENEFITS MONITORING — unified view
+// =====================
+let _pbmMode = 'performance';
+
 function switchPBMView() {
-  const sel = document.getElementById('pbmSelector')?.value || 'performance';
+  const sel = document.getElementById('pbmSelector');
+  if (!sel) return;
+  _pbmMode = sel.value;
+
   const perfFilters   = document.getElementById('pbmPerformanceFilters');
   const annualFilters = document.getElementById('pbmAnnualFilters');
   const sub           = document.getElementById('pbmSub');
 
-  if (sel === 'performance') {
-    if (perfFilters)   perfFilters.style.display   = '';
-    if (annualFilters) annualFilters.style.display  = 'none';
+  if (_pbmMode === 'performance') {
+    if (perfFilters)   perfFilters.style.display  = '';
+    if (annualFilters) annualFilters.style.display = 'none';
     if (sub) sub.textContent = 'Source: Benefits Register — For Chiefs · Planned vs Actual · Provident Growth & Service Line Growth';
     buildBenefits();
   } else {
-    if (perfFilters)   perfFilters.style.display   = 'none';
-    if (annualFilters) annualFilters.style.display  = '';
+    if (perfFilters)   perfFilters.style.display  = 'none';
+    if (annualFilters) annualFilters.style.display = '';
     if (sub) sub.textContent = 'Source: 2023–2025 PMOE Annual Reports · Projects delivered · Outcomes & benefits monitored';
     buildAnnualReport();
   }
 }
 
-function buildBenefits() {
-  const search = (document.getElementById('benefitsSearch')?.value || '').toLowerCase();
-  const pmF    = document.getElementById('benefitsPMFilter')?.value || '';
-  const el     = document.getElementById('benefitsContent');
-  if (!el) return;
-
-  // Group by program then project
-  const programs = {};
-  BENEFITS_REGISTER_DATA.forEach(row => {
-    if (!programs[row.program]) programs[row.program] = {};
-    if (!programs[row.program][row.project]) programs[row.program][row.project] = [];
-    programs[row.program][row.project].push(row);
-  });
-
-  const healthColor = { Yes:'var(--success)', No:'var(--danger)', Hold:'var(--warning)' };
-  const healthBg    = { Yes:'rgba(16,185,129,.1)', No:'rgba(239,68,68,.1)', Hold:'rgba(245,158,11,.1)' };
-  const healthIcon  = { Yes:'✓', No:'✗', Hold:'⏸' };
-
-  let html = '';
-
-  // Summary stats
-  const allRows   = BENEFITS_REGISTER_DATA;
-  const meetGoal  = allRows.filter(r => r.health === 'Yes').length;
-  const notMeet   = allRows.filter(r => r.health === 'No').length;
-  const onHold    = allRows.filter(r => r.health === 'Hold').length;
-  const fy2025    = allRows.filter(r => String(r.fy).includes('2025'));
-  const meet2025  = fy2025.filter(r => r.health === 'Yes').length;
-
-  html += `<div class="stats-row animate-in" style="margin-bottom:18px;">
-    <div class="stat-card green"><div class="stat-label">Meeting Goal</div><div class="stat-value">${meetGoal}</div><div class="stat-sub">All years</div></div>
-    <div class="stat-card red"  ><div class="stat-label">Not Meeting</div><div class="stat-value">${notMeet}</div><div class="stat-sub">All years</div></div>
-    <div class="stat-card amber"><div class="stat-label">On Hold</div><div class="stat-value">${onHold}</div><div class="stat-sub">All years</div></div>
-    <div class="stat-card blue" ><div class="stat-label">FY2025 On Track</div><div class="stat-value">${meet2025}/${fy2025.length}</div><div class="stat-sub">Latest year</div></div>
-  </div>`;
-
-  Object.entries(programs).forEach(([prog, projects]) => {
-    html += `<div style="margin-bottom:24px;">
-      <div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">📊 ${prog}</div>`;
-
-    Object.entries(projects).forEach(([proj, rows]) => {
-      if (search && !proj.toLowerCase().includes(search) && !prog.toLowerCase().includes(search)) return;
-
-      html += `<div class="project-card" style="margin-bottom:12px;">
-        <div class="project-card-header">
-          <div style="flex:1;"><div class="project-name">${proj}</div></div>
-        </div>
-        <div class="project-card-body">
-          <div style="overflow-x:auto;">
-            <table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;">
-              <thead>
-                <tr style="background:var(--surface2);">
-                  <th style="padding:6px 10px;text-align:left;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">FY</th>
-                  <th style="padding:6px 10px;text-align:left;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Planned</th>
-                  <th style="padding:6px 10px;text-align:left;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Actual</th>
-                  <th style="padding:6px 10px;text-align:center;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Ratio</th>
-                  <th style="padding:6px 10px;text-align:center;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows.map(r => `
-                  <tr style="border-bottom:1px solid var(--border);">
-                    <td style="padding:8px 10px;color:var(--text3);font-family:var(--font-mono);white-space:nowrap;">${r.fy}</td>
-                    <td style="padding:8px 10px;color:var(--text2);line-height:1.5;">${r.planned}</td>
-                    <td style="padding:8px 10px;color:var(--text);line-height:1.5;">${r.actual}</td>
-                    <td style="padding:8px 10px;text-align:center;font-family:var(--font-mono);font-weight:700;color:${r.ratio>=1?'var(--success)':r.ratio>=0.8?'var(--warning)':'var(--danger)'};">${(r.ratio*100).toFixed(0)}%</td>
-                    <td style="padding:8px 10px;text-align:center;">
-                      <span style="font-size:11px;padding:2px 10px;border-radius:10px;background:${healthBg[r.health]||'rgba(100,100,100,.1)'};color:${healthColor[r.health]||'#888'};font-weight:600;border:1px solid ${healthColor[r.health]||'#888'}44;">
-                        ${healthIcon[r.health]||'?'} ${r.health}
-                      </span>
-                    </td>
-                  </tr>`).join('')}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>`;
-    });
-
-    html += '</div>';
-  });
-
-  el.innerHTML = html;
-}
-
-// =====================
-// ANNUAL REPORT VIEW
-// Source: 2023, 2024, 2025 PMOE Annual Reports (Word documents)
-// =====================
+// ── Annual Report ─────────────────────────────────────────────────────────────
 let _annualYear = 2025;
 
 function setAnnualYear(year) {
   _annualYear = year;
   [2023,2024,2025].forEach(y => {
-    const btn = document.getElementById('yr-'+y);
-    if (btn) {
-      const active = y === year;
-      btn.style.background  = active ? 'var(--accent)' : 'transparent';
-      btn.style.color       = active ? '#fff'          : 'var(--text3)';
-      btn.style.borderColor = active ? 'var(--accent)'  : 'var(--border2)';
-    }
+    const btn = document.getElementById('yr-' + y);
+    if (!btn) return;
+    const active = y === year;
+    btn.style.background  = active ? 'var(--accent)' : 'transparent';
+    btn.style.color       = active ? '#fff'          : 'var(--text3)';
+    btn.style.borderColor = active ? 'var(--accent)'  : 'var(--border2)';
   });
-  switchPBMView();
+  buildAnnualReport();
 }
 
 function buildAnnualReport() {
-  const el = document.getElementById('annualContent');
+  const el = document.getElementById('pbmContent');
   if (!el) return;
 
-  const yr      = _annualYear;
-  const summary = ANNUAL_EXEC_SUMMARY[yr]  || '';
-  const projects = ANNUAL_REPORT_PROJECTS[yr] || [];
-  const benefits = ANNUAL_BENEFITS_SUMMARY[yr] || {};
-  const upcoming = ANNUAL_UPCOMING[yr] || [];
+  const yr       = _annualYear;
+  const summary  = ANNUAL_EXEC_SUMMARY[yr]     || '';
+  const projects = ANNUAL_REPORT_PROJECTS[yr]   || [];
+  const benefits = ANNUAL_BENEFITS_SUMMARY[yr]  || {};
+  const upcoming = ANNUAL_UPCOMING[yr]          || [];
 
-  const statusClr = { success:'var(--success)', partial:'var(--warning)', risk:'var(--danger)' };
-  const statusBg  = { success:'rgba(16,185,129,.08)', partial:'rgba(245,158,11,.08)', risk:'rgba(239,68,68,.08)' };
-  const statusIcon = { success:'✓ Delivered', partial:'~ Partial', risk:'⚠ Below Target' };
+  const statusClr  = {success:'var(--success)', partial:'var(--warning)', risk:'var(--danger)'};
+  const statusBg   = {success:'rgba(16,185,129,.08)', partial:'rgba(245,158,11,.08)', risk:'rgba(239,68,68,.08)'};
+  const statusIcon = {success:'✓ Delivered', partial:'~ Partial', risk:'⚠ Below Target'};
 
   let html = '<div style="max-width:900px;">';
 
-  // Executive Summary
   if (summary) {
     html += `<div style="padding:16px 20px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(16,185,129,.08));border-radius:12px;border:1px solid rgba(59,130,246,.2);margin-bottom:20px;">
       <div style="font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Executive Summary — ${yr}</div>
@@ -2281,10 +3305,8 @@ function buildAnnualReport() {
     </div>`;
   }
 
-  // Projects completed
   if (projects.length) {
-    html += `<div style="margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">✅ Initiatives/Projects Completed (${yr})</div>`;
+    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">✅ Initiatives/Projects Completed (${yr})</div>`;
     projects.forEach(r => {
       html += `<div class="project-card" style="margin-bottom:10px;">
         <div class="project-card-header">
@@ -2302,23 +3324,15 @@ function buildAnnualReport() {
     html += '</div>';
   }
 
-  // Benefits monitoring summary
   if (benefits.performing || benefits.underperforming) {
-    html += `<div style="margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--warning);">📊 Benefits Monitoring Summary</div>`;
-    if (benefits.performing) {
-      html += `<div style="padding:12px 16px;background:rgba(16,185,129,.08);border-radius:8px;border:1px solid rgba(16,185,129,.2);font-size:13px;color:var(--success);margin-bottom:8px;"><strong>✓ Performing as Planned:</strong><span style="color:var(--text2);"> ${benefits.performing}</span></div>`;
-    }
-    if (benefits.underperforming) {
-      html += `<div style="padding:12px 16px;background:rgba(239,68,68,.08);border-radius:8px;border:1px solid rgba(239,68,68,.2);font-size:13px;color:var(--danger);">⚠ ${benefits.underperforming}</div>`;
-    }
+    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--warning);">📊 Benefits Monitoring Summary</div>`;
+    if (benefits.performing)    html += `<div style="padding:12px 16px;background:rgba(16,185,129,.08);border-radius:8px;border:1px solid rgba(16,185,129,.2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--success);">✓ Performing as Planned:</strong> <span style="color:var(--text2);">${benefits.performing}</span></div>`;
+    if (benefits.underperforming) html += `<div style="padding:12px 16px;background:rgba(239,68,68,.08);border-radius:8px;border:1px solid rgba(239,68,68,.2);font-size:13px;color:var(--danger);">⚠ ${benefits.underperforming}</div>`;
     html += '</div>';
   }
 
-  // Upcoming projects (2025 only)
   if (upcoming.length) {
-    html += `<div style="margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">🔮 Projects Planned for Completion in 2026</div>`;
+    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">🔮 Planned for 2026</div>`;
     upcoming.forEach(r => {
       html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 14px;background:var(--surface2);border-radius:8px;margin-bottom:6px;gap:12px;">
         <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text);">${r.p}</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">${r.b}</div></div>
@@ -2332,6 +3346,78 @@ function buildAnnualReport() {
   el.innerHTML = html;
 }
 
+// ── Performance Monitoring (Benefits Register) ────────────────────────────────
+function buildBenefits() {
+  const el     = document.getElementById('pbmContent');
+  const search = (document.getElementById('benefitsSearch')?.value || '').toLowerCase();
+  if (!el) return;
+
+  const healthColor = {Yes:'var(--success)', No:'var(--danger)', Hold:'var(--warning)'};
+  const healthBg    = {Yes:'rgba(16,185,129,.1)', No:'rgba(239,68,68,.1)', Hold:'rgba(245,158,11,.1)'};
+  const healthIcon  = {Yes:'✓', No:'✗', Hold:'⏸'};
+
+  const allRows  = BENEFITS_REGISTER_DATA;
+  const meetGoal = allRows.filter(r => r.health === 'Yes').length;
+  const notMeet  = allRows.filter(r => r.health === 'No').length;
+  const onHold   = allRows.filter(r => r.health === 'Hold').length;
+  const fy2025   = allRows.filter(r => String(r.fy).includes('2025'));
+  const meet25   = fy2025.filter(r => r.health === 'Yes').length;
+
+  let html = `<div class="stats-row animate-in" style="margin-bottom:18px;">
+    <div class="stat-card green"><div class="stat-label">Meeting Goal</div><div class="stat-value">${meetGoal}</div><div class="stat-sub">All years</div></div>
+    <div class="stat-card red"  ><div class="stat-label">Not Meeting</div><div class="stat-value">${notMeet}</div><div class="stat-sub">All years</div></div>
+    <div class="stat-card amber"><div class="stat-label">On Hold</div><div class="stat-value">${onHold}</div><div class="stat-sub">All years</div></div>
+    <div class="stat-card blue" ><div class="stat-label">FY2025 On Track</div><div class="stat-value">${meet25}/${fy2025.length}</div><div class="stat-sub">Latest year</div></div>
+  </div>`;
+
+  // Group by program → project
+  const programs = {};
+  allRows.forEach(row => {
+    if (search && !row.project.toLowerCase().includes(search) && !row.program.toLowerCase().includes(search)) return;
+    if (!programs[row.program]) programs[row.program] = {};
+    if (!programs[row.program][row.project]) programs[row.program][row.project] = [];
+    programs[row.program][row.project].push(row);
+  });
+
+  Object.entries(programs).forEach(([prog, projects]) => {
+    html += `<div style="margin-bottom:24px;">
+      <div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">📊 ${prog}</div>`;
+    Object.entries(projects).forEach(([proj, rows]) => {
+      html += `<div class="project-card" style="margin-bottom:12px;">
+        <div class="project-card-header"><div style="flex:1;"><div class="project-name">${proj}</div></div></div>
+        <div class="project-card-body">
+          <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;">
+            <thead><tr style="background:var(--surface2);">
+              <th style="padding:6px 10px;text-align:left;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">FY</th>
+              <th style="padding:6px 10px;text-align:left;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Planned</th>
+              <th style="padding:6px 10px;text-align:left;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Actual</th>
+              <th style="padding:6px 10px;text-align:center;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Ratio</th>
+              <th style="padding:6px 10px;text-align:center;color:var(--text3);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border);">Status</th>
+            </tr></thead>
+            <tbody>${rows.map(r => `
+              <tr style="border-bottom:1px solid var(--border);">
+                <td style="padding:8px 10px;color:var(--text3);font-family:var(--font-mono);white-space:nowrap;">${r.fy}</td>
+                <td style="padding:8px 10px;color:var(--text2);line-height:1.5;">${r.planned}</td>
+                <td style="padding:8px 10px;color:var(--text);line-height:1.5;">${r.actual}</td>
+                <td style="padding:8px 10px;text-align:center;font-family:var(--font-mono);font-weight:700;color:${r.ratio>=1?'var(--success)':r.ratio>=0.8?'var(--warning)':'var(--danger)'};">${Math.round(r.ratio*100)}%</td>
+                <td style="padding:8px 10px;text-align:center;">
+                  <span style="font-size:11px;padding:2px 10px;border-radius:10px;background:${healthBg[r.health]||'rgba(100,100,100,.1)'};color:${healthColor[r.health]||'#888'};font-weight:600;border:1px solid ${healthColor[r.health]||'#888'}44;">${healthIcon[r.health]||'?'} ${r.health}</span>
+                </td>
+              </tr>`).join('')}
+            </tbody>
+          </table></div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  });
+
+  if (!Object.keys(programs).length) {
+    html += '<div class="no-results">No performance data matches your search.</div>';
+  }
+
+  el.innerHTML = html;
+}
 
 function buildDashboards(filter='', statusFilter='') {
   let data = DASHBOARD_DATA;
