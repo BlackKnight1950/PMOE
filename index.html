@@ -744,7 +744,7 @@
   <div class="topbar-actions">
     <span class="last-refresh" id="lastRefresh"></span>
     <button class="btn btn-ghost" onclick="refreshData()" id="refreshBtn">↺ Refresh</button>
-    
+    <button class="btn btn-primary" onclick="showView('benefits')">📋 Meeting Prep</button>
   </div>
 </header>
 
@@ -754,7 +754,7 @@
   <div class="nav-tab" onclick="showView('projects')" id="tab-projects">📁 Projects <span class="nav-badge" id="projectsCount">—</span></div>
   <div class="nav-tab" onclick="showView('risks')" id="tab-risks">⚠️ Risks & Issues <span class="nav-badge warn" id="riskCount">—</span></div>
   
-  <div class="nav-tab" onclick="showView('pbm')" id="tab-pbm">📈 Project Benefits Monitoring</div>
+  <div class="nav-tab" onclick="showView('benefits')" id="tab-benefits">📈 Benefits Monitoring</div>
   <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
   <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Compliance</div>
   <div class="nav-tab" onclick="showView('dashboards')" id="tab-dashboards">🖥️ Project Dashboards <span class="nav-badge" id="dashboardCount">—</span></div>
@@ -783,7 +783,7 @@
       <div class="stat-card green"><div class="stat-label">Completed</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">Completed &amp; closed</div></div>
       <div class="stat-card amber"><div class="stat-label">Risks Flagged</div><div class="stat-value" id="stat-risks">—</div><div class="stat-sub">Across active projects</div></div>
       <div class="stat-card red"><div class="stat-label">Issues Open</div><div class="stat-value" id="stat-issues">—</div><div class="stat-sub">Requiring resolution</div></div>
-      
+      <div class="stat-card purple"><div class="stat-label">Closeout Rate</div><div class="stat-value" id="stat-closeout">—</div><div class="stat-sub">Closeout reports filed</div></div>
     </div>
 
     <div class="overview-grid animate-in delay-2">
@@ -839,7 +839,6 @@
           <option>Elizabeth Wallish</option>
           <option>Jasmin Sanchez</option>
           <option>Lane Harmon</option>
-          <option>Precious Avery</option>
         </select>
         <select class="filter-select" id="projectsDomainFilter" onchange="buildProjects()">
           <option value="">All Domains</option>
@@ -849,6 +848,17 @@
           <option value="Fiscal">Fiscal Resilience</option>
           <option value="Patient Safety">Patient Safety & Quality</option>
           <option value="Workforce">Workforce</option>
+        </select>
+        <select class="filter-select" id="projectsSponsorFilter" onchange="buildProjects()">
+          <option value="">All Sponsors</option>
+          <option value="Claudia Fegan">Claudia Fegan</option>
+          <option value="Donna Mayfield">Donna Mayfield</option>
+          <option value="Doug Elwell">Doug Elwell</option>
+          <option value="Erik Mikaitis">Erik Mikaitis</option>
+          <option value="Israel Rocha">Israel Rocha</option>
+          <option value="Javier Reyes">Javier Reyes</option>
+          <option value="LaTanya Langford">LaTanya Langford</option>
+          <option value="Valeria Velazquez">Valeria Velazquez</option>
         </select>
       </div>
     </div>
@@ -883,11 +893,11 @@
   </div>
 
   <!-- COMPLETED VIEW -->
-  <div class="view" id="view-pbm">
+  <div class="view" id="view-benefits">
     <div class="section-header">
       <div>
         <div class="section-title">Project Benefits Monitoring</div>
-        <div class="section-sub" id="pbmSub">Performance data from Benefits Register — For Chiefs · Annual PMOE Reports 2023–2025</div>
+        <div class="section-sub">Project Benefits &amp; Impact — sourced from PMOE Load-Update report · PM-reported outcomes</div>
       </div>
       <button class="btn btn-ghost" onclick="generateAISummary('benefits')">💡 Key Insights</button>
     </div>
@@ -895,8 +905,6 @@
       <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="benefitsAIText"></div>
     </div>
-
-    <!-- Dropdown selector -->
     <div class="animate-in" style="margin-bottom:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
       <label style="font-size:12px;color:var(--text3);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;white-space:nowrap;">View</label>
       <select id="pbmSelector" onchange="switchPBMView()" class="filter-select" style="font-size:13px;padding:8px 14px;min-width:300px;">
@@ -904,25 +912,28 @@
         <option value="annual">📑 Annual PMOE Report</option>
       </select>
     </div>
-
-    <!-- Performance Monitoring sub-filters -->
     <div id="pbmPerformanceFilters" class="filter-bar animate-in" style="margin-bottom:16px;">
       <div class="search-wrap">
         <span class="search-icon">🔍</span>
         <input type="text" class="search-input" id="benefitsSearch" placeholder="Search programs or projects..." oninput="buildBenefits()">
       </div>
     </div>
-
-    <!-- Annual Report year buttons (hidden by default) -->
     <div id="pbmAnnualFilters" style="display:none;margin-bottom:16px;">
       <div style="display:flex;gap:8px;">
-        <button id="yr-2025" onclick="setAnnualYear(2025)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:white;transition:all .15s;">2025</button>
-        <button id="yr-2024" onclick="setAnnualYear(2024)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);transition:all .15s;">2024</button>
-        <button id="yr-2023" onclick="setAnnualYear(2023)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);transition:all .15s;">2023</button>
+        <button id="yr-2025" onclick="setAnnualYear(2025)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:white;">2025</button>
+        <button id="yr-2024" onclick="setAnnualYear(2024)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);">2024</button>
+        <button id="yr-2023" onclick="setAnnualYear(2023)" style="padding:5px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border2);background:transparent;color:var(--text3);">2023</button>
       </div>
     </div>
-
-    <div id="pbmContent" class="animate-in"></div>
+      <select class="filter-select" id="benefitsPMFilter" onchange="buildBenefits()">
+        <option value="">All PMs</option>
+        <option>Julius Ablis</option>
+        <option>Elizabeth Wallish</option>
+        <option>Jasmin Sanchez</option>
+        <option>Lane Harmon</option>
+      </select>
+    </div>
+    <div id="benefitsContent" class="animate-in"></div>
   </div>
 
   <div class="view" id="view-closeout">
@@ -964,7 +975,6 @@
         <option value="Elizabeth Wallish">Elizabeth Wallish</option>
         <option value="Jasmin Sanchez">Jasmin Sanchez</option>
         <option value="Lane Harmon">Lane Harmon</option>
-        <option value="Precious Avery">Precious Avery</option>
       </select>
     </div>
 
@@ -1217,26 +1227,26 @@ const PMOE_LOAD_DATA = [
 // =====================
 const MASTER_FILE_DATA = [
   // ── IN PROGRESS (20) ──────────────────────────────────────────────────
-  {initiative:"Anal Dysplasia Diagnostic and Treatment Services", status:"In Progress", phase:"Execution",  health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Julius Ablis",     start:"2025-06-01", end:"2026-05-28", pct:31},
-  {initiative:"APP Optimization",                                  status:"In Progress", phase:"Planning",   health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Lane Harmon",      start:"2026-01-05", end:"2026-11-30", pct:null},
-  {initiative:"ARPA Spend Monitoring/Sustainability",              status:"In Progress", phase:"Monitoring", health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2022-12-01", end:"2026-06-30", pct:89},
-  {initiative:"Behavioral Intake Center",                          status:"In Progress", phase:"Planning",   health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2026-02-02", end:"2026-05-22", pct:0},
-  {initiative:"Cath Lab - EP Optimization Project",                status:"In Progress", phase:"Planning",   health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Jasmin Sanchez",   start:"2026-03-02", end:"2026-10-30", pct:null},
-  {initiative:"CCH Press Ganey Consumerism",                       status:"In Progress", phase:"Execution",  health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Julius Ablis",     start:"2025-11-24", end:"2026-06-03", pct:38},
-  {initiative:"Domestic Spend (EARN)",                             status:"In Progress", phase:"Execution",  health:"Green", domain:"Fiscal Resilience",                                      pm:"Jasmin Sanchez",   start:"2025-06-02", end:"2026-12-31", pct:36},
-  {initiative:"Health Equity Committee Capacity Building",         status:"In Progress", phase:"Execution",  health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2026-01-05", end:"2026-12-18", pct:null},
-  {initiative:"HRO: Clinical Outcomes Group",                      status:"In Progress", phase:"Monitoring", health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Elizabeth Wallish",start:"2024-12-01", end:"2026-10-28", pct:90},
-  {initiative:"Immediate Care (AH)",                               status:"In Progress", phase:"Planning",   health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Lane Harmon",      start:"2026-01-05", end:"2026-10-30", pct:null},
-  {initiative:"JSH Nurse Call and Overhead Paging Systems",        status:"In Progress", phase:"Planning",   health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2026-03-03", end:"2026-08-17", pct:5},
-  {initiative:"Lab Automation Upgrade",                            status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2026-01-26", end:"2026-07-10", pct:29},
-  {initiative:"Medication Refill and Reconciliation Optimization", status:"In Progress", phase:"Planning",   health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Lane Harmon",      start:"2025-11-03", end:"2026-04-17", pct:0},
-  {initiative:"No Show Risk Prediction",                           status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2025-08-01", end:"2026-07-29", pct:60},
-  {initiative:"Pharmacy Domestic Spend",                           status:"In Progress", phase:"Execution",  health:"Green", domain:"Fiscal Resilience",                                      pm:"Lane Harmon",      start:"2022-01-01", end:"2023-03-31", pct:85},
-  {initiative:"Population Health Management/VBC",                  status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Lane Harmon",      start:"2022-12-01", end:"2026-12-29", pct:null},
-  {initiative:"Surgery Optimization Phase 3",                      status:"In Progress", phase:"Execution",  health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Jasmin Sanchez",   start:"2025-07-28", end:"2026-12-17", pct:82},
-  {initiative:"Unified Strategy: CCH-CCDPH",                       status:"In Progress", phase:"Planning",   health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2026-02-16", end:"2026-09-30", pct:null},
-  {initiative:"Wayfinding App - Stroger and PB",                   status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2025-08-01", end:"2026-07-29", pct:66},
-  {initiative:"Workforce Pipeline Development (City Colleges of Chicago)", status:"In Progress", phase:"Execution", health:"Green", domain:"Workforce: Talents & Teams", pm:"Jasmin Sanchez", start:"2025-06-30", end:"2026-12-18", pct:71},
+  {initiative:"Anal Dysplasia Diagnostic and Treatment Services", status:"In Progress", phase:"Execution",  health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Julius Ablis",     start:"2025-06-01", end:"2026-05-28", pct:31, sponsor:"Claudia Fegan"},
+  {initiative:"APP Optimization",                                  status:"In Progress", phase:"Planning",   health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Lane Harmon",      start:"2026-01-05", end:"2026-11-30", pct:null, sponsor:"Erik Mikaitis"},
+  {initiative:"ARPA Spend Monitoring/Sustainability",              status:"In Progress", phase:"Monitoring", health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2022-12-01", end:"2026-06-30", pct:89, sponsor:"Doug Elwell"},
+  {initiative:"Behavioral Intake Center",                          status:"In Progress", phase:"Planning",   health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2026-02-02", end:"2026-05-22", pct:0, sponsor:"Donna Mayfield"},
+  {initiative:"Cath Lab - EP Optimization Project",                status:"In Progress", phase:"Planning",   health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Jasmin Sanchez",   start:"2026-03-02", end:"2026-10-30", pct:null, sponsor:"Claudia Fegan"},
+  {initiative:"CCH Press Ganey Consumerism",                       status:"In Progress", phase:"Execution",  health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Julius Ablis",     start:"2025-11-24", end:"2026-06-03", pct:38, sponsor:"Israel Rocha"},
+  {initiative:"Domestic Spend (EARN)",                             status:"In Progress", phase:"Execution",  health:"Green", domain:"Fiscal Resilience",                                      pm:"Jasmin Sanchez",   start:"2025-06-02", end:"2026-12-31", pct:36, sponsor:"Doug Elwell"},
+  {initiative:"Health Equity Committee Capacity Building",         status:"In Progress", phase:"Execution",  health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2026-01-05", end:"2026-12-18", pct:null, sponsor:"LaTanya Langford"},
+  {initiative:"HRO: Clinical Outcomes Group",                      status:"In Progress", phase:"Monitoring", health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Elizabeth Wallish",start:"2024-12-01", end:"2026-10-28", pct:90, sponsor:"Erik Mikaitis"},
+  {initiative:"Immediate Care (AH)",                               status:"In Progress", phase:"Planning",   health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Lane Harmon",      start:"2026-01-05", end:"2026-10-30", pct:null, sponsor:"Valeria Velazquez"},
+  {initiative:"JSH Nurse Call and Overhead Paging Systems",        status:"In Progress", phase:"Planning",   health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2026-03-03", end:"2026-08-17", pct:5, sponsor:"Javier Reyes"},
+  {initiative:"Lab Automation Upgrade",                            status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2026-01-26", end:"2026-07-10", pct:29, sponsor:"Claudia Fegan"},
+  {initiative:"Medication Refill and Reconciliation Optimization", status:"In Progress", phase:"Planning",   health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Lane Harmon",      start:"2025-11-03", end:"2026-04-17", pct:0, sponsor:"Erik Mikaitis"},
+  {initiative:"No Show Risk Prediction",                           status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2025-08-01", end:"2026-07-29", pct:60, sponsor:"Valeria Velazquez"},
+  {initiative:"Pharmacy Domestic Spend",                           status:"In Progress", phase:"Execution",  health:"Green", domain:"Fiscal Resilience",                                      pm:"Lane Harmon",      start:"2022-01-01", end:"2023-03-31", pct:85, sponsor:"Doug Elwell"},
+  {initiative:"Population Health Management/VBC",                  status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Lane Harmon",      start:"2022-12-01", end:"2026-12-29", pct:null, sponsor:"Israel Rocha"},
+  {initiative:"Surgery Optimization Phase 3",                      status:"In Progress", phase:"Execution",  health:"Green", domain:"Optimization, Systemization, & Performance Improvement", pm:"Jasmin Sanchez",   start:"2025-07-28", end:"2026-12-17", pct:82, sponsor:"Claudia Fegan"},
+  {initiative:"Unified Strategy: CCH-CCDPH",                       status:"In Progress", phase:"Planning",   health:"Green", domain:"Health Equity, Community Health, & Integration",         pm:"Elizabeth Wallish",start:"2026-02-16", end:"2026-09-30", pct:null, sponsor:"Israel Rocha"},
+  {initiative:"Wayfinding App - Stroger and PB",                   status:"In Progress", phase:"Execution",  health:"Green", domain:"Growth, Innovation, & Transformation",                   pm:"Julius Ablis",     start:"2025-08-01", end:"2026-07-29", pct:66, sponsor:"Javier Reyes"},
+  {initiative:"Workforce Pipeline Development (City Colleges of Chicago)", status:"In Progress", phase:"Execution", health:"Green", domain:"Workforce: Talents & Teams", pm:"Jasmin Sanchez", start:"2025-06-30", end:"2026-12-18", pct:71, sponsor:"Israel Rocha"},
   // ── ON HOLD (1) ───────────────────────────────────────────────────────
   {initiative:"1115 Waiver Implementation: Justice-Involved Re-Entry", status:"On Hold", phase:"Planning", health:"Green", domain:"Health Equity, Community Health, & Integration", pm:"Julius Ablis", start:"2022-01-04", end:"2026-08-13", pct:26},
   // ── COMPLETE (28 top-level from PM Process Compliance Audit) ─────────
@@ -1280,6 +1290,28 @@ const MASTER_FILE_DATA = [
 // 54 completed projects from Projects - Completed and Closed folder + 21 active
 // Closeout Rate = projects with closeout:true ÷ 54 completed
 // true = filed, false = not filed, null = not yet applicable (active)
+const CLOSEOUT_DATA = [
+  {project:"ACGME Compliance - Call Room Optimization",pm:"Julius Ablis",doc:"Project Closure Report - ACGME 10.30.2024.docx",date:"Oct 2024",notes:"Call room optimization for ACGME compliance requirements across CCH facilities.",lessonsLearned:[]},
+  {project:"Allied Health Education Agreements Restructure",pm:"Elizabeth Wallish",doc:"Project Closure Report - Allied Health.docx",date:"Nov 2025",notes:"Restructure of allied health education agreements for operational and staffing alignment.",lessonsLearned:[]},
+  {project:"Birthday Health Screenings Program",pm:"Elizabeth Wallish",doc:"Project Closure Report - Birthday Health Screenings.docx",date:"Jan 2025",notes:"Launch of birthday-based preventive health screenings for Cook County residents.",lessonsLearned:[]},
+  {project:"Bronzeville Health Center",pm:"Julius Ablis",doc:"Project Closure Report - Bronzeville Health Center.docx",date:"Apr 2025",notes:"New health center providing Psychiatry, Family Medicine, and Rehabilitation services in Bronzeville.",lessonsLearned:[]},
+  {project:"Care Coordination Transition",pm:"Elizabeth Wallish",doc:"Care Coordination Project - Closure Report 8.5.25.docx",date:"Aug 2025",notes:"Transition of care coordination caseloads to CountyCare using health risk stratification.",lessonsLearned:[]},
+  {project:"Centralized Credentialing",pm:"Julius Ablis",doc:"Project Closure Report - Centralized Credentialing.docx",date:"Jul 2025",notes:"Centralized credentialing process to reduce deployment risk and administrative burden.",lessonsLearned:[]},
+  {project:"Crisis Triage Stabilization Center",pm:"Julius Ablis",doc:"Project Closure Report - Provident CTSC.docx",date:"Feb 2025",notes:"Establishment of Crisis Triage and Stabilization Center at Provident Hospital.",lessonsLearned:[]},
+  {project:"DGIM - Admin Process Improvement",pm:"Julius Ablis",doc:"Project Closure Report - DGIM Admin.docx",date:"Oct 2025",notes:"Administrative process improvement for the Department of General Internal Medicine.",lessonsLearned:[]},
+  {project:"Health Care Equity Certification",pm:"Elizabeth Wallish",doc:"HCE Project Closure Report 6.13.25.docx",date:"Jun 2025",notes:"The Joint Commission Healthcare Equity Certification \u2014 earned with no citations or deficiencies.",lessonsLearned:[]},
+  {project:"Organizational Consolidations",pm:"Elizabeth Wallish",doc:"Closure Report - Organizational Consolidation.docx",date:"Feb 2026",notes:"Organizational consolidation across CCH departments to improve alignment and operational clarity.",lessonsLearned:[]},
+  {project:"Primary Care-Managed Care Info Coordination",pm:"Julius Ablis",doc:"Project Closure Report - Provident PCP-Managed Care Info Coordination.docx",date:"Oct 2025",notes:"Coordination of primary care and managed care information to reduce referral gaps.",lessonsLearned:[]},
+  {project:"Provident Colonoscopy",pm:"Julius Ablis",doc:"Project Closure Report - Provident Colonoscopy.docx",date:"Oct 2025",notes:"Resumption of endoscopy and colonoscopy services at Provident Hospital.",lessonsLearned:[]},
+  {project:"Provident Volume",pm:"Elizabeth Wallish",doc:"Project Closure Report - Provident Volumes 2.10.26.docx",date:"Feb 2026",notes:"Provident Hospital volume growth monitoring \u2014 inpatient, observation, and ambulance.",lessonsLearned:[]},
+  {project:"Population Health Management - Phase 1",pm:"Julius Ablis",doc:"\ud83d\udcc4 Word document on file",date:"",notes:"Phase 1 population health management and value-based care alignment initiative.",lessonsLearned:[]},
+  {project:"Provident Observation Unit",pm:"Julius Ablis",doc:"\ud83d\udcc4 Word document on file",date:"",notes:"Dedicated observation unit at Provident for evaluation and short-stay treatment.",lessonsLearned:[]},
+  {project:"Provident PT/OT/SLP",pm:"Julius Ablis",doc:"\ud83d\udcc4 Word document on file",date:"",notes:"PT, OT, and SLP outpatient services at Provident Hospital.",lessonsLearned:[]},
+  {project:"Specialty Clinics Expansion at Sengstacke",pm:"Julius Ablis",doc:"\ud83d\udcc4 Word document on file",date:"",notes:"Specialty clinic expansion at Sengstacke Health Center serving west side communities.",lessonsLearned:[]},
+  {project:"Telehealth Optimization",pm:"Lane Harmon",doc:"\ud83d\udcc4 Word document on file",date:"",notes:"Optimization of AmWell telehealth platform across ACHN primary and specialty care settings.",lessonsLearned:[]},
+  {project:"UniteUS",pm:"Precious Avery",doc:"\ud83d\udcc4 Word document on file",date:"",notes:"Social services referral coordination platform connecting CCDPH, CountyCare, ACHN, and CBOs.",lessonsLearned:[]}
+];
+
 const COMPLIANCE_DATA = [
   // ── ACTIVE PROJECTS (21) ───────────────────────────────────────────────
   { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
@@ -1363,27 +1395,19 @@ const COMPLIANCE_DATA = [
 ];
 
 const DASHBOARD_DATA = [
-  // ── Active Project Dashboards — URLs verified via Smartsheet API ──
-  { name: "EARN Leadership Dashboard",           project: "Domestic Spend (EARN)",               status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/66gRMXVg52qMr4GpMQvRPGxXmg8PRP3m54hWWxh1",  description: "Domestic spend tracking, HEDIS performance, CountyCare member trends. FY2026 Goal: $152M." },
-  { name: "Surgery Optimization Dashboard",      project: "Surgery Optimization Phase 3",        status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/XhMqGvf69pR8RjPgH67Vcw2g92jPPMw7M66jHxv1",  description: "OR utilization, PPT v2 form deployment, deliverables tracker, tasks at risk." },
-  { name: "HEC Dashboard",                       project: "Health Equity Committee Capacity",    status: "Active",    pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/dashboards/q3p42QfJ7vVM676HRGgfFXRRV4pQ2v2c3h2x7R71",  description: "HEC capacity building initiative — recruitment efforts and committee governance." },
-  { name: "City Colleges Leadership Dashboard",  project: "City Colleges Workforce",             status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/8Vc7Q4Q8X3qxPXFWfVQ8534CH8wGCVRWjgQvmjj1",  description: "Workforce pipeline development with City Colleges of Chicago — MOU, curriculum, student placement." },
-  { name: "Immun / Unified Strategy Dashboard",  project: "Unified Strategy: CCH-CCDPH",        status: "Active",    pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/dashboards/3446qrv35rXrwcJrRm5WPVj9JmvrF4WpxQ56vcg1",  description: "CCH-CCDPH unified strategy — immunization metrics and initiative alignment tracking." },
-  // ── PMOE Portfolio Dashboard ───────────────────────────────────────────
-  { name: "PMOE Portfolio Dashboard",            project: "PMOE Portfolio",                      status: "Portfolio", pm: "PMOE Team",         url: "https://app.smartsheet.com/dashboards/6hwgprQwqWVx534C7675463whVVcq3w4p7gq3hG1",  description: "Full portfolio — project status by PM, strategic domain chart, weekly notes, delayed & on-hold projects." },
-  // ── Completed Project Dashboards ──────────────────────────────────────
-  { name: "Pharmacy Domestic Spend Dashboard",   project: "Pharmacy Domestic Spend",             status: "Completed", pm: "Lane Harmon",       url: "https://app.smartsheet.com/reports/g5fMcW75P7RvrRJJX3wR9CWMg9Q32wqX4877FHP1",  description: "Pharmacy domestic spend tracking and formulary optimization." },
-  { name: "Project Dashboard — Cath Lab",        project: "Cardio Service Line",                 status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Cath Lab optimization project closeout dashboard." },
-  { name: "Meeting Agenda Dashboard",            project: "Cardio Service Line",                 status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Cardio service line meeting agenda and governance tracker." },
-  { name: "Project Dashboard — NSICU Expansion", project: "Neuro and Onco Service Line",        status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "NSICU Expansion project closeout." },
-  { name: "Staffing Dashboard",                  project: "Agency Staffing (Surge)",             status: "Completed", pm: "PMOE Team",         url: "https://app.smartsheet.com/b/home",                                               description: "Agency staffing surge response dashboard." },
-  { name: "CCH Agency Staffing Dashboard",       project: "Agency Staffing (Improved Process)",  status: "Completed", pm: "PMOE Team",         url: "https://app.smartsheet.com/b/home",                                               description: "Improved agency staffing process post-surge." },
-  { name: "Project Dashboard — Quiet Campaign",  project: "Quiet Campaign",                      status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Quiet Campaign project closeout." },
-  { name: "Patient Throughput Dashboard",        project: "Patient Throughput Committee",        status: "Completed", pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/b/home",                                               description: "Patient throughput improvement initiative dashboard." },
-  { name: "Project Dashboard — Inpatient Dialysis", project: "Inpatient Dialysis (HD & CRRT)", status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Provident HD & CRRT Inpatient Dialysis closeout." },
-  { name: "Project Dashboard — L&D Experience", project: "L&D Patient Experience",               status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "Labor & Delivery patient experience improvement." },
-  { name: "1690 Command Center Dashboard",       project: "1690 Command Center",                 status: "Completed", pm: "Julius Ablis",      url: "https://app.smartsheet.com/b/home",                                               description: "1690 Command Center project closeout." },
-  { name: "30 Day Employee Onboarding",          project: "PMOE Onboarding",                     status: "Other",     pm: "PMOE Team",         url: "https://app.smartsheet.com/b/home",                                               description: "Employee onboarding tracker for the PMOE team." },
+  // ── Active Project Dashboards ─────────────────────────────────────────────
+  { name: "EARN Leadership Dashboard",                           project: "Domestic Spend (EARN)",                      status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/66gRMXVg52qMr4GpMQvRPGxXmg8PRP3m54hWWxh1",  description: "Domestic spend tracking, HEDIS performance, CountyCare member trends. FY2026 Goal: $152M." },
+  { name: "Surgery Optimization Dashboard",                      project: "Surgery Optimization Phase 3",               status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/XhMqGvf69pR8RjPgH67Vcw2g92jPPMw7M66jHxv1",  description: "OR utilization, PPT v2 form deployment, deliverables tracker, tasks at risk." },
+  { name: "HEC Dashboard",                                       project: "Health Equity Committee Capacity",           status: "Active",    pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/dashboards/q3p42QfJ7vVM676HRGgfFXRRV4pQ2v2c3h2x7R71",  description: "HEC capacity building initiative — recruitment efforts and committee governance." },
+  { name: "City Colleges Leadership Dashboard",                  project: "City Colleges Workforce",                    status: "Active",    pm: "Jasmin Sanchez",    url: "https://app.smartsheet.com/dashboards/8Vc7Q4Q8X3qxPXFWfVQ8534CH8wGCVRWjgQvmjj1",  description: "Workforce pipeline development with City Colleges of Chicago — MOU, curriculum, student placement." },
+  { name: "Immun / Unified Strategy Dashboard",                  project: "Unified Strategy: CCH-CCDPH",               status: "Active",    pm: "Elizabeth Wallish", url: "https://app.smartsheet.com/dashboards/3446qrv35rXrwcJrRm5WPVj9JmvrF4WpxQ56vcg1",  description: "CCH-CCDPH unified strategy — immunization metrics and initiative alignment tracking." },
+  { name: "ACHN Provider and Operations Coordination Tracker",   project: "ACHN Providers and Operations Coordination", status: "Active",    pm: "Julius Ablis",      url: "https://app.smartsheet.com/dashboards/8169822098876292",                            description: "ACHN provider coordination tracker — operations alignment and provider performance monitoring." },
+  { name: "CCH Agency Staffing Request & Utilization Tracker",   project: "Agency Staffing",                            status: "Active",    pm: "Julius Ablis",      url: "https://app.smartsheet.com/dashboards/5399766835193732",                            description: "CCH agency staffing request and utilization tracking — request volume, fill rates, and cost monitoring." },
+  { name: "PM Support Tracker",                                  project: "PMOE Operations",                            status: "Active",    pm: "PMOE Team",         url: "https://app.smartsheet.com/dashboards/3795133230540676",                            description: "PMOE PM support tracker — project management capacity, task assignment, and team support monitoring." },
+  { name: "Proposals Tracker",                                   project: "PMOE Operations",                            status: "Active",    pm: "PMOE Team",         url: "https://app.smartsheet.com/dashboards/7642616473905028",                            description: "Proposals tracking dashboard — pre-project proposals, PRB submissions, and approval pipeline." },
+  { name: "Program/District Code Tracker",                       project: "PMOE Operations",                            status: "Active",    pm: "PMOE Team",         url: "https://app.smartsheet.com/dashboards/2156860905154436",                            description: "Program and district code management tracker for PMOE portfolio financial tracking." },
+  // ── PMOE Portfolio Dashboard ──────────────────────────────────────────────
+  { name: "PMOE Portfolio Dashboard",                            project: "PMOE Portfolio",                             status: "Portfolio", pm: "PMOE Team",         url: "https://app.smartsheet.com/dashboards/6hwgprQwqWVx534C7675463whVVcq3w4p7gq3hG1",  description: "Full portfolio — project status by PM, strategic domain chart, weekly notes, delayed & on-hold projects." },
 ];
 
 const RISKS_DATA = [
@@ -1429,8 +1453,8 @@ function init() {
   let i = 0;
   const tick = () => {
     if (i < steps.length) {
-      bar.style.width = steps[i][0] + '%';
-      status.textContent = steps[i][1];
+      if (bar) bar.style.width = steps[i][0] + '%';
+      if (status) status.textContent = steps[i][1];
       i++;
       setTimeout(tick, 420);
     } else {
@@ -1489,10 +1513,10 @@ PMOE_LOAD_DATA.forEach(p => {
 function buildDashboard() {
   // Stats
   document.getElementById('stat-active').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
-  document.getElementById('stat-complete').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete').length;
+  document.document.getElementById('stat-complete').textContent = MASTER_FILE_DATA.filter(p => p.status === 'Complete').length;
   document.getElementById('stat-risks').textContent = allRisks.length;
   document.getElementById('stat-issues').textContent = allIssues.length;
-  const _sc = document.getElementById('stat-closeout'); if (_sc) _sc.textContent = Math.round(closeoutCount / totalComplete * 100) + '%';
+  document.getElementById('stat-closeout').textContent = Math.round(closeoutCount / totalComplete * 100) + '%';
 
   // Nav badges
   document.getElementById('projectsCount').textContent = MASTER_FILE_DATA.length;
@@ -1696,7 +1720,7 @@ function buildExecution(filter='', pm='', riskFilter='') {
       </div>`;
   }).join('');
 
-  const _eg = document.getElementById('executionGrid'); if (_eg) _eg.innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
+  const _egEl = document.getElementById('executionGrid'); if (_egEl) _egEl.innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
 }
 
 function filterExecution() {
@@ -1854,7 +1878,7 @@ function buildCompleted(filter='', pm='', closeout='') {
       </div>`;
   }).join('');
 
-  const _cg = document.getElementById('completedGrid'); if (_cg) _cg.innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
+  const _cgEl = document.getElementById('completedGrid'); if (_cgEl) _cgEl.innerHTML = html || '<div class="no-results">No projects match your filters.</div>';
 }
 
 function filterCompleted() {
@@ -2013,7 +2037,7 @@ function buildBenefits() {
       Post-meeting: Update statuses and action items within 24 hours.
     </div>`;
 
-  const _mc = document.getElementById('meetingContent'); if (_mc) _mc.innerHTML = html;
+  const _mcEl = document.getElementById('meetingContent'); if (_mcEl) _mcEl.innerHTML = html;
 }
 
 
@@ -2401,8 +2425,7 @@ async function generateAISummary(view) {
     compliance: ['complianceAI', 'complianceAIText'],
     closeout: ['closeoutAI', 'closeoutAIText'],
     projects: ['projectsAI', 'projectsAIText'],
-    benefits: ['benefitsAI', 'benefitsAIText'],
-    pbm: ['benefitsAI', 'benefitsAIText']
+    benefits: ['benefitsAI', 'benefitsAIText']
   };
 
   if (!elMap[view] || !prompts[view]) { console.warn('No AI config for view:', view); return; }
@@ -2514,7 +2537,7 @@ async function refreshData() {
     else if (current === 'projects')  buildProjects();
     else if (current === 'risks')      buildRisks();
     else if (current === 'projects')  buildProjects();
-    else if (current === 'pbm')    buildMeetingPrep();
+    else if (current === 'benefits')    buildMeetingPrep();
     else if (current === 'closeout')   buildCloseout();
     else if (current === 'compliance') buildCompliance();
 
@@ -2541,72 +2564,7 @@ async function refreshData() {
 // Sourced from PM Process Compliance Audit sheet attachments + Lessons Learned Logs
 // =====================
 
-const CLOSEOUT_DATA = [
-  {
-    project: "Cardio Service Line", pm: "Julius Ablis", sheetId: "3450682062727044",
-    lessonsLearned: [
-      { type:"Best Practice",           area:"Recruitment",             situation:"CCH agreed to post physician/PA jobs while PIDs were still being created, enabling the Cardiology department to attract top talent before positions were formally approved.", recommendation:"Standardize this as policy: allow job postings ahead of PID creation for Board-approved or grant-funded positions, especially when competing for scarce specialist talent." },
-      { type:"Improvement Opportunity", area:"Requirements Management",  situation:"New functionality requests arrived just 2 weeks before Go-Live, after resources had been allocated and schedules finalized.", recommendation:"Bring Clinical Informatics Strategist into early stakeholder sessions. Establish a formal change control cutoff — no new requirements after the project schedule is baselined." },
-      { type:"Improvement Opportunity", area:"Stakeholder Identification",situation:"OR Admin was not identified during pre-planning or kickoff and their coordination need for TAVR scheduling only surfaced 2 weeks before Go-Live.", recommendation:"Always ask sponsors and stakeholders: 'Is there anyone else I need to speak to?' Map all upstream and downstream workflow recipients before finalizing scope." },
-      { type:"Improvement Opportunity", area:"Recruitment Follow-Through",situation:"CCH submitted Decision-To-Hire for 5 physicians and PAs but applicants did not receive timely follow-up, risking loss of talent to competitors.", recommendation:"Establish recruitment communication SLAs. CHRO to improve CCH's response time to compete effectively for specialist talent." },
-      { type:"Best Practice",           area:"Vendor Management",        situation:"Abbott and Medtronic were slow on contracting. Division Chair and physician lead directly contacted company leadership behind the scenes to accelerate.", recommendation:"Use executive and physician leadership relationships as a back channel to accelerate vendor contract negotiations, especially for implantable device vendors." },
-      { type:"Improvement Opportunity", area:"Testing",                  situation:"Phase 2 testing went off track due to MERGE and ASCEND system issues, causing a domino effect on change control and Go-Live dates.", recommendation:"Allocate minimum 2 weeks for testing phases. Build in additional buffer whenever integrations involve third-party systems like MERGE or ASCEND." },
-      { type:"Improvement Opportunity", area:"Vendor Engagement",        situation:"Post-implant remote monitoring requirements were not surfaced during planning and only emerged during vendor coding/billing discussions.", recommendation:"Engage vendors in requirements gathering before contracts are finalized to surface technical requirements that clinical leads may not know to ask for." }
-    ]
-  },
-  {
-    project: "Provident Ambulance Runs", pm: "Julius Ablis", sheetId: "5583485176964996",
-    lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Physician Recruitment",    situation:"Physician market pool is small in Chicago. Recruiting permanent ED physicians takes at least 8 months, and even agency vendors struggle to fill positions.", recommendation:"For projects with predetermined Go-Live dates requiring physician recruitment, begin agency/locums engagement immediately. Get Legal and Operations Counsel ahead of union discussions early." },
-      { type:"Improvement Opportunity", area:"Requirements Management",  situation:"Active stakeholder engagement during requirements gathering identified critical risks including long lead times from global supply chain issues.", recommendation:"For projects with defined outcomes and milestones, thorough requirements analysis pays dividends. Never shortcut the requirements phase." },
-      { type:"Improvement Opportunity", area:"Requirements Completeness",situation:"A critical enterprise system requirement was missed and only surfaced a few weeks before Go-Live, requiring emergency weekend work.", recommendation:"Run a structured pre-Go-Live requirements checklist 6–8 weeks out. Include regulatory and infrastructure requirements, not just clinical workflow items." },
-      { type:"Improvement Opportunity", area:"Task Verification",        situation:"A project contributor reported a deliverable complete. PM accepted at face value. Two months later, stakeholders reported the functionality had never been delivered.", recommendation:"Require documented proof of completion for every critical-path deliverable — screenshots, sign-offs, or business owner verification — especially within 2 weeks of Go-Live." },
-      { type:"Improvement Opportunity", area:"Scheduling",               situation:"Go-Live date was predetermined before detailed planning was completed. The date moved 4 times — each move unnecessary and preventable.", recommendation:"Never lock a Go-Live date before scope, resources, and time constraints are understood. Faster timelines require more resources or narrower scope, never both for free." }
-    ]
-  },
-  {
-    project: "Inpatient Dialysis (HD & CRRT)", pm: "Julius Ablis", sheetId: "6141654999558020",
-    lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"CRRT equipment acquisition was delayed multiple times because the shared accounting string had insufficient funds remaining across projects.", recommendation:"Avoid shared accounting strings across projects. Confirm the funding balance with Finance before initiating procurement. Isolate project-specific strings at kickoff." },
-      { type:"Improvement Opportunity", area:"Equipment/Cross-Site",     situation:"It was assumed Provident Imaging Tech could operate a C-ARM unit transferred from Stroger — they could not. Project was delayed 2 weeks and required executive escalation.", recommendation:"Never assume equipment compatibility or staff capability across sites. Explicitly verify model specifications and staff certifications before scheduling transfers between Stroger and Provident." },
-      { type:"Best Practice",           area:"Communication Planning",   situation:"Hemodialysis Go-Live was delayed 1 week because locum physicians covering ICU and 8 West were unaware the service was now available.", recommendation:"Expand the communication plan to explicitly include locum and agency staff. Develop a structured Go-Live broadcast that reaches all clinical staff covering relevant units." },
-      { type:"Improvement Opportunity", area:"Stakeholder Engagement",   situation:"Stakeholders missed solution design, demo, and sign-off meetings, leading to expensive build-test-adjust cycles.", recommendation:"Establish attendance accountability for solution design and sign-off sessions — include it in the project charter. Missed demos must be documented and escalated to sponsor." }
-    ]
-  },
-  {
-    project: "Provident PT/OT/SLP", pm: "Julius Ablis", sheetId: "3749902026755972",
-    lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Budget/Finance",           situation:"Project was initiated without a concrete budget plan or funding source. PMOE had to intervene post-initiation and negotiate a $200k CFO transfer.", recommendation:"Before initiating any project, sponsors must have a confirmed budget and funding source. Align project initiation with the Cook County budgeting cycle." },
-      { type:"Improvement Opportunity", area:"Space Planning",           situation:"Several furniture pieces and an ice machine could not fit the designated space because dimensions were never measured before ordering.", recommendation:"Measure the space and verify equipment specifications against room dimensions before finalizing any procurement. Add space measurement as a mandatory requirements document step." },
-      { type:"Improvement Opportunity", area:"Technical Requirements",   situation:"An assumption was made that WOW units included computers — the model ordered was a medication dispensing unit for inpatient nursing, not outpatient therapy.", recommendation:"Specify technology requirements with full model-level detail. Validate vendor quotes against exact specifications before purchase order approval." },
-      { type:"Improvement Opportunity", area:"Scope Management",         situation:"Service owners had unstated expectations about additional items (signage, sharps collectors, sanitizers) never discussed during scoping.", recommendation:"Use a structured requirements document with an explicit 'what is NOT included' section. Walk through it with service owners to surface assumptions before scope is finalized." },
-      { type:"Improvement Opportunity", area:"Task Verification",        situation:"Project contributors reported tasks complete on several occasions without verification — issues uncovered just days before the baseline Go-Live date.", recommendation:"Verify completion of all tasks with documented evidence (photos, sign-offs, system screenshots). Build a verification step into the plan for every critical deliverable." }
-    ]
-  },
-  {
-    project: "Provident Observation Unit", pm: "Julius Ablis", sheetId: "4739855649034116",
-    lessonsLearned: [
-      { type:"Improvement Opportunity", area:"Requirements Specification",situation:"Strip and laser printers were not specified during the GE requirements meeting. Provident leaders assumed GE would replicate the ICU installation, but GE sent a different team with no knowledge of prior work.", recommendation:"Provide itemized, model-level requirements at every vendor requirements meeting. Prohibit 'copy what was done in the ICU' instructions — each project team must specify requirements from scratch." }
-    ]
-  },
-  { project: "Organizational Consolidations",              pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
-  { project: "Provident Volume",                            pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
-  { project: "ACGME Compliance - Call Room Optimization",  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Allied Health Education Agreements Restructure", pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
-  { project: "Birthday Health Screenings Program",         pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
-  { project: "Bronzeville Health Center",                  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Care Coordination Transition",               pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
-  { project: "Centralized Credentialing",                  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Crisis Triage Stabilization Center",         pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "DGIM - Admin Process Improvement",           pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Health Care Equity Certification",           pm: "Elizabeth Wallish", sheetId: null, lessonsLearned: [] },
-  { project: "Population Health Management - Phase 1",     pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Primary Care-Managed Care Information Coordination", pm: "Julius Ablis", sheetId: null, lessonsLearned: [] },
-  { project: "Provident Colonoscopy",                      pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Specialty Clinics Expansion at Sengstacke",  pm: "Julius Ablis",      sheetId: null, lessonsLearned: [] },
-  { project: "Telehealth Optimization",                    pm: "Lane Harmon",       sheetId: null, lessonsLearned: [] },
-  { project: "UniteUS",                                    pm: "Precious Avery",    sheetId: null, lessonsLearned: [] }
-];
+
 
 // Cross-cutting themes from real Lessons Learned logs (4 projects, 20 entries)
 const LESSONS_THEMES = [
@@ -2931,11 +2889,13 @@ function buildProjects() {
   const search    = (document.getElementById('projectsSearch')?.value || '').toLowerCase();
   const pmF       = document.getElementById('projectsPMFilter')?.value || '';
   const domainF   = document.getElementById('projectsDomainFilter')?.value || '';
+  const sponsorF  = document.getElementById('projectsSponsorFilter')?.value || '';
 
   let data = MASTER_FILE_DATA;
   if (_projStatusFilter) data = data.filter(p => p.status === _projStatusFilter);
   if (pmF)     data = data.filter(p => p.pm === pmF);
-  if (domainF) data = data.filter(p => p.domain.toLowerCase().includes(domainF.toLowerCase()));
+  if (domainF)  data = data.filter(p => p.domain.toLowerCase().includes(domainF.toLowerCase()));
+  if (sponsorF) data = data.filter(p => (p.sponsor || '') === sponsorF);
   if (search)  data = data.filter(p =>
     p.initiative.toLowerCase().includes(search) ||
     p.pm.toLowerCase().includes(search) ||
@@ -3132,7 +3092,7 @@ function buildBenefits() {
         <div style="flex:1;">
           <div class="project-name">${p.project}</div>
           <div class="project-pm" style="margin-top:3px;">
-            ${p.pm ? `👤 ${p.pm}` : ''}
+            ${p.pm ? `👤 ${p.pm}` : ''}${p.sponsor ? `<span style="margin-left:10px;font-size:11px;color:var(--text3);">🏢 ${p.sponsor}</span>` : ''}
             ${master ? `<span style="margin-left:8px;color:var(--text3);font-size:11px;">📂 ${master.phase}</span>` : ''}
           </div>
         </div>
@@ -3149,206 +3109,11 @@ function buildBenefits() {
 }
 
 
-// =====================
-// BENEFITS REGISTER DATA
-// SOURCE: Benefits Register — for Chiefs (report_id 1142112728862596)
-// Last fetched: April 5, 2026
-// =====================
-const BENEFITS_REGISTER_DATA = [
-  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2023", planned:"#ED Patients: 3,600",          actual:"#ED Patients: 3,402",                             ratio:0.95, health:"Yes"},
-  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2024", planned:"#ED Patients: 3,600",          actual:"#ED Patients: 2,876",                             ratio:0.80, health:"Hold"},
-  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2025", planned:"#ED Patients: 3,601",          actual:"#ED Patients: 2,404",                             ratio:0.67, health:"No"},
-  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2023", planned:"Encounters: 250",              actual:"Encounters: 221",                                 ratio:0.88, health:"Yes"},
-  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2024", planned:"Encounters: 290",              actual:"Encounters: 280",                                 ratio:0.97, health:"Yes"},
-  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2025", planned:"Encounters: 290",              actual:"Encounters: 169",                                 ratio:0.58, health:"No"},
-  {program:"Provident Growth", project:"Observation Unit",                           fy:"2023", planned:"Inpatient ADC: 12.5 | Obs ADC: 14", actual:"Inpatient ADC: 10.4 | Obs ADC: 9.0",      ratio:0.76, health:"Hold"},
-  {program:"Provident Growth", project:"Observation Unit",                           fy:"2024", planned:"Inpatient ADC: 12.5 | Obs ADC: 14", actual:"Inpatient ADC: 7.8 | Obs ADC: 9.4",       ratio:0.75, health:"No"},
-  {program:"Provident Growth", project:"Observation Unit",                           fy:"2025", planned:"Inpatient ADC: 12.5 | Obs ADC: 14", actual:"Inpatient ADC: 6.7 | Obs ADC: 9.2",       ratio:0.70, health:"No"},
-  {program:"Provident Growth", project:"Endoscopy / Colonoscopy Services",           fy:"2025", planned:"Encounters: 1,466",            actual:"Encounters: 437",                                 ratio:0.30, health:"No"},
-  {program:"Provident Growth", project:"Plastics Clinic",                            fy:"2024", planned:"Encounters: 92",               actual:"Encounters: 5",                                   ratio:0.05, health:"No"},
-  {program:"Provident Growth", project:"Plastics Clinic",                            fy:"2025", planned:"Encounters: 348",              actual:"Encounters: 73",                                  ratio:0.21, health:"No"},
-  {program:"Provident Growth", project:"Rehab Services (PT/OT/SLP)",                 fy:"2023", planned:"Encounters: 1,000",            actual:"Encounters: 1,029",                               ratio:1.03, health:"Yes"},
-  {program:"Provident Growth", project:"Rehab Services (PT/OT/SLP)",                 fy:"2024", planned:"Encounters: 4,000",            actual:"Encounters: 3,820",                               ratio:0.96, health:"Yes"},
-  {program:"Provident Growth", project:"D/C: Outpatient Rehab to Bronzeville",       fy:"2025 (Dec–May)", planned:"Encounters: 2,000", actual:"Encounters: 1,656",                               ratio:0.83, health:"Hold"},
-  {program:"Service Line Growth", project:"Robotic Bronchoscopy",                    fy:"2025", planned:"Encounters: 100",              actual:"Encounters: 103",                                 ratio:1.03, health:"Yes"},
-  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2023", planned:"TAVR: 48 | MITRACLIP: 12 | WATCHMAN: 12 | Balloon: 5 | Pulmo: 6 | CardioMEMS: 9",      actual:"TAVR: 20 | MITRACLIP: 16 | WATCHMAN: 35 | Balloon: 3 | Pulmo: 8 | CardioMEMS: 8",    ratio:1.10, health:"Yes"},
-  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2024", planned:"TAVR: 60 | IMPELLA: 5 | EKOS: 18 | MITRACLIP: 16 | WATCHMAN: 16 | Balloon: 5 | Pulmo: 6 | CardioMEMS: 12", actual:"TAVR: 28 | IMPELLA: 4 | EKOS: 2 | MITRACLIP: 14 | WATCHMAN: 28 | Balloon: 0 | Pulmo: 10 | CardioMEMS: 7", ratio:0.67, health:"No"},
-  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2025", planned:"TAVR: 60 | IMPELLA: 5 | EKOS: 18 | MITRACLIP: 16 | WATCHMAN: 16 | Balloon: 5 | Pulmo: 6 | CardioMEMS: 12", actual:"TAVR: 36 | IMPELLA: 2 | EKOS: 3 | MITRACLIP: 11 | WATCHMAN: 22 | Balloon: 2 | Pulmo: 8 | CardioMEMS: 13", ratio:0.70, health:"No"},
-  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2023", planned:"EP Ablation: 103 | Device: 100", actual:"EP Ablation: 178 | Device: 141",               ratio:1.60, health:"Yes"},
-  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2024", planned:"EP Ablation: 128 | Device: 110", actual:"EP Ablation: 182 | Device: 125",               ratio:1.30, health:"Yes"},
-  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2025", planned:"EP Ablation: 130 | Device: 120", actual:"EP Ablation: 130 | Device: 153",               ratio:1.10, health:"Yes"},
-  {program:"Service Line Growth", project:"Nuclear Cardiology (PET Jubilant)",       fy:"2025", planned:"Encounters: 43",               actual:"Encounters: 43",                                  ratio:1.00, health:"Yes"},
-  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2023", planned:"VNS Implantation: 3",          actual:"VNS Implantation: 3 (1 Medicaid, 1 MCO, 1 Commercial)",   ratio:1.00, health:"Yes"},
-  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2024", planned:"VNS Implantation: 10",         actual:"VNS Implantation: 3",                             ratio:0.33, health:"No"},
-  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2025", planned:"VNS Implantation: 12",         actual:"VNS Implantation: 11 | Revision: 1",              ratio:0.92, health:"Yes"},
-  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",  fy:"2024", planned:"Encounters: 80",               actual:"Encounters: 64",                                  ratio:0.80, health:"Hold"},
-  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",  fy:"2025", planned:"Encounters: 267",              actual:"Encounters: 225",                                 ratio:0.85, health:"Yes"}
-];
 
-const ANNUAL_REPORT_PROJECTS = {
-  2025: [
-    {p:"Healthcare Equity Certification (TJC)",       b:"Advanced certification to embed health equity in all aspects of CCH care and treatment.",                                             o:"TJC Certification earned. No single citation or deficiency — special remarks from TJC Evaluator.", status:"success"},
-    {p:"Birthday Screening Program",                   b:"Promote birthday health screenings at no cost to Cook County residents as part of prevention strategy.",                             o:"Program launched county-wide.",                                                                    status:"success"},
-    {p:"Care Coordination Transition",                 b:"Transition patient caseloads from complex care coordination back to CountyCare using health risk stratification.",                   o:"Adjusted scope: High Risk population stays with CountyCare Care Coordination group due to staffing constraints.", status:"partial"},
-    {p:"Bronzeville Health Center",                    b:"Enhance access to Psychiatry, Family Medicine, and Rehabilitation services for Bronzeville community.",                              o:"Family Medicine: 2,807 visits (6/1–11/30/25). Services actively running.",                        status:"success"},
-    {p:"ARPA Programs Transition",                     b:"Ensure smooth transition of ARPA-funded programs to sustainability or successor funding.",                                           o:"Transition completed Q2 2025.",                                                                    status:"success"},
-    {p:"ACHN Providers and Operations Coordination",   b:"Improve coordination between ACHN providers and operations to reduce inefficiencies.",                                               o:"97% complete as of monitoring phase.",                                                             status:"success"},
-    {p:"ACGME Compliance - Call Room Optimization",    b:"Ensure compliance with ACGME call room standards.",                                                                                  o:"All compliance requirements met.",                                                                 status:"success"}
-  ],
-  2024: [
-    {p:"Provident Observation Unit",                   b:"Dedicated space for evaluation and short-term treatment requiring extended observation before admission/discharge.",                  o:"Completed 10/30/24. Planned ADC: 14; Actual as of 12/2/24: 11.1 ADC.",                           status:"partial"},
-    {p:"Plastics Clinic at Sengstacke",                b:"Create access to Plastics Specialists at Provident Hospital.",                                                                       o:"Only 5 encounters vs 92 proposed as of 12/2/24. Significant benefit shortfall.",                  status:"risk"},
-    {p:"Permanent Catheter Removal Clinic A",          b:"Decrease wait time and avoid straining Interventional Radiology suite capacity.",                                                   o:"No performance metrics set by sponsor. Closeout report circulated.",                               status:"partial"},
-    {p:"UniteUS",                                      b:"Platform to facilitate referral coordination between CCDPH, CountyCare, BH Office, ACHN, and CBOs.",                                o:"All partners using the system. Maintenance transitioned to Office of Research and Innovation.",    status:"success"},
-    {p:"SPD Management Transition",                    b:"Bring in a vendor meeting Stroger Hospital Operations needs and improve Sterile Processing efficiency.",                             o:"Short-term vendor onboarded and took over SPD operations 12/4/24.",                               status:"success"},
-    {p:"Renal Pre-Transplant Clinic",                  b:"Streamlined process for CCH patients to access kidney transplant services.",                                                         o:"Service started 12/10. Metrics: # assessed by UI Health, # on transplant list, # who underwent transplant.", status:"success"},
-    {p:"North Riverside Dental Services",              b:"Establish Oral Health services at North Riverside on the west side of Chicago.",                                                     o:"Service started 12/23. Metrics: Actual volume and revenue vs planned.",                           status:"success"}
-  ],
-  2023: [
-    {p:"CCH-UCM Neuro Clinic at Provident",            b:"Increase outpatient Neurology foot traffic for insured patients — primary target CountyCare CVA/Stroke members.",                    o:"Redirection added avg 15 CVA/stroke outpatients per month. Transitioned to operations.",          status:"success"},
-    {p:"Vagal Nerve Stimulation (VNS)",                b:"New procedure implanting device to control needs of epileptic patients no longer responding to medicines.",                          o:"Pilot (3 cases): avg reimbursement $79k vs device cost $50k. Senior Mgmt approved 10 additional units.", status:"success"},
-    {p:"BCBS Managed Care Audits",                     b:"Address critical audit findings that could cause BCBS to cancel IPA agreement serving 1,900 members — significant revenue impact.",  o:"All critical findings addressed. BCBS cleared CCH. PMOE drafted policy and 2 tools meeting BCBS requirements.", status:"success"},
-    {p:"Telehealth Optimization",                      b:"Optimize and redefine use of AmWell for telehealth visits across ACHN in primary and specialty settings.",                           o:"Monthly reporting by Operations team including % successful calls and provider/patient satisfaction.", status:"success"},
-    {p:"CCBHC Certification",                          b:"Review standards to prepare for CCBHC certification application.",                                                                   o:"Compiled summary of checklist findings presented to workgroup.",                                   status:"success"},
-    {p:"SPD Management Transition Phase 1",            b:"Ensure seamless transition for sterilization of products and maintenance of sterility across all CCH facilities.",                  o:"Transition smooth and met Clinical and Operational requirements.",                                 status:"success"},
-    {p:"Provident PT/OT/SLP",                          b:"Increase foot traffic in outpatient services and decrease patient transfers from Provident to Stroger for Rehabilitation Medicine.",  o:"Services started 10/10/23. End of October volume: 238 (avg 12 patients/day).",                   status:"success"}
-  ]
-};
 
-const ANNUAL_EXEC_SUMMARY = {
-  2025: "In 2025, PMOE operated as a system-level execution arm for Cook County Health, advancing enterprise priorities through disciplined delivery, measurable outcomes, and governance. PMOE supported strategic goals by improving access, strengthening reliability and safety, reducing operational and compliance risk, and enabling long-term financial and workforce sustainability. More than 600 leaders completed High Reliability training, establishing a shared framework for Zero Harm.",
-  2024: "FY2024 saw PMOE deliver 7 major initiatives spanning new clinical services at Provident, care coordination improvements, and expansion of specialty services. Benefits monitoring mechanisms were established for all completed projects, with formal tracking of volume, revenue, and operational outcomes.",
-  2023: "FY2023 marked the establishment of foundational PMOE PMO practices alongside delivery of critical service expansion projects. PMOE restarted clinical services at Provident, established new procedures, and addressed system-level compliance challenges, while formalizing the Project Review Board and Balanced Scorecard frameworks."
-};
 
-const ANNUAL_BENEFITS_SUMMARY = {
-  2025: {performing:"EP (Cardiology) · PET Jubilant (Cardiology) · VNS Implantation (Neuroscience) · Endocrinology Clinic (North Riverside) · Robotic Bronchoscopy", underperforming:"All Provident-related implemented projects/initiatives are underperforming."},
-  2024: {performing:"UniteUS · SPD Management Transition · Renal Pre-Transplant Clinic · North Riverside Dental", underperforming:"Plastics Clinic (5 vs 92 planned encounters). Observation Unit below ADC targets."},
-  2023: {performing:"Provident PT/OT/SLP · VNS · BCBS Audit clearance · Telehealth Optimization", underperforming:"Quiet Campaign funding not allocated."}
-};
-
-const ANNUAL_UPCOMING = {
-  2025: [
-    {p:"Wellvana: Medicare VBC",              b:"Enrollment of Shared Savings Program and improved HEDIS measures.",                    e:"March 2026"},
-    {p:"CCH-City Colleges Partnership",       b:"Develop long-term workforce pipeline for select job positions at CCH.",                e:"December 2026"},
-    {p:"Organizational Consolidation",        b:"Create better organizational alignment and clarity.",                                   e:"June 2026"},
-    {p:"ARPA Expense Monitoring",             b:"ARPA fund spend monitoring through grant period.",                                      e:"June 2026"},
-    {p:"Anal Dysplasia Service",              b:"High-quality accessible screening and treatment for patients at risk of anal cancer.", e:"June 2026"},
-    {p:"CCH-Press Ganey Consumerism",         b:"Create strong online reputation critical to patient acquisition and brand credibility.", e:"May 2026"},
-    {p:"High Reliability (post-RISI)",        b:"Safety Coaching cohort pilot, training, and HRO tools. Q1 2026 metrics measurement.", e:"May 2026"}
-  ]
-};
-
-// =====================
-// PROJECT BENEFITS MONITORING — unified view
-// =====================
-let _pbmMode = 'performance';
-
-function switchPBMView() {
-  const sel = document.getElementById('pbmSelector');
-  if (!sel) return;
-  _pbmMode = sel.value;
-
-  const perfFilters   = document.getElementById('pbmPerformanceFilters');
-  const annualFilters = document.getElementById('pbmAnnualFilters');
-  const sub           = document.getElementById('pbmSub');
-
-  if (_pbmMode === 'performance') {
-    if (perfFilters)   perfFilters.style.display  = '';
-    if (annualFilters) annualFilters.style.display = 'none';
-    if (sub) sub.textContent = 'Source: Benefits Register — For Chiefs · Planned vs Actual · Provident Growth & Service Line Growth';
-    buildBenefits();
-  } else {
-    if (perfFilters)   perfFilters.style.display  = 'none';
-    if (annualFilters) annualFilters.style.display = '';
-    if (sub) sub.textContent = 'Source: 2023–2025 PMOE Annual Reports · Projects delivered · Outcomes & benefits monitored';
-    buildAnnualReport();
-  }
-}
-
-// ── Annual Report ─────────────────────────────────────────────────────────────
-let _annualYear = 2025;
-
-function setAnnualYear(year) {
-  _annualYear = year;
-  [2023,2024,2025].forEach(y => {
-    const btn = document.getElementById('yr-' + y);
-    if (!btn) return;
-    const active = y === year;
-    btn.style.background  = active ? 'var(--accent)' : 'transparent';
-    btn.style.color       = active ? '#fff'          : 'var(--text3)';
-    btn.style.borderColor = active ? 'var(--accent)'  : 'var(--border2)';
-  });
-  buildAnnualReport();
-}
-
-function buildAnnualReport() {
-  const el = document.getElementById('pbmContent');
-  if (!el) return;
-
-  const yr       = _annualYear;
-  const summary  = ANNUAL_EXEC_SUMMARY[yr]     || '';
-  const projects = ANNUAL_REPORT_PROJECTS[yr]   || [];
-  const benefits = ANNUAL_BENEFITS_SUMMARY[yr]  || {};
-  const upcoming = ANNUAL_UPCOMING[yr]          || [];
-
-  const statusClr  = {success:'var(--success)', partial:'var(--warning)', risk:'var(--danger)'};
-  const statusBg   = {success:'rgba(16,185,129,.08)', partial:'rgba(245,158,11,.08)', risk:'rgba(239,68,68,.08)'};
-  const statusIcon = {success:'✓ Delivered', partial:'~ Partial', risk:'⚠ Below Target'};
-
-  let html = '<div style="max-width:900px;">';
-
-  if (summary) {
-    html += `<div style="padding:16px 20px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(16,185,129,.08));border-radius:12px;border:1px solid rgba(59,130,246,.2);margin-bottom:20px;">
-      <div style="font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Executive Summary — ${yr}</div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.8;">${summary}</div>
-    </div>`;
-  }
-
-  if (projects.length) {
-    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">✅ Initiatives/Projects Completed (${yr})</div>`;
-    projects.forEach(r => {
-      html += `<div class="project-card" style="margin-bottom:10px;">
-        <div class="project-card-header">
-          <div style="flex:1;"><div class="project-name">${r.p}</div></div>
-          <span style="font-size:11px;padding:3px 10px;border-radius:10px;background:${statusBg[r.status]||'rgba(100,100,100,.08)'};color:${statusClr[r.status]||'var(--text3)'};border:1px solid ${statusClr[r.status]||'#888'}44;font-family:var(--font-mono);flex-shrink:0;">${statusIcon[r.status]||''}</span>
-        </div>
-        <div class="project-card-body">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin-top:6px;">
-            <div><div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;color:var(--text3);margin-bottom:3px;">Intended Benefit</div><div style="color:var(--text2);line-height:1.6;">${r.b}</div></div>
-            <div><div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;color:var(--success);margin-bottom:3px;">Outcome / Benefits Monitoring</div><div style="color:var(--text);line-height:1.6;">${r.o}</div></div>
-          </div>
-        </div>
-      </div>`;
-    });
-    html += '</div>';
-  }
-
-  if (benefits.performing || benefits.underperforming) {
-    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--warning);">📊 Benefits Monitoring Summary</div>`;
-    if (benefits.performing)    html += `<div style="padding:12px 16px;background:rgba(16,185,129,.08);border-radius:8px;border:1px solid rgba(16,185,129,.2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--success);">✓ Performing as Planned:</strong> <span style="color:var(--text2);">${benefits.performing}</span></div>`;
-    if (benefits.underperforming) html += `<div style="padding:12px 16px;background:rgba(239,68,68,.08);border-radius:8px;border:1px solid rgba(239,68,68,.2);font-size:13px;color:var(--danger);">⚠ ${benefits.underperforming}</div>`;
-    html += '</div>';
-  }
-
-  if (upcoming.length) {
-    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">🔮 Planned for 2026</div>`;
-    upcoming.forEach(r => {
-      html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 14px;background:var(--surface2);border-radius:8px;margin-bottom:6px;gap:12px;">
-        <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text);">${r.p}</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">${r.b}</div></div>
-        <div style="font-size:11px;padding:3px 10px;border-radius:10px;background:rgba(59,130,246,.1);color:var(--accent);border:1px solid rgba(59,130,246,.25);font-family:var(--font-mono);white-space:nowrap;">${r.e}</div>
-      </div>`;
-    });
-    html += '</div>';
-  }
-
-  html += '</div>';
-  el.innerHTML = html;
-}
-
-// ── Performance Monitoring (Benefits Register) ────────────────────────────────
 function buildBenefits() {
-  const el     = document.getElementById('pbmContent');
+  const el     = document.getElementById('benefitsContent');
   const search = (document.getElementById('benefitsSearch')?.value || '').toLowerCase();
   if (!el) return;
 
@@ -3370,7 +3135,6 @@ function buildBenefits() {
     <div class="stat-card blue" ><div class="stat-label">FY2025 On Track</div><div class="stat-value">${meet25}/${fy2025.length}</div><div class="stat-sub">Latest year</div></div>
   </div>`;
 
-  // Group by program → project
   const programs = {};
   allRows.forEach(row => {
     if (search && !row.project.toLowerCase().includes(search) && !row.program.toLowerCase().includes(search)) return;
@@ -3400,9 +3164,7 @@ function buildBenefits() {
                 <td style="padding:8px 10px;color:var(--text2);line-height:1.5;">${r.planned}</td>
                 <td style="padding:8px 10px;color:var(--text);line-height:1.5;">${r.actual}</td>
                 <td style="padding:8px 10px;text-align:center;font-family:var(--font-mono);font-weight:700;color:${r.ratio>=1?'var(--success)':r.ratio>=0.8?'var(--warning)':'var(--danger)'};">${Math.round(r.ratio*100)}%</td>
-                <td style="padding:8px 10px;text-align:center;">
-                  <span style="font-size:11px;padding:2px 10px;border-radius:10px;background:${healthBg[r.health]||'rgba(100,100,100,.1)'};color:${healthColor[r.health]||'#888'};font-weight:600;border:1px solid ${healthColor[r.health]||'#888'}44;">${healthIcon[r.health]||'?'} ${r.health}</span>
-                </td>
+                <td style="padding:8px 10px;text-align:center;"><span style="font-size:11px;padding:2px 10px;border-radius:10px;background:${healthBg[r.health]||'rgba(100,100,100,.1)'};color:${healthColor[r.health]||'#888'};font-weight:600;border:1px solid ${healthColor[r.health]||'#888'}44;">${healthIcon[r.health]||'?'} ${r.health}</span></td>
               </tr>`).join('')}
             </tbody>
           </table></div>
@@ -3412,12 +3174,185 @@ function buildBenefits() {
     html += '</div>';
   });
 
-  if (!Object.keys(programs).length) {
-    html += '<div class="no-results">No performance data matches your search.</div>';
-  }
-
+  if (!Object.keys(programs).length) html += '<div class="no-results">No performance data matches your search.</div>';
   el.innerHTML = html;
 }
+
+// ── Annual Report ─────────────────────────────────────────────────────────────
+let _annualYear = 2025;
+let _pbmMode = 'performance';
+
+function switchPBMView() {
+  const sel = document.getElementById('pbmSelector');
+  if (!sel) { buildBenefits(); return; }
+  _pbmMode = sel.value;
+  const perfF   = document.getElementById('pbmPerformanceFilters');
+  const annualF = document.getElementById('pbmAnnualFilters');
+  const sub     = document.getElementById('pbmSub');
+  if (_pbmMode === 'performance') {
+    if (perfF)   perfF.style.display   = '';
+    if (annualF) annualF.style.display  = 'none';
+    if (sub) sub.textContent = 'Source: Benefits Register — For Chiefs · Planned vs Actual · Provident Growth & Service Line Growth';
+    buildBenefits();
+  } else {
+    if (perfF)   perfF.style.display   = 'none';
+    if (annualF) annualF.style.display  = '';
+    if (sub) sub.textContent = 'Source: 2023–2025 PMOE Annual Reports · Projects delivered · Outcomes & benefits monitored';
+    buildAnnualReport();
+  }
+}
+
+function setAnnualYear(year) {
+  _annualYear = year;
+  [2023,2024,2025].forEach(y => {
+    const btn = document.getElementById('yr-' + y);
+    if (!btn) return;
+    btn.style.background  = y === year ? 'var(--accent)' : 'transparent';
+    btn.style.color       = y === year ? '#fff'          : 'var(--text3)';
+    btn.style.borderColor = y === year ? 'var(--accent)'  : 'var(--border2)';
+  });
+  buildAnnualReport();
+}
+
+function buildAnnualReport() {
+  const el = document.getElementById('benefitsContent');
+  if (!el) return;
+  const yr       = _annualYear;
+  const summary  = ANNUAL_EXEC_SUMMARY[yr]     || '';
+  const projects = ANNUAL_REPORT_PROJECTS[yr]   || [];
+  const benefits = ANNUAL_BENEFITS_SUMMARY[yr]  || {};
+  const upcoming = ANNUAL_UPCOMING[yr]          || [];
+  const statusClr  = {success:'var(--success)', partial:'var(--warning)', risk:'var(--danger)'};
+  const statusBg   = {success:'rgba(16,185,129,.08)', partial:'rgba(245,158,11,.08)', risk:'rgba(239,68,68,.08)'};
+  const statusIcon = {success:'✓ Delivered', partial:'~ Partial', risk:'⚠ Below Target'};
+
+  let html = '<div style="max-width:900px;">';
+  if (summary) {
+    html += `<div style="padding:16px 20px;background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(16,185,129,.08));border-radius:12px;border:1px solid rgba(59,130,246,.2);margin-bottom:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;">Executive Summary — ${yr}</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8;">${summary}</div></div>`;
+  }
+  if (projects.length) {
+    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">✅ Initiatives/Projects Completed (${yr})</div>`;
+    projects.forEach(r => {
+      html += `<div class="project-card" style="margin-bottom:10px;">
+        <div class="project-card-header">
+          <div style="flex:1;"><div class="project-name">${r.p}</div></div>
+          <span style="font-size:11px;padding:3px 10px;border-radius:10px;background:${statusBg[r.status]||'rgba(100,100,100,.08)'};color:${statusClr[r.status]||'var(--text3)'};border:1px solid ${statusClr[r.status]||'#888'}44;font-family:var(--font-mono);flex-shrink:0;">${statusIcon[r.status]||''}</span>
+        </div>
+        <div class="project-card-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin-top:6px;">
+            <div><div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;color:var(--text3);margin-bottom:3px;">Intended Benefit</div><div style="color:var(--text2);line-height:1.6;">${r.b}</div></div>
+            <div><div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;color:var(--success);margin-bottom:3px;">Outcome / Benefits Monitoring</div><div style="color:var(--text);line-height:1.6;">${r.o}</div></div>
+          </div>
+        </div>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  if (benefits.performing || benefits.underperforming) {
+    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--warning);">📊 Benefits Monitoring Summary</div>`;
+    if (benefits.performing)      html += `<div style="padding:12px 16px;background:rgba(16,185,129,.08);border-radius:8px;border:1px solid rgba(16,185,129,.2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--success);">✓ Performing as Planned:</strong> <span style="color:var(--text2);">${benefits.performing}</span></div>`;
+    if (benefits.underperforming) html += `<div style="padding:12px 16px;background:rgba(239,68,68,.08);border-radius:8px;border:1px solid rgba(239,68,68,.2);font-size:13px;color:var(--danger);">⚠ ${benefits.underperforming}</div>`;
+    html += '</div>';
+  }
+  if (upcoming.length) {
+    html += `<div style="margin-bottom:20px;"><div style="font-size:13px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.08em;padding:8px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border-left:3px solid var(--accent);">🔮 Planned for 2026</div>`;
+    upcoming.forEach(r => {
+      html += `<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:10px 14px;background:var(--surface2);border-radius:8px;margin-bottom:6px;gap:12px;">
+        <div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--text);">${r.p}</div><div style="font-size:12px;color:var(--text3);margin-top:2px;">${r.b}</div></div>
+        <div style="font-size:11px;padding:3px 10px;border-radius:10px;background:rgba(59,130,246,.1);color:var(--accent);border:1px solid rgba(59,130,246,.25);font-family:var(--font-mono);white-space:nowrap;">${r.e}</div>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+
+
+const BENEFITS_REGISTER_DATA = [
+  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2023", planned:"#ED Patients: 3,600",                actual:"#ED Patients: 3,402",                         ratio:0.95, health:"Yes"},
+  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2024", planned:"#ED Patients: 3,600",                actual:"#ED Patients: 2,876",                         ratio:0.80, health:"Hold"},
+  {program:"Provident Growth", project:"Ambulance Runs",                             fy:"2025", planned:"#ED Patients: 3,601",                actual:"#ED Patients: 2,404",                         ratio:0.67, health:"No"},
+  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2023", planned:"Encounters: 250",                    actual:"Encounters: 221",                             ratio:0.88, health:"Yes"},
+  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2024", planned:"Encounters: 290",                    actual:"Encounters: 280",                             ratio:0.97, health:"Yes"},
+  {program:"Provident Growth", project:"Inpatient Dialysis",                         fy:"2025", planned:"Encounters: 290",                    actual:"Encounters: 169",                             ratio:0.58, health:"No"},
+  {program:"Provident Growth", project:"Observation Unit",                           fy:"2023", planned:"Inpatient ADC:12.5 | Obs ADC:14",   actual:"Inpatient ADC:10.4 | Obs ADC:9.0",            ratio:0.76, health:"Hold"},
+  {program:"Provident Growth", project:"Observation Unit",                           fy:"2024", planned:"Inpatient ADC:12.5 | Obs ADC:14",   actual:"Inpatient ADC:7.8 | Obs ADC:9.4",             ratio:0.75, health:"No"},
+  {program:"Provident Growth", project:"Observation Unit",                           fy:"2025", planned:"Inpatient ADC:12.5 | Obs ADC:14",   actual:"Inpatient ADC:6.7 | Obs ADC:9.2",             ratio:0.70, health:"No"},
+  {program:"Provident Growth", project:"Endoscopy / Colonoscopy",                    fy:"2025", planned:"Encounters: 1,466",                  actual:"Encounters: 437",                             ratio:0.30, health:"No"},
+  {program:"Provident Growth", project:"Plastics Clinic",                            fy:"2024", planned:"Encounters: 92",                     actual:"Encounters: 5",                               ratio:0.05, health:"No"},
+  {program:"Provident Growth", project:"Plastics Clinic",                            fy:"2025", planned:"Encounters: 348",                    actual:"Encounters: 73",                              ratio:0.21, health:"No"},
+  {program:"Provident Growth", project:"Rehab Services (PT/OT/SLP)",                 fy:"2023", planned:"Encounters: 1,000",                  actual:"Encounters: 1,029",                           ratio:1.03, health:"Yes"},
+  {program:"Provident Growth", project:"Rehab Services (PT/OT/SLP)",                 fy:"2024", planned:"Encounters: 4,000",                  actual:"Encounters: 3,820",                           ratio:0.96, health:"Yes"},
+  {program:"Provident Growth", project:"D/C: Outpatient Rehab to Bronzeville",       fy:"2025", planned:"Encounters: 2,000",                  actual:"Encounters: 1,656",                           ratio:0.83, health:"Hold"},
+  {program:"Service Line Growth", project:"Robotic Bronchoscopy",                    fy:"2025", planned:"Encounters: 100",                    actual:"Encounters: 103",                             ratio:1.03, health:"Yes"},
+  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2023", planned:"TAVR:48|MITRACLIP:12|WATCHMAN:12",  actual:"TAVR:20|MITRACLIP:16|WATCHMAN:35",             ratio:1.10, health:"Yes"},
+  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2024", planned:"TAVR:60|IMPELLA:5|EKOS:18",         actual:"TAVR:28|IMPELLA:4|EKOS:2",                     ratio:0.67, health:"No"},
+  {program:"Service Line Growth", project:"Cardio Service Line (Cath Lab & EP Lab)", fy:"2025", planned:"TAVR:60|IMPELLA:5|EKOS:18",         actual:"TAVR:36|IMPELLA:2|EKOS:3",                     ratio:0.70, health:"No"},
+  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2023", planned:"EP Ablation:103|Device:100",         actual:"EP Ablation:178|Device:141",                   ratio:1.60, health:"Yes"},
+  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2024", planned:"EP Ablation:128|Device:110",         actual:"EP Ablation:182|Device:125",                   ratio:1.30, health:"Yes"},
+  {program:"Service Line Growth", project:"EP Lab (Ablation & Device)",              fy:"2025", planned:"EP Ablation:130|Device:120",         actual:"EP Ablation:130|Device:153",                   ratio:1.10, health:"Yes"},
+  {program:"Service Line Growth", project:"Nuclear Cardiology (PET Jubilant)",       fy:"2025", planned:"Encounters: 43",                    actual:"Encounters: 43",                               ratio:1.00, health:"Yes"},
+  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2023", planned:"VNS Implantation: 3",               actual:"VNS Implantation: 3 (Medicaid/MCO/Commercial)",ratio:1.00, health:"Yes"},
+  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2024", planned:"VNS Implantation: 10",              actual:"VNS Implantation: 3",                          ratio:0.33, health:"No"},
+  {program:"Service Line Growth", project:"Vagal Nerve Stimulation (VNS)",           fy:"2025", planned:"VNS Implantation: 12",              actual:"VNS Implantation: 11 | Revision: 1",           ratio:0.92, health:"Yes"},
+  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",  fy:"2024", planned:"Encounters: 80",                    actual:"Encounters: 64",                               ratio:0.80, health:"Hold"},
+  {program:"Service Line Growth", project:"Endocrinology Clinic (North Riverside)",  fy:"2025", planned:"Encounters: 267",                   actual:"Encounters: 225",                              ratio:0.85, health:"Yes"}
+];
+
+const ANNUAL_REPORT_PROJECTS = {
+  2025: [
+    {p:"Healthcare Equity Certification (TJC)", b:"Certification to embed health equity across CCH care and treatment.", o:"TJC Certification earned. No citations or deficiencies — special remarks from evaluator.", status:"success"},
+    {p:"Birthday Screening Program", b:"Promote birthday health screenings at no cost to Cook County residents.", o:"Program launched county-wide.", status:"success"},
+    {p:"Care Coordination Transition", b:"Transition patient caseloads to CountyCare using health risk stratification.", o:"Adjusted scope: High Risk stays with CountyCare Care Coordination due to staffing constraints.", status:"partial"},
+    {p:"Bronzeville Health Center", b:"Enhance access to Psychiatry, Family Medicine, and Rehabilitation for Bronzeville.", o:"Family Medicine: 2,807 visits (6/1-11/30/25). Services actively running.", status:"success"},
+    {p:"ARPA Programs Transition", b:"Ensure smooth transition of ARPA-funded programs to sustainability.", o:"Transition completed Q2 2025.", status:"success"},
+    {p:"ACHN Providers and Operations Coordination", b:"Improve coordination between ACHN providers and operations.", o:"97% complete as of monitoring phase.", status:"success"},
+    {p:"ACGME Compliance - Call Room Optimization", b:"Ensure compliance with ACGME call room standards across CCH.", o:"All compliance requirements met.", status:"success"}
+  ],
+  2024: [
+    {p:"Provident Observation Unit", b:"Dedicated space for evaluation and short-term treatment requiring extended observation.", o:"Completed 10/30/24. Planned ADC: 14; Actual as of 12/2/24: 11.1 ADC.", status:"partial"},
+    {p:"Plastics Clinic at Sengstacke", b:"Create access to Plastics Specialists at Provident Hospital.", o:"Only 5 encounters vs 92 proposed. Significant benefit shortfall.", status:"risk"},
+    {p:"Permanent Catheter Removal Clinic A", b:"Decrease wait time and avoid straining IR suite capacity.", o:"No performance metrics set by sponsor. Closeout report circulated.", status:"partial"},
+    {p:"UniteUS", b:"Platform to facilitate referral coordination between CCDPH, CountyCare, BH, ACHN, and CBOs.", o:"All partners using the system. Maintenance transitioned to Office of Research and Innovation.", status:"success"},
+    {p:"SPD Management Transition", b:"Vendor meeting Stroger Hospital needs and improving Sterile Processing efficiency.", o:"Short-term vendor onboarded and took over SPD operations 12/4/24.", status:"success"},
+    {p:"Renal Pre-Transplant Clinic", b:"Streamlined process for CCH patients to access kidney transplant services.", o:"Service started 12/10. Metrics tracking # assessed, # on list, # who underwent transplant.", status:"success"},
+    {p:"North Riverside Dental Services", b:"Establish Oral Health services at North Riverside on the west side of Chicago.", o:"Service started 12/23. Metrics: Actual volume and revenue vs planned.", status:"success"}
+  ],
+  2023: [
+    {p:"CCH-UCM Neuro Clinic at Provident", b:"Increase outpatient Neurology for CountyCare CVA/Stroke members.", o:"Redirection added avg 15 CVA/stroke outpatients per month. Transitioned to operations.", status:"success"},
+    {p:"Vagal Nerve Stimulation (VNS)", b:"New procedure for epileptic patients no longer responding to medicines.", o:"Pilot (3 cases): avg reimbursement $79k vs device cost $50k. Senior Mgmt approved 10 more units.", status:"success"},
+    {p:"BCBS Managed Care Audits", b:"Address critical audit findings that could cause BCBS to cancel IPA agreement (1,900 members).", o:"All critical findings addressed. BCBS cleared CCH. PMOE drafted policy and 2 compliance tools.", status:"success"},
+    {p:"Telehealth Optimization", b:"Optimize AmWell telehealth across ACHN in primary and specialty settings.", o:"Monthly reporting by Operations team — % successful calls and provider/patient satisfaction.", status:"success"},
+    {p:"CCBHC Certification", b:"Review standards to prepare for CCBHC certification application.", o:"Compiled checklist findings summary presented to workgroup.", status:"success"},
+    {p:"SPD Management Transition Phase 1", b:"Ensure seamless sterilization transition across all CCH facilities.", o:"Transition smooth and met Clinical and Operational requirements.", status:"success"},
+    {p:"Provident PT/OT/SLP", b:"Increase PT/OT/SLP outpatient services and decrease transfers to Stroger.", o:"Services started 10/10/23. End of October: 238 visits (avg 12/day).", status:"success"}
+  ]
+};
+const ANNUAL_EXEC_SUMMARY = {
+  2025: "In 2025, PMOE operated as a system-level execution arm for Cook County Health, advancing enterprise priorities through disciplined delivery, measurable outcomes, and governance. More than 600 leaders completed High Reliability training, establishing a shared framework for Zero Harm. PMOE supported strategic goals by improving access, strengthening reliability and safety, reducing operational and compliance risk, and enabling long-term financial and workforce sustainability.",
+  2024: "FY2024 saw PMOE deliver 7 major initiatives spanning new clinical services at Provident, care coordination improvements, and expansion of specialty services. Benefits monitoring mechanisms were established for all completed projects.",
+  2023: "FY2023 marked the establishment of foundational PMOE PMO practices alongside critical service expansion. PMOE restarted Provident clinical services, addressed system-level compliance challenges, and formalized the Project Review Board and Balanced Scorecard frameworks."
+};
+const ANNUAL_BENEFITS_SUMMARY = {
+  2025: {performing:"EP (Cardiology) · PET Jubilant · VNS Implantation · Endocrinology Clinic (North Riverside) · Robotic Bronchoscopy", underperforming:"All Provident-related implemented projects/initiatives are underperforming."},
+  2024: {performing:"UniteUS · SPD Management Transition · Renal Pre-Transplant Clinic · North Riverside Dental", underperforming:"Plastics Clinic (5 vs 92 planned encounters). Observation Unit below ADC targets."},
+  2023: {performing:"Provident PT/OT/SLP · VNS · BCBS Audit clearance · Telehealth Optimization", underperforming:"Quiet Campaign funding not allocated."}
+};
+const ANNUAL_UPCOMING = {
+  2025: [
+    {p:"Wellvana: Medicare VBC",        b:"Enrollment of Shared Savings Program and improved HEDIS measures.",                   e:"March 2026"},
+    {p:"CCH-City Colleges Partnership", b:"Develop long-term workforce pipeline for select CCH job positions.",                  e:"December 2026"},
+    {p:"Organizational Consolidation",  b:"Create better organizational alignment and clarity.",                                  e:"June 2026"},
+    {p:"ARPA Expense Monitoring",       b:"ARPA fund spend monitoring through grant period.",                                     e:"June 2026"},
+    {p:"Anal Dysplasia Service",        b:"High-quality screening and treatment for patients at risk of anal cancer.",           e:"June 2026"},
+    {p:"CCH-Press Ganey Consumerism",   b:"Create strong online reputation critical to patient acquisition and brand credibility.", e:"May 2026"},
+    {p:"High Reliability (post-RISI)",  b:"Safety Coaching cohort, training, and HRO tools. Q1 2026 metrics measurement.",     e:"May 2026"}
+  ]
+};
 
 function buildDashboards(filter='', statusFilter='') {
   let data = DASHBOARD_DATA;
