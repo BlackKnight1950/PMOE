@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1012,6 +1012,11 @@
 </main>
 
 <script>
+// Module-level mutable arrays — populated by buildDashboard() and refreshData()
+let allRisks  = [];
+let allIssues = [];
+
+
 // =====================
 // EMBEDDED SMARTSHEET DATA — PMOE Load - Update + Master File
 // Project Item / Deliverable / Status / Risk or Issue / Impact/Notes  (PMOE Load - Update)
@@ -1432,10 +1437,10 @@ const RISKS_DATA = [
 // =====================
 const activeProjects = PMOE_LOAD_DATA;
 const completedProjects = COMPLIANCE_DATA.filter(p => p.status === "Complete");
-const allRisks = PMOE_LOAD_DATA.flatMap(p =>
+allRisks = PMOE_LOAD_DATA.flatMap(p =>
   p.deliverables.filter(d => d.risk === "Risk").map(d => ({...d, project: p.project, pm: p.pm, type:"Risk"}))
 );
-const allIssues = PMOE_LOAD_DATA.flatMap(p =>
+allIssues = PMOE_LOAD_DATA.flatMap(p =>
   p.deliverables.filter(d => d.risk === "Issue").map(d => ({...d, project: p.project, pm: p.pm, type:"Issue"}))
 );
 const closeoutCount = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && p.closeout === true).length;
@@ -1466,6 +1471,8 @@ function init() {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
         buildDashboard();
+        // Auto-refresh from live API on load
+        refreshData();
       }, 300);
     }
   };
@@ -1514,6 +1521,7 @@ PMOE_LOAD_DATA.forEach(p => {
   }
   p.master = mkey ? (MASTER_FILE_DATA[mkey] || null) : null;
 });
+
 
 function buildDashboard() {
   // Stats
@@ -2483,40 +2491,87 @@ function showView(name) {
 }
 
 async function refreshData() {
+  const API = 'https://pmoe-api.onrender.com/api/data';
   const btn = document.getElementById('refreshBtn');
   const refreshEl = document.getElementById('lastRefresh');
 
-  // The dashboard data is embedded at build time from Smartsheet via Claude + Smartsheet MCP.
-  // To refresh: open Claude (claude.ai), upload this file, and say "refresh the dashboard data".
-  // Claude will pull all live Smartsheet data and generate a new file with current information.
+  btn.textContent = '↺ Refreshing…';
+  btn.disabled = true;
+  if (refreshEl) refreshEl.textContent = 'Fetching live data…';
 
-  btn.textContent = '↺ Refresh';
-  btn.disabled = false;
+  try {
+    const res = await fetch(API, { signal: AbortSignal.timeout(20000) });
 
-  // Show how to refresh
-  const modal = document.createElement('div');
-  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
-  modal.innerHTML = `
-    <div style="background:var(--surface);border:1px solid var(--border2);border-radius:16px;padding:32px;max-width:500px;width:90%;box-shadow:0 24px 48px rgba(0,0,0,0.4);">
-      <div style="font-size:24px;margin-bottom:12px;">🔄 How to Refresh Live Data</div>
-      <div style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px;">
-        This dashboard embeds live Smartsheet data that was last pulled on <strong>April 4, 2026</strong>.<br><br>
-        To update with the latest changes from all Smartsheet sources:
-        <ol style="margin:12px 0 0 20px;padding:0;">
-          <li style="margin-bottom:8px;">Open <a href="https://claude.ai" target="_blank" style="color:var(--accent);">claude.ai</a> in your browser</li>
-          <li style="margin-bottom:8px;">Upload this HTML file to a new message</li>
-          <li style="margin-bottom:8px;">Type: <strong>"Refresh the dashboard data from Smartsheet"</strong></li>
-          <li>Claude will pull all live data and deliver an updated file</li>
-        </ol>
-      </div>
-      <div style="font-size:12px;color:var(--text3);margin-bottom:20px;padding:10px 14px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);">
-        📊 <strong>Sources refreshed:</strong> PMOE Load-Update report · PM Process Compliance Audit · CCH-Press Ganey Risks Log · Lab Automation Risks Log · Master File · Lessons Learned sheets
-      </div>
-      <button onclick="this.closest('div[style*=fixed]').remove()" style="background:var(--accent);color:white;border:none;border-radius:8px;padding:10px 24px;font-size:14px;cursor:pointer;font-weight:600;">Got it</button>
-    </div>`;
-  document.body.appendChild(modal);
-  modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(errBody.error || `API error ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    // ── Update live PMOE_LOAD_DATA ────────────────────────────────────────
+    if (data.pmoeLoadData && data.pmoeLoadData.length) {
+      // Add masterKey field by normalising project name (matches MASTER_FILE_DATA lookup)
+      data.pmoeLoadData.forEach(p => {
+        if (!p.masterKey) p.masterKey = p.project;
+      });
+      PMOE_LOAD_DATA.length = 0;
+      data.pmoeLoadData.forEach(p => PMOE_LOAD_DATA.push(p));
+    }
+
+    // ── Update live Risk data ─────────────────────────────────────────────
+    if (data.risksData) {
+      allRisks.length  = 0;
+      allIssues.length = 0;
+      data.risksData.forEach(r => {
+        if (r.highRisk) allRisks.push(r); else allIssues.push(r);
+      });
+    }
+
+    // ── Update live Compliance data ───────────────────────────────────────
+    if (data.complianceData && data.complianceData.length) {
+      COMPLIANCE_DATA.length = 0;
+      data.complianceData.forEach(r => COMPLIANCE_DATA.push(r));
+    }
+
+    // ── Update timestamp ──────────────────────────────────────────────────
+    const fetched = data.fetchedAt ? new Date(data.fetchedAt) : new Date();
+    const stamp = fetched.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' })
+                + ' ' + fetched.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' });
+    if (refreshEl) refreshEl.textContent = `Live · ${stamp}`;
+
+    // ── Rebuild entire dashboard with new data ────────────────────────────
+    buildDashboard();
+
+    btn.textContent = '↺ Refresh';
+    btn.disabled = false;
+
+  } catch (err) {
+    console.error('Refresh failed:', err.message);
+    btn.textContent = '↺ Refresh';
+    btn.disabled = false;
+    if (refreshEl) refreshEl.textContent = 'Showing cached data';
+
+    // Show non-blocking error banner
+    const existing = document.getElementById('_apiErrorBanner');
+    if (existing) existing.remove();
+    const banner = document.createElement('div');
+    banner.id = '_apiErrorBanner';
+    banner.style.cssText = 'position:fixed;bottom:20px;right:20px;background:var(--surface);border:1px solid var(--danger);border-radius:10px;padding:14px 18px;max-width:360px;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:9999;font-size:13px;';
+    banner.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;">
+        <div>
+          <div style="font-weight:700;color:var(--danger);margin-bottom:4px;">⚠ Live refresh failed</div>
+          <div style="color:var(--text2);line-height:1.5;">${err.message}</div>
+          <div style="color:var(--text3);font-size:11px;margin-top:4px;">Showing embedded data. API: pmoe-api.onrender.com</div>
+        </div>
+        <button onclick="this.closest('#_apiErrorBanner').remove()" style="background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0;flex-shrink:0;">✕</button>
+      </div>`;
+    document.body.appendChild(banner);
+    setTimeout(() => banner.remove(), 8000);
+  }
 }
+
 
 // =====================
 // CLOSEOUT / LESSONS LEARNED DATA
