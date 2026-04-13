@@ -771,6 +771,7 @@
     <div class="stats-row animate-in delay-1" id="statsRow">
       <div class="stat-card blue"><div class="stat-label">Active Projects</div><div class="stat-value" id="stat-active">—</div><div class="stat-sub">Planning &amp; Execution Phase</div></div>
       <div class="stat-card green"><div class="stat-label">Completed</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">Completed &amp; closed</div></div>
+      <div class="stat-card amber"><div class="stat-label">On Hold</div><div class="stat-value" id="stat-hold">—</div><div class="stat-sub">Paused projects</div></div>
       <div class="stat-card amber"><div class="stat-label">Risks Flagged</div><div class="stat-value" id="stat-risks">—</div><div class="stat-sub">Across active projects</div></div>
       <div class="stat-card red"><div class="stat-label">Issues Open</div><div class="stat-value" id="stat-issues">—</div><div class="stat-sub">Requiring resolution</div></div>
       
@@ -1528,6 +1529,7 @@ function buildDashboard() {
   document.getElementById('stat-active').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
   const _completeProjects = ['ACGME Compliance - Call Room Optimization', 'ACHN Providers and Operations Coordination', 'Agency Staffing', 'Anesthesiology Process Improvement', 'Behavioral Health Office Strategic Plan', 'Birthday Health Screenings Program', 'Bronzeville Health Center', 'Care Coordination Transition', 'CCBHC Certification', 'Centralized Credentialing', 'Clinical Decision Unit', 'Contract & Workforce Taskforce', 'Crisis Triage Stabilization Center', 'DGIM - Admin Process Improvement', 'Health Care Equity Certification', 'High Reliability Training', 'Inpatient Dialysis (HD & CRRT)', 'L&D Patient Experience', 'New Arrivals Clinic Services', 'North Riverside Dental Services', 'Organizational Consolidations', 'Patient Throughput Committee', 'Population Health Management - Phase 1', 'Pre-Renal Transplant Clinic', 'Primary Care-Managed Care Info Coordination', 'Provident Ambulance Runs', 'Provident PT/OT/SLP', 'Quiet Campaign', 'SPD Management Transition', 'Telehealth Optimization'];
   document.getElementById('stat-complete').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Complete' && _completeProjects.includes(p.project)).length || 30;
+  document.getElementById('stat-hold').textContent = COMPLIANCE_DATA.filter(p => p.status === 'On Hold').length;
   document.getElementById('stat-risks').textContent = allRisks.length;
   document.getElementById('stat-issues').textContent = allIssues.length;
   /* stat-closeout removed */
@@ -2500,7 +2502,14 @@ async function refreshData() {
   if (refreshEl) refreshEl.textContent = 'Fetching live data…';
 
   try {
-    const res = await fetch(API, { signal: AbortSignal.timeout(20000) });
+    const _ctrl = new AbortController();
+    const _timer = setTimeout(() => _ctrl.abort(), 20000);
+    let res;
+    try {
+      res = await fetch(API, { signal: _ctrl.signal });
+    } finally {
+      clearTimeout(_timer);
+    }
 
     if (!res.ok) {
       const errBody = await res.json().catch(() => ({}));
@@ -2514,6 +2523,14 @@ async function refreshData() {
       // Add masterKey field by normalising project name (matches MASTER_FILE_DATA lookup)
       data.pmoeLoadData.forEach(p => {
         if (!p.masterKey) p.masterKey = p.project;
+        // Normalize PM names from API contact fields
+        if (p.pm) {
+          const lp = p.pm.toLowerCase();
+          if (lp.includes('jablis') || lp.includes('julius')) p.pm = 'Julius Ablis';
+          else if (lp.includes('wallish') || lp.includes('elizabeth')) p.pm = 'Elizabeth Wallish';
+          else if (lp.includes('sanchez') || lp.includes('jasmin')) p.pm = 'Jasmin Sanchez';
+          else if (lp.includes('harmon') || lp.includes('lane')) p.pm = 'Lane Harmon';
+        }
       });
       PMOE_LOAD_DATA.length = 0;
       data.pmoeLoadData.forEach(p => PMOE_LOAD_DATA.push(p));
@@ -2530,8 +2547,31 @@ async function refreshData() {
 
     // ── Update live Compliance data ───────────────────────────────────────
     if (data.complianceData && data.complianceData.length) {
+      // Normalize PM display names from API contact fields
+      const PM_NAMES = {
+        'jablis@cookcountyhhs.org': 'Julius Ablis',
+        'julius.ablis': 'Julius Ablis',
+        'elizabeth.wallish@cookcountyhealth.org': 'Elizabeth Wallish',
+        'elizabeth.wallish': 'Elizabeth Wallish',
+        'jasmin.sanchez@cookcountyhealth.org': 'Jasmin Sanchez',
+        'jasmin.sanchez': 'Jasmin Sanchez',
+        'lane.harmon@cookcountyhealth.org': 'Lane Harmon',
+        'lane.harmon': 'Lane Harmon',
+        'lharmon@cookcountyhhs.org': 'Lane Harmon',
+      };
+      const normPM = v => {
+        if (!v) return v;
+        const lv = v.toLowerCase();
+        for (const [k, n] of Object.entries(PM_NAMES)) {
+          if (lv.includes(k.toLowerCase())) return n;
+        }
+        return v;
+      };
       COMPLIANCE_DATA.length = 0;
-      data.complianceData.forEach(r => COMPLIANCE_DATA.push(r));
+      data.complianceData.forEach(r => {
+        r.pm = normPM(r.pm);
+        COMPLIANCE_DATA.push(r);
+      });
     }
 
     // ── Update timestamp ──────────────────────────────────────────────────
@@ -2687,52 +2727,126 @@ const BENEFITS_REGISTER_DATA = [
 // ── PMOE Annual Reports 2023–2025 ────────────────────────────────────────────
 const ANNUAL_REPORTS = {
   2025: {
-    execSummary: "In 2025, PMOE operated as a system-level execution arm for Cook County Health, advancing enterprise priorities through disciplined delivery, measurable outcomes, and governance. More than 600 leaders completed High Reliability training establishing a shared framework for Zero Harm. PMOE supported strategic goals by improving access, strengthening reliability and safety, reducing operational and compliance risk, and enabling long-term financial and workforce sustainability.",
-    benefitsMonitoring: { performing:["EP (Cardiology)","PET Jubilant (Cardiology)","VNS Implantation (Neuroscience)","Endocrinology Clinic (North Riverside)","Robotic Bronchoscopy"], note:"All Provident-related implemented projects/initiatives are underperforming." },
+    execSummary: "In 2025, PMOE operated as a system-level execution arm for Cook County Health (CCH), advancing enterprise priorities through disciplined delivery, measurable outcomes, and governance. PMOE supported CCH's strategic goals by improving access, strengthening reliability and safety, reducing operational and compliance risk, and enabling long-term financial and workforce sustainability. More than 600 leaders completed High Reliability training, establishing a shared framework for Zero Harm. PMOE-led interventions significantly improved procedural attendance rates, eliminated credentialing-related deployment risks, and expanded service availability in underserved communities. Beyond formal projects, PMOE provided rapid, high-value analytical and implementation support to executive leadership including contract risk assessment, value-based care readiness, academic partnership development, technology acquisition, and ARPA-funded initiative planning.",
     projects: [
-      {name:"Healthcare Equity Certification (TJC)", benefit:"Provides structure to guide CCH toward embedding health equity in all aspects of care and service delivery.", outcome:"TJC Certification confirmed. CCH earned special remarks from TJC Evaluator — well prepared with no single citation or deficiency.", status:"success"},
-      {name:"Birthday Screening Program", benefit:"Promote birthday health screenings at no cost to Cook County residents as part of a broader prevention strategy.", outcome:"Program launched. Volume tracking in progress.", status:"success"},
-      {name:"Care Coordination Transition", benefit:"Transition patient caseloads to CountyCare using health risk stratification approach.", outcome:"Scope adjusted at closure: High Risk population stays with CC Care Coordination group due to CountyCare staffing constraints.", status:"partial"},
-      {name:"Bronzeville Health Center", benefit:"Enhance overall service delivery and access to Psychiatry, Family Medicine, and Rehabilitation services.", outcome:"Family Medicine: 2,807 · Pediatrics: 269 · Psychiatry: 3,211 · MAT: 594 · Rehab (PT/OT/SLP): 3,896 (6/1–11/30/25)", status:"success"},
-      {name:"Clinical Triage and Stabilization Center", benefit:"Establish Crisis Triage Stabilization Center at Provident serving community mental health needs.", outcome:"Operating 24/7 for surrounding communities. Volume is low but tied to ARPA funding.", status:"partial"},
-      {name:"Unified/Centralized Credentialing", benefit:"Merge two separate Credentials Committees at Provident and Stroger to reduce credentialing turnaround time.", outcome:"Credentialing total turnaround time reduced by 10 business days.", status:"success"},
+      {name:"Healthcare Equity Certification (TJC)", benefit:"Provides structure to guide CCH toward embedding health equity in all aspects of care, treatment, and service delivery. Validates CCH's commitment to reducing health disparities.", outcome:"TJC Certification confirmed. CCH earned special remarks from the TJC Evaluator — well prepared with zero citations or deficiencies.", status:"success"},
+      {name:"Birthday Screening Program", benefit:"Promote birthday health screenings at no cost to Cook County residents as part of a broader prevention service and care strategy. Promote wellness, increase PCP selection, and increase life expectancy.", outcome:"Program launched and operating.", status:"success"},
+      {name:"Care Coordination Transition", benefit:"Transition patient caseloads from complex care coordination back to CountyCare using a payor-agnostic health risk stratification approach.", outcome:"Scope adjusted at closure: High Risk population stays with CC Care Coordination (Diane Creal) due to CountyCare staffing constraints.", status:"partial"},
+      {name:"Bronzeville Health Center", benefit:"Enhance overall service delivery and access to Psychiatry, Family Medicine, and Rehabilitation services for the Bronzeville community. Part of broader CCH strategic initiative to improve healthcare in underserved areas.", outcome:"Provider Visits (6/1–11/30/25): Family Medicine 2,807 · Pediatrics 269 · Psychiatry 3,211 · MAT 594 · Rehab (PT/OT/SLP) 3,896 · Family Medicine at Sengstacke 1,258", status:"success"},
+      {name:"Clinical Triage and Stabilization Center (CTSC)", benefit:"Establish a Crisis Triage Stabilization Center at Provident Hospital serving community mental health needs — safe, secure environment less restrictive than an ER.", outcome:"Operating 24/7 for communities surrounding Provident Hospital. Volume is very low but service continues because tied to ARPA funding.", status:"partial"},
+      {name:"Unified/Centralized Credentialing", benefit:"Merge two separate Credentials Committees at Provident and Stroger to one unified committee. Prevent uncredentialed providers from deploying to Sengstacke and Bronzeville.", outcome:"Credentialing total turnaround time reduced by 10 business days. Zero incidence of provider deployed without completing credentialing/privileging.", status:"success"},
+      {name:"Provident Colonoscopy/Endoscopy", benefit:"Resume colonoscopy and endoscopy services at Provident Hospital with contracted GI Physician. Historically show rate was only 58%.", outcome:"Show Rate: 92% · Volume: 437 (5–6 cases/day, 4x/week)", status:"success"},
+      {name:"High Reliability Training", benefit:"Train select CCH leaders in high reliability principles to redefine safety as a core value, embedding high reliability thinking into daily operations to achieve Zero Harm.", outcome:"600 CCH leaders completed the 5-part training series. Press Ganey Assessment: CCH Safety Event Reporting Data is lower than the national average.", status:"success"},
+      {name:"ACHN Providers and Operations Coordination", benefit:"Establishes a structured workflow for initiating, reviewing, approving, and communicating provider-related requests ensuring the right ACHN leaders make timely decisions.", outcome:"Zero incidence of patient going to ACHN site but not seen due to provider not being scheduled. Zero incidence of CCH billing under provider who is no longer working for CCH. Zero incidence of Clinical Chairs deploying providers without required site support.", status:"success"},
     ],
+    nonProjectAssignments: [
+      {name:"Agency/Temporary Staffing", description:"Develop process for requesting temporary or agency staffing for non-nursing positions", deliverable:"Electronic process using computer or mobile phone. Successful pilot in Laboratory and Respiratory Therapy."},
+      {name:"Primary Care–Managed Care Information Coordination", description:"Automate communication of provider changes from ACHN Provider and Operations Coordination process into Primary Care and Managed Care data repositories", deliverable:"Automation process established eliminating manual entry and reducing risk of outdated provider data."},
+      {name:"CCH–UI Health Joint Peds CBA", description:"Requirements and cost-benefit analyses for partnering with UI Health in establishing joint pediatric unit at Stroger", deliverable:"Cost-benefit analysis for joint pediatric unit provided. 3 options available; any option carries cost risk as UI Health did not provide detailed requirements."},
+      {name:"Robotic Bronchoscopy", description:"Acquire robotic technology for Pulmonary services to improve CCH's capability in diagnosing, treating, and managing patients with pulmonary conditions", deliverable:"Cost benefit analysis completed. Contract executed."},
+      {name:"Strategy and Implementation's Intranet Page", description:"Update content and ensure alignment with CCH's public-facing website", deliverable:"Updated facade with screenshots of newly approved CCH Strategy Plan. Updated supporting documents."},
+      {name:"Medicaid Impact Workgroup", description:"Support the planning and implementation of CCH's launch of Medicaid Impact Workgroup", deliverable:"Leverage of event technologies (Slido and MIRO). Event summary and recommendations delivered."},
+    ],
+    preProjectWork: [
+      {name:"Healing Hurt Program", deliverable:"Requirements Analysis · Financial Proforma", status:"Program including costs absorbed by CCH"},
+      {name:"ARPA-Behavioral Health Office", deliverable:"Requirements Analysis · Financial Proforma", status:"Program including costs absorbed by CCH"},
+      {name:"Food as Medicine Program", deliverable:"Requirements Analysis · Financial Proforma", status:"Program including costs absorbed by CCH"},
+      {name:"Housing Program (FHP)", deliverable:"Requirements Analysis · Financial Proforma", status:"Program including costs absorbed by CCH"},
+      {name:"Medical Respite Program", deliverable:"Requirements Analysis · Financial Proforma", status:"Program including costs absorbed by CCH"},
+      {name:"ARPA-ACHN LCSWs Transition Program", deliverable:"Requirements Analysis · Financial Proforma", status:"Program including costs absorbed by CCH"},
+    ],
+    benefitsMonitoring: {
+      performing:["EP (Cardiology)","PET Jubilant (Cardiology)","VNS Implantation (Neuroscience)","Endocrinology Clinic (North Riverside)","Robotic Bronchoscopy"],
+      note:"All Provident-related implemented projects/initiatives are underperforming."
+    },
     upcoming2026: [
       {name:"Wellvana: Medicare VBC", expected:"March 2026", benefit:"Enrollment of Shared Savings Program and improved HEDIS measures."},
-      {name:"CCH-City Colleges of Chicago Partnership", expected:"December 2026", benefit:"Develop long-term pipeline for select job positions at CCH."},
+      {name:"CCH–City Colleges of Chicago Partnership", expected:"December 2026", benefit:"Develop long-term pipeline for select job positions at CCH."},
       {name:"Organizational Consolidation", expected:"June 2026", benefit:"Create better organizational alignment and clarity."},
       {name:"ARPA Expense Monitoring", expected:"June 2026", benefit:"ARPA fund spend monitoring."},
-      {name:"Anal Dysplasia Service", expected:"June 2026", benefit:"High-quality accessible screening and treatment for patients at risk of anal cancer."},
-      {name:"CCH-Press Ganey Consumerism", expected:"May 2026", benefit:"Create strong and trustworthy online reputation critical to patient acquisition and brand credibility."},
-      {name:"High Reliability (post-RISI)", expected:"May 2026", benefit:"Safety Coaching cohort pilot, training, and high reliability tools completion."},
-    ]
+      {name:"Anal Dysplasia Service", expected:"June 2026", benefit:"Provide high-quality, accessible screening and treatment for patients at risk of anal cancer, expanding specialty care and downstream revenue at The CORE Center."},
+      {name:"CCH–Press Ganey Consumerism (Reputation Management)", expected:"May 2026", benefit:"Create strong and trustworthy online reputation critical to patient acquisition, retention, and brand credibility."},
+      {name:"High Reliability (post-RISI)", expected:"May 2026", benefit:"Safety Coaching cohort pilot, training, and high reliability tools complete. Q1 2026 metrics measurement using both EMERS and AHRA survey."},
+    ],
+    upcoming2026Assignments: [
+      {name:"PMOE No Show Tool", benefit:"Reduced wasted appointment slots through targeted overbooking capability.", notes:"Process and outputs presented to select CCH leaders for review and decision. Rollout iterative if approved."},
+      {name:"Speak UP", benefit:"Offshoot project of High Reliability (post-RISI) designed to promote transparency and accountability at CCH.", notes:"Initial discussion scheduled early February."},
+      {name:"Bilateral Lung Volume Reduction", benefit:"CCH to offer service for patients with moderate to severe COPD no longer responding to traditional medical management.", notes:"Cost Benefit Analysis to be finalized once 2024 and 2025 PFT data become available."},
+      {name:"Keeping Patients at Provident Hospital", benefit:"Exploratory assignment to determine how patients admitted at Provident needing procedure/test can receive it at Stroger and return to Provident.", notes:"Cardiology is the test service; if defined process emerges will roll out to Imaging (IR)."},
+    ],
   },
+
   2024: {
-    execSummary: "FY2024 saw PMOE deliver 7 major initiatives spanning new clinical services at Provident, care coordination improvements, and specialty service expansion. Benefits monitoring mechanisms were established for all completed projects with formal tracking of volume, revenue, and operational outcomes.",
-    benefitsMonitoring: { performing:["UniteUS","SPD Management Transition","Renal Pre-Transplant Clinic","North Riverside Dental Services"], note:"Plastics Clinic: only 5 encounters vs 92 proposed. Observation Unit: planned ADC 14, actual 11.1." },
+    execSummary: "In 2024, PMOE completed 7 initiatives/projects across Provident Hospital operations, clinical service access, and health technology platforms. The year surfaced important findings about project governance — including cases where projects were greenlighted without business cases and where physician commitments did not align with proposals submitted to the Project Review Board. PMOE's pre-project work matured significantly with 6 proposals analyzed and several approved for FY2025 implementation. The Project Review Board reviewed 16 proposals in 2024: 8 approved, 0 denied, 3 pending, and 5 not submitted to PRB.",
     projects: [
-      {name:"Provident Observation Unit", benefit:"Create dedicated space for evaluation and short-term treatment of patients requiring extended observation.", outcome:"Project completed 10/30/24. Planned Observation ADC is 14; actual as of 12/2/24 is 11.1.", status:"partial"},
-      {name:"Plastics Clinic at Sengstacke Health Center", benefit:"Create access to Plastics Specialists at Provident Hospital.", outcome:"As of 12/2/24, only 5 encounters vs 92 encounters as proposed. Discrepancy between proposed and physician commitment.", status:"risk"},
-      {name:"Permanent Catheter Removal in Clinic A", benefit:"Decrease wait time for patients and avoid straining Interventional Radiology suites.", outcome:"No performance metrics/benefits set by project sponsor. Closeout report circulated.", status:"partial"},
-      {name:"UniteUS", benefit:"Platform to facilitate referral coordination for clinical and social services.", outcome:"CountyCare, BH Office, ACHN, and CBOs are using the system. Process maintenance transitioned to Office of Research and Innovation.", status:"success"},
-      {name:"SPD Management Transition", benefit:"Bring in vendor meeting Stroger Hospital Operations needs and improve efficiency of Sterile Processing.", outcome:"Short-term vendor onboarded and took over SPD operations on 12/4/24.", status:"success"},
-      {name:"Renal Pre-Transplant Clinic", benefit:"Create streamlined process for CCH patients to access kidney transplant services.", outcome:"Service started 12/10. Metrics: # of CCH patients assessed by UI Health Transplant Specialists.", status:"success"},
-      {name:"North Riverside Dental Services", benefit:"Establish Oral Health services at North Riverside to provide needed dental services on west side of Chicago.", outcome:"Service started 12/23. Metrics: Actual volume and revenue vs planned.", status:"success"},
-    ]
+      {name:"Provident Observation Unit", benefit:"Create a separate unit providing dedicated space for evaluation, monitoring, and short-term treatment of patients requiring extended observation before admission/discharge decisions. Freed-up beds in 8 West to be used for inpatients.", outcome:"Project completed 10/30/24. No business case existed when greenlighted. Planned Observation ADC is 14; as of 12/2/24, actual Observation ADC is 11.1.", status:"partial"},
+      {name:"Plastics Clinic at Sengstacke Health Center", benefit:"Create access to Plastics Specialists at Provident Hospital.", outcome:"Discrepancy between what was proposed and what Physician Leaders committed resulted in benefit shortfall. As of 12/2/24: only 5 encounters vs 92 encounters as proposed.", status:"risk"},
+      {name:"Permanent Catheter Removal in Clinic A", benefit:"Decrease wait time for patients and avoid further straining capacity on Interventional Radiology suites.", outcome:"No performance metrics/benefits were set by the project sponsor. Closeout report circulated to the group.", status:"partial"},
+      {name:"Unite US", benefit:"Implement a platform to facilitate referral coordination for clinical and social services between CCDPH, CountyCare, Behavioral Health Office, ACHN, and community partners.", outcome:"Platform in use by CountyCare, Behavioral Health Office, ACHN, and Community-Based Organizations. Process maintenance transitioned to Office of Research and Innovation.", status:"success"},
+      {name:"SPD Management Transition", benefit:"Bring in a vendor meeting Stroger Hospital Operations needs and improve efficiency of Sterile Processing processes.", outcome:"Short-term vendor onboarded and took over SPD operations on 12/4/24.", status:"success"},
+      {name:"Renal Pre-Transplant Clinic", benefit:"Create a streamlined process for CCH patients to access kidney transplant services.", outcome:"Service started 12/10. Metrics: # of CCH patients assessed by UI Health Transplant Specialists, # in transplant list, # who underwent transplant procedure.", status:"success"},
+      {name:"North Riverside Dental Services", benefit:"Establish Oral Health services at North Riverside providing needed dental services on the west side of Chicago.", outcome:"Service started 12/23. Metrics: Actual volume and revenue vs planned.", status:"success"},
+    ],
+    nonProjectAssignments: [
+      {name:"Population Health: Phase 1", description:"Develop a proposal on implementing Population Health Management (PHM) initiative within Cook County Health to improve overall health and well-being of communities served.", deliverable:"Analysis complete. Current state shows risk stratification and empanelment processes are fragmented. Majority of outcomes tracked are process metrics, not outcome metrics."},
+      {name:"Agency Staffing", description:"Develop process for requesting temporary or agency staffing for non-nursing positions with structured approach to approvals and tightly controlled agency expenditure.", deliverable:"Electronic process using computer or mobile phone. On CCH Intranet (Finance page primary, Strategy page redundancy). Successful pilot in Laboratory and Respiratory Therapy."},
+      {name:"ACGME Compliance", description:"Assist Chief Academic Affairs Officer in developing plan to address ACGME downgrade status for CCH.", deliverable:"Plan developed and delivered."},
+      {name:"CCH–UI Health Joint Peds", description:"Requirements and cost-benefit analyses for partnering with University of Illinois Health in establishing joint pediatric unit at Stroger Hospital (Pediatric ICU and General Pediatric Unit).", deliverable:"Cost-benefit analysis for joint pediatric unit with limited and high-level program requirements provided by UI Health. 3 options available but any carry risk of blown cost as UI Health did not provide detailed requirements for each pediatric specialty."},
+    ],
+    preProjectWork: [
+      {name:"PET-Jubilant", deliverable:"Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED — Department using OPEX funds. Scheduled for FY2025 implementation."},
+      {name:"Anorectal Manometry", deliverable:"Internal Data Analysis · Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED with Funding Support. Scheduled for FY2025 assuming requested funds in approved FY2025 CCH Budget."},
+      {name:"Anal Dysplasia Clinic", deliverable:"Internal Data Analysis · Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED with Funding Support. Scheduled for FY2025 assuming requested funds in approved FY2025 CCH Budget."},
+      {name:"Endocrinology Clinic at North Riverside", deliverable:"Internal Data Analysis · Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED — Department using OPEX funds. Implemented 8/2024 and has 80% performance ratio (planned vs actual)."},
+      {name:"Renal Pre-Transplant Clinic", deliverable:"Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED with Funding Support. GO LIVE: 12/2024."},
+      {name:"Zephyr Valve", deliverable:"Requirements Analysis · Financial Proforma · Business Case", status:"Pending — Routed to Value Analysis process."},
+      {name:"Physical Medicine & Rehabilitation", deliverable:"Internal Data Analysis · Requirements Analysis · Financial Proforma · Business Case", status:"Pending — BI provided current productivity of 3 PM&R Providers."},
+      {name:"Ion-Assisted Robotic Bronchoscopy", deliverable:"Internal Data Analysis · Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED with Funding Support. Implementation assigned to HIS — went live 8/2024. Benefits Monitoring: Data methodology finalized including frequency and format for volume and actual payments."},
+    ],
+    benefitsMonitoring: {
+      performing:["Endocrinology Clinic at North Riverside (80% performance ratio)","Ion-Assisted Robotic Bronchoscopy (live 8/2024)"],
+      note:"Provident Observation Unit underperforming vs planned ADC (11.1 actual vs 14 planned). Plastics Clinic significantly underperforming (5 encounters vs 92 proposed). Permanent Catheter Removal had no metrics established by sponsor."
+    },
   },
+
   2023: {
-    execSummary: "FY2023 established foundational PMOE PMO practices while delivering critical service expansion. PMOE restarted Provident clinical services, established new procedures, and addressed system-level compliance challenges, while formalizing the Project Review Board and Balanced Scorecard frameworks.",
-    benefitsMonitoring: { performing:["Provident PT/OT/SLP (Oct 2023: 238 visits)","VNS — avg reimbursement $79k vs $50k device cost","BCBS Managed Care Audit — all findings cleared"], note:"Quiet Campaign: funding not allocated as of 11/8/2023." },
+    execSummary: "In 2023, PMOE completed 9 initiatives/projects, 11 non-project assignments, and developed its Practice Maturity Framework. Key clinical completions included the Provident PT/OT/SLP service launch (238 patients in first month), VNS Procedure pilot delivering $79k average reimbursement vs $50k device cost, and SPD Management Transition Phase 1. The Practice Maturity Assessment identified that several projects were being initiated without specific targets or measures, and that benefits delivered were not being consistently measured — prompting the expansion of pre-project work packages and benefits monitoring requirements for FY2024.",
     projects: [
-      {name:"CCH-UCM Neuro Clinic at Provident Hospital", benefit:"Increase outpatient foot traffic in Neurology clinic for CountyCare members with CVA/Stroke.", outcome:"Redirection efforts added an average 15 CVA/stroke outpatients per month. Transitioned to operations.", status:"success"},
-      {name:"Vagal Nerve Stimulation (VNS) Procedure", benefit:"New procedure implanting device to control needs of epileptic patients no longer responding to medicines.", outcome:"Approved pilot (3 cases): avg reimbursement $79k vs device cost $50k. Senior Management approved procurement of 10 additional units.", status:"success"},
-      {name:"BCBS Managed Care Audits", benefit:"Address critical audit findings that could cause BCBS to cancel contract with CCH (1,900 members).", outcome:"All critical audit findings addressed. BCBS cleared CCH. PMOE drafted policy document and 2 tools meeting BCBS requirements.", status:"success"},
-      {name:"Telehealth Optimization", benefit:"Optimize and redefine use of AmWell for telehealth visits across ACHN in primary and specialty settings.", outcome:"Monthly reporting will be conducted by Operations team including % of successful calls and provider/patient satisfaction.", status:"success"},
+      {name:"CCH–UCM Neuro Clinic at Provident Hospital", benefit:"Increase outpatient foot traffic in Neurology clinic for insured patients — primarily CountyCare members with CVA/Stroke history.", outcome:"Redirection efforts added an average 15 CVA/stroke outpatients per month. Transitioned to operations.", status:"success"},
+      {name:"Vagal Nerve Stimulation (VNS) Procedure", benefit:"New procedure in main OR implanting device to control/address needs of epileptic patients no longer responding to medicines. Component of Neuroscience Service Line.", outcome:"Approved pilot (3 cases) showed average reimbursement of $79k vs $50k device cost. Senior Management approved procurement of additional 10 units of devices.", status:"success"},
+      {name:"Quiet Campaign", benefit:"A quiet environment promotes rest and healing. Increases HCAHPS hospital environment scores.", outcome:"Funding has not been allocated to this project as of 11/8/2023.", status:"risk"},
+      {name:"FEMA Reimbursement", benefit:"Assisted SCM and Finance in organizing COVID-19 expense reports with required supporting documents. 3-year engagement starting 2020.", outcome:"CCH is up to date with the expense report and other required information.", status:"success"},
+      {name:"BCBS Managed Care Audits", benefit:"CCH is the IPA for BCBS's Cook Medical Group Plan (1,900 members). Annual audit showed critical issues that could have caused BCBS to cancel contract with significant financial revenue impact.", outcome:"All critical audit findings addressed. BCBS cleared CCH. PMOE drafted policy document and 2 tools meeting BCBS requirements. PMOE reviewed 2023 BCBS/NCQA standards and provided recommendations to prevent future issues.", status:"success"},
+      {name:"Telehealth Optimization", benefit:"Optimize and redefine use of AmWell for telehealth visits across ACHN in both primary and specialty settings.", outcome:"Monthly reporting conducted by Operations team including % of successful calls and provider/patient satisfaction.", status:"success"},
       {name:"CCBHC Certification", benefit:"Review standards to prepare for CCBHC application and certification.", outcome:"Compiled summary of checklist findings presented to workgroup.", status:"success"},
-      {name:"SPD Management Transition Phase 1", benefit:"Ensure seamless transition for ongoing sterilization of products at all CCH facilities.", outcome:"Transition was smooth and met Clinical and Operational requirements.", status:"success"},
-      {name:"Provident PT/OT/SLP", benefit:"Increase foot traffic in outpatient services and decrease transfers to Stroger for Rehabilitation Medicine.", outcome:"Services started 10/10/23. End of October volume is 238 (average of 12 patients per day).", status:"success"},
-    ]
-  }
+      {name:"SPD Management Transition Phase 1", benefit:"Ensure seamless transition for ongoing sterilization of products and maintenance of sterility of processed items until point of use across all Cook County Health facilities.", outcome:"Transition was smooth and met the Clinical and Operational requirements.", status:"success"},
+      {name:"Provident PT/OT/SLP", benefit:"Increase foot traffic in outpatient services and decrease patients being transferred from Provident (ED and Inpatient) to Stroger Hospital for Rehabilitation Medicine services.", outcome:"Services started 10/10/23. End of October volume is 238 (average of 12 patients per day).", status:"success"},
+      {name:"Trauma Blood Track", benefit:"Improve capability of Laboratory Services to provide critically needed blood to Trauma patients.", outcome:"Blood bags readily available in Trauma instead of getting blood from Blood Bank. Blood Bank can remotely monitor inventory.", status:"success"},
+    ],
+    nonProjectAssignments: [
+      {name:"Health Equity: Chronic Diseases", description:"Assist Chief Health Equity and Inclusion Officer in capturing existing programs across CCH designed for Hypertension and Diabetes.", deliverable:"Document showing list of ongoing programs for Hypertension and Diabetes. Proposal on implementing pilot in select South Chicago zip codes with high concentration of both conditions."},
+      {name:"OKR Workboard", description:"Assist CCH Executives, ACHN, and Nursing in using OKR mindset to drive results.", deliverable:"Structure, expectations, and update cadence established."},
+      {name:"ACHN Organizational Structure", description:"Assist COO (ACHN) in documenting newly designed organizational structure.", deliverable:"Document showing the organizational structure."},
+      {name:"Pediatric Plastic Surgery Services", description:"Assist Surgery Chair in developing requirements for starting plastics surgery for pediatric population.", deliverable:"Document showing requirements and cost-benefit analysis."},
+      {name:"Bed Control: 3 New Process Metrics", description:"Assist Patient Access in generating 3 new process metrics requested by Director of QM Improvement.", deliverable:"Bed Control process map (Swim Lane) from patient entering ED to patient moved to inpatient unit. Analysis using Minitab showing quantified variation and WIP. Tool for Patient Access generating the 3 new process metrics using existing Teletracking reports."},
+      {name:"Inpatient Behavioral Health Certificate of Need (CON)", description:"Assist Provident Hospital Leaders and Behavioral Health to review requirements and prepare documents for submitting CON to State agency.", deliverable:"Document showing requirements and information needed for submitting CON."},
+      {name:"East Leyden HS: School-Based Clinic", description:"Assist CCH Leaders in determining whether it is worth pursuing establishing a school-based clinic at East Leyden High School.", deliverable:"Document showing location is well-served — at least 10 health service providers within 3-mile radius. Projected service utilization based on demographics and environmental factors included."},
+      {name:"Analysis of Service Utilization at 31st Street", description:"Assist Associate Chief Strategy Officer to determine whether to focus service offerings on Primary vs Specialty Care at new CCH facility.", deliverable:"Market analysis within 5-mile radius. Information leans toward primary care services based on demographics, environmental factors, and projected service utilization."},
+      {name:"Provident Hospital Opportunities", description:"Assist Provident Hospital leaders to determine potential market opportunities driven by demographic, environmental, and societal changes within 5-mile radius.", deliverable:"Internal performance (volume of each service). Market Analysis (top medical conditions within 5-mile radius of Provident). Demographic and consumer behavior towards health. Market Opportunities based on demographics, environmental, and societal changes."},
+      {name:"South Chicago Market", description:"Assist CCH Leaders in reviewing competition, strategies-in-motion, and consumer behaviors and select critical internal performance to bolster for CCH to compete in select market segments.", deliverable:"Consumer Behavior and Insights (Urgent Care, ED, Telehealth). Market Niche (what matters most to Medicaid and Medicare consumers). CCH's 3rd next available for Primary and Specialty Care, Slot Utilization, Show Rate, and performance against MGMA benchmark. Opportunities: Capabilities needed to compete in Medicaid and Medicare segments."},
+      {name:"Request Workflow", description:"Create an online process for submitting requests for Program Code and District Code with automated routing and communications.", deliverable:"Leveraged Smartsheet functionality and embedded workflow logic in PMOE Intake Request."},
+    ],
+    preProjectWork: [
+      {name:"Provident PT/OT/SLP", deliverable:"Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED — Implemented 10/2023"},
+      {name:"Trauma Blood Track", deliverable:"Requirements Analysis · Financial Proforma", status:"APPROVED — Implemented 2023"},
+      {name:"Cardio Service Line (VNS)", deliverable:"Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED with Funding Support"},
+      {name:"Endocrinology Clinic (NR)", deliverable:"Requirements Analysis · Financial Proforma · Business Case", status:"APPROVED — Scheduled FY2024"},
+    ],
+    benefitsMonitoring: {
+      performing:["CCH-UCM Neuro Clinic (avg 15 CVA/stroke outpatients/month)","VNS Procedure ($79k avg reimbursement vs $50k device cost; 10 additional units approved)","SPD Management Transition (smooth transition meeting clinical and operational requirements)","Provident PT/OT/SLP (238 patients in October, avg 12/day)","BCBS Managed Care Audits (all findings cleared)","Telehealth Optimization (monthly reporting established)"],
+      note:"Quiet Campaign: Funding not allocated as of 11/8/2023. Benefits Management maturity assessment found several projects initiated without specific targets or measures — benefits monitoring rollout and upfront charter requirements to be mandated in FY2024."
+    },
+  },
 };
 
 
@@ -2814,7 +2928,32 @@ function buildProjects() {
           </div>
           <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0;">${pctBadge} ${healthBadge}</div>
         </div>
-        <div class="project-card-body">${delivHtml}</div>
+        <div class="project-card-body">
+          ${delivHtml}
+          ${(() => {
+            const ch = CHARTER_DATA[p.project] || CHARTER_DATA[p.masterKey] ||
+              Object.entries(CHARTER_DATA).find(([k]) =>
+                p.project && k.toLowerCase().includes(p.project.toLowerCase().split(' ').slice(0,3).join(' '))
+              )?.[1];
+            if (!ch) return '';
+            return `<div style="margin-top:11px;padding:11px 14px;background:rgba(59,130,246,0.05);border:1px solid rgba(59,130,246,0.18);border-radius:7px;">
+              <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px;">📋 Project Charter</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;">
+                <div>
+                  <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Purpose</div>
+                  <div style="color:var(--text2);line-height:1.6;">${ch.purpose}</div>
+                </div>
+                <div>
+                  <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;">Objectives</div>
+                  <div style="color:var(--text2);line-height:1.6;">${ch.objectives}</div>
+                </div>
+              </div>
+              <div style="margin-top:7px;font-size:10px;color:var(--text3);">
+                📄 ${ch.fileName} · <a href="${ch.smartsheetUrl}" target="_blank" style="color:var(--accent);text-decoration:none;">Open in Smartsheet ↗</a>
+              </div>
+            </div>`;
+          })()}
+        </div>
       </div>`;
     }).join('');
   }
@@ -2963,10 +3102,98 @@ function buildBenefits() {
       });
       html+='</div>';
     }
+    // Non-Project Assignments section
+    if(rpt.nonProjectAssignments&&rpt.nonProjectAssignments.length){
+      html+=`<div style="margin-bottom:18px;"><div style="font-size:12px;font-weight:700;padding:7px 13px;background:var(--surface2);border-radius:7px;margin-bottom:10px;border-left:3px solid var(--accent2);text-transform:uppercase;letter-spacing:.08em;">📋 Non-Project Assignments Completed (${yr})</div>`;
+      rpt.nonProjectAssignments.forEach(a=>{
+        html+=`<div style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:7px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">${a.name}</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px;">
+            <div><div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;color:var(--text3);margin-bottom:2px;">Description</div><div style="color:var(--text2);line-height:1.6;">${a.description}</div></div>
+            <div><div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;color:var(--accent2);margin-bottom:2px;">Completed Deliverable</div><div style="color:var(--text);line-height:1.6;">${a.deliverable}</div></div>
+          </div></div>`;
+      });
+      html+='</div>';
+    }
+    // Pre-Project Work Package section
+    if(rpt.preProjectWork&&rpt.preProjectWork.length){
+      html+=`<div style="margin-bottom:18px;"><div style="font-size:12px;font-weight:700;padding:7px 13px;background:var(--surface2);border-radius:7px;margin-bottom:10px;border-left:3px solid #8b5cf6;text-transform:uppercase;letter-spacing:.08em;">🔬 Pre-Project Work Package Completed (${yr})</div>`;
+      rpt.preProjectWork.forEach(p=>{
+        html+=`<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:9px 13px;background:var(--surface2);border-radius:7px;margin-bottom:6px;gap:10px;border:1px solid var(--border);">
+          <div style="flex:1;min-width:0;"><div style="font-size:13px;font-weight:600;color:var(--text);">${p.name}</div><div style="font-size:11px;color:var(--text3);margin-top:2px;font-family:var(--font-mono);">${p.deliverable}</div></div>
+          <div style="font-size:11px;padding:3px 10px;border-radius:12px;background:rgba(139,92,246,.1);color:#8b5cf6;border:1px solid rgba(139,92,246,.25);white-space:normal;text-align:right;max-width:200px;">${p.status}</div>
+        </div>`;
+      });
+      html+='</div>';
+    }
+    // 2026 upcoming assignments (2025 report only)
+    if(rpt.upcoming2026Assignments&&rpt.upcoming2026Assignments.length){
+      html+=`<div style="margin-bottom:18px;"><div style="font-size:12px;font-weight:700;padding:7px 13px;background:var(--surface2);border-radius:7px;margin-bottom:10px;border-left:3px solid var(--warning);text-transform:uppercase;letter-spacing:.08em;">🗓️ 2026 Upcoming Projects & Assignments</div>`;
+      rpt.upcoming2026Assignments.forEach(a=>{
+        html+=`<div style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:7px;">
+          <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px;">${a.name}</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:3px;">${a.benefit}</div>
+          <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);">${a.notes}</div>
+        </div>`;
+      });
+      html+='</div>';
+    }
     el.innerHTML=html;
   }
 }
 
+
+// Cross-cutting themes from real Lessons Learned logs (5 projects, 22 entries)
+const LESSONS_THEMES = [
+  {
+    theme:"Requirements Management", icon:"📋",
+    color:"var(--danger)", bgColor:"rgba(239,68,68,0.06)", borderColor:"rgba(239,68,68,0.2)",
+    count:8,
+    summary:"The most pervasive failure across all projects. Equipment ordered without measurements, technology specs assumed rather than documented, vendor requirements missed, regulatory needs surfacing at Go-Live, and stakeholder expectations left unspoken — all trace back to inadequate requirements documentation.",
+    recommendation:"Mandate a completed, signed requirements document before any procurement, vendor engagement, or system build. Include space measurements, technology specs, regulatory needs, and explicit stakeholder expectations. Engage Clinical Informatics early and ask every sponsor: 'Is there anyone else I need to speak to?'",
+    projects:["Cardio Service Line","Provident PT/OT/SLP","Provident Ambulance Runs","Provident Observation Unit"]
+  },
+  {
+    theme:"Task Verification & Quality Gates", icon:"✅",
+    color:"var(--accent)", bgColor:"rgba(59,130,246,0.06)", borderColor:"rgba(59,130,246,0.2)",
+    count:3,
+    summary:"Verbal or self-reported task completion was accepted without verification — resulting in critical issues surfacing days before Go-Live, and one case where a deliverable reported complete was found 2 months later to have never been delivered.",
+    recommendation:"Require documented proof of task completion for all critical-path deliverables. Acceptable evidence includes photographs, system screenshots, business owner sign-off, or direct stakeholder confirmation. Do not advance a project to Go-Live readiness based on verbal status updates.",
+    projects:["Provident PT/OT/SLP","Provident Ambulance Runs","Cardio Service Line"]
+  },
+  {
+    theme:"Budget & Financial Planning", icon:"💰",
+    color:"var(--warning)", bgColor:"rgba(245,158,11,0.06)", borderColor:"rgba(245,158,11,0.2)",
+    count:2,
+    summary:"Projects initiated without confirmed funding required retroactive financial intervention (PT/OT/SLP: $200k secured after the fact from CFO). Shared accounting strings across projects created procurement delays when balances were unknown.",
+    recommendation:"No project initiates without an approved, dedicated funding source tied to the Cook County budget cycle. For equipment-heavy projects, assign dedicated accounting strings per project. Sponsors must confirm budget availability before charter approval.",
+    projects:["Provident PT/OT/SLP","Inpatient Dialysis (HD & CRRT)"]
+  },
+  {
+    theme:"Staffing, Training & Cross-Site Assumptions", icon:"👥",
+    color:"#6366f1", bgColor:"rgba(99,102,241,0.06)", borderColor:"rgba(99,102,241,0.2)",
+    count:3,
+    summary:"Physician recruitment timelines were severely underestimated (8+ months for ED physicians). Equipment transferred from Stroger to Provident assumed staff cross-training that did not exist. Early engagement with Legal, unions, and agency vendors is essential for staffing-dependent Go-Lives.",
+    recommendation:"For projects requiring physician recruitment: start agency/locums route immediately and engage Legal and union counsel early on rates. For equipment transfers between CCH facilities: never assume cross-training — validate capabilities and schedule training before transfer.",
+    projects:["Provident Ambulance Runs","Inpatient Dialysis (HD & CRRT)"]
+  },
+  {
+    theme:"Go-Live Planning & Scheduling", icon:"📅",
+    color:"var(--success)", bgColor:"rgba(16,185,129,0.06)", borderColor:"rgba(16,185,129,0.2)",
+    count:2,
+    summary:"Predetermined Go-Live dates set before detailed planning was complete caused avoidable delays (Ambulance Runs: Go-Live moved 4 times). Testing windows were too short to absorb integration issues from MERGE/ASCEND systems.",
+    recommendation:"Set Go-Live dates only after detailed planning is complete. If an executive-mandated date exists, immediately conduct a scope/resource/time trade-off analysis. Allocate minimum 2-week testing windows for projects with complex system integrations.",
+    projects:["Provident Ambulance Runs","Cardio Service Line"]
+  },
+  {
+    theme:"Best Practices to Replicate", icon:"⭐",
+    color:"#f59e0b", bgColor:"rgba(245,158,11,0.06)", borderColor:"rgba(245,158,11,0.2)",
+    count:2,
+    summary:"Two documented best practices from Cardio Service Line: (1) CCH leadership used back-channel vendor outreach to accelerate slow contracting from Abbott and Medtronic. (2) Allowing job posting before PIDs were created (with CSO/CHRO/Budget alignment) enabled faster physician recruitment.",
+    recommendation:"Formalize these as standard practices: (1) Back-channel vendor escalation protocol for stalled contracting. (2) Policy allowing grant-funded projects to post jobs while awaiting PIDs — HR and Budget should codify this for time-sensitive projects.",
+    projects:["Cardio Service Line"]
+  }
+];
 
 function buildCloseout(filter='', typeFilter='', pmFilter='') {
   // Source of truth: ALL completed projects from PM Process Compliance Audit
