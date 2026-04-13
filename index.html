@@ -1513,7 +1513,7 @@ PMOE_LOAD_DATA.forEach(p => {
 function buildDashboard() {
   // Stats
   document.getElementById('stat-active').textContent = COMPLIANCE_DATA.filter(p => p.status === 'Active').length;
-  document.document.getElementById('stat-complete').textContent = MASTER_FILE_DATA.filter(p => p.status === 'Complete').length;
+  document.getElementById('stat-complete').textContent = MASTER_FILE_DATA.filter(p => p.status === 'Complete').length;
   document.getElementById('stat-risks').textContent = allRisks.length;
   document.getElementById('stat-issues').textContent = allIssues.length;
   document.getElementById('stat-closeout').textContent = Math.round(closeoutCount / totalComplete * 100) + '%';
