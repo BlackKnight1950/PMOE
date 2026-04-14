@@ -1090,67 +1090,34 @@ let _closeoutView = 'projects';
 // ============================================================
 // INIT
 // ============================================================
-async function init() {
+function init() {
   const bar    = document.getElementById('loaderProgress');
   const status = document.getElementById('loaderStatus');
   const label  = document.getElementById('syncLabel');
 
   const steps = [
-    [15, "Loading embedded data…"],
-    [35, "Building portfolio overview…"],
-    [55, API_URL ? "Connecting to Smartsheet API…" : "Running in offline mode…"],
-    [80, "Fetching live project data…"],
-    [95, "Rendering dashboard…"],
+    [25,  "Loading embedded data…"],
+    [60,  "Building portfolio overview…"],
+    [90,  "Rendering dashboard…"],
     [100, "Ready"],
   ];
 
-  // Animate loader through first 3 steps while we attempt the API fetch
   let i = 0;
-  function advance() {
-    if (i < steps.length) {
-      bar.style.width  = steps[i][0] + '%';
-      status.textContent = steps[i][1];
-      i++;
+  function step() {
+    if (i >= steps.length) {
+      // Start clean with embedded data. User presses Refresh to pull live data.
+      label.innerHTML = '<span style="color:var(--text3)">\u25cf Embedded</span> · Apr 14, 2026';
+      setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 300);
+      return;
     }
+    bar.style.width    = steps[i][0] + '%';
+    status.textContent = steps[i][1];
+    i++;
+    setTimeout(step, 300);
   }
-  const ticker = setInterval(advance, 350);
 
-  // Always build from embedded data first so the dashboard is usable immediately
   buildDashboard();
-
-  // Attempt live API fetch if URL is configured
-  if (API_URL) {
-    try {
-      label.textContent = 'Connecting…';
-      // Wake the service (free tier cold start can take ~15s)
-      await fetchWithTimeout(`${API_URL}/api/health`, 20000);
-
-      status.textContent = 'Loading live Smartsheet data…';
-      const resp = await fetchWithTimeout(`${API_URL}/api/data`, 30000);
-      if (resp.ok) {
-        const liveData = await resp.json();
-        ingestLiveData(liveData);
-        buildDashboard();   // rebuild with live data
-
-        const fetchedAt = liveData.fetchedAt
-          ? new Date(liveData.fetchedAt).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' })
-          : new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
-        label.innerHTML = `<span style="color:var(--success)">● Live</span> · ${fetchedAt} · ${liveData.meta?.projectRows || 0} projects`;
-      } else {
-        throw new Error(`API ${resp.status}`);
-      }
-    } catch (err) {
-      console.warn('Initial live fetch failed, using embedded data:', err.message);
-      label.innerHTML = `<span style="color:var(--warning)">⚠ Embedded</span> · April 14, 2026 · <span style="font-size:10px;cursor:pointer;text-decoration:underline;" onclick="refreshData()">Connect live</span>`;
-    }
-  } else {
-    label.textContent = 'Embedded · April 14, 2026';
-  }
-
-  clearInterval(ticker);
-  bar.style.width = '100%';
-  status.textContent = 'Ready';
-  setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 300);
+  step();
 }
 
 function buildDashboard() {
@@ -1928,24 +1895,24 @@ function closeModal(e) {
 // ============================================================
 async function callClaude(prompt, targetEl, loadingEl) {
   if (loadingEl) loadingEl.style.display = 'block';
+  // Route through the Render proxy — direct browser calls to
+  // api.anthropic.com are blocked by CORS and require a server-side key.
+  if (!API_URL) {
+    if (targetEl) targetEl.textContent = 'Key Insights require the live API. Press Refresh to connect.';
+    return;
+  }
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const r = await fetch(`${API_URL}/api/ai`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
-      })
+      body: JSON.stringify({ prompt })
     });
-    const data = await resp.json();
-    const text = data.content?.map(b => b.text || '').join('') || 'No response.';
+    const data = await r.json();
+    const text = data.text || data.error || 'No response.';
     if (targetEl) targetEl.innerHTML = text.replace(/\n/g, '<br>');
     return text;
   } catch(e) {
-    if (targetEl) targetEl.textContent = 'Unable to generate insights at this time.';
-  } finally {
-    if (loadingEl) {}
+    if (targetEl) targetEl.textContent = 'Unable to generate insights at this time. Ensure the API is connected.';
   }
 }
 
