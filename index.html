@@ -2009,7 +2009,7 @@ function fetchWithTimeout(url, ms) {
 // e.g. 'https://pmoe-dashboard-api.onrender.com'
 // Leave as empty string to run in offline/embedded mode.
 // ============================================================
-const API_URL = 'https://pmoe-dashboard-api.onrender.com';
+const API_URL = 'https://pmoe-api.onrender.com';
 
 // ============================================================
 // LIVE DATA INGESTION
@@ -2110,28 +2110,30 @@ function showView(name) {
 
 async function refreshData() {
   const label = document.getElementById('syncLabel');
-  label.textContent = 'Refreshing…';
 
-  // If no API URL is configured, just rebuild from embedded data
+  // No API configured — rebuild from embedded data only
   if (!API_URL) {
-    await new Promise(r => setTimeout(r, 400));
     buildDashboard();
     label.textContent = 'Embedded · ' + new Date().toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
     return;
   }
 
-  try {
-    // First hit /api/health to confirm the service is awake
-    // (Render free tier spins down after 15 min inactivity — health check wakes it)
-    label.textContent = 'Waking API…';
-    const health = await fetchWithTimeout(`${API_URL}/api/health`, 12000);
-    if (!health.ok) throw new Error(`Health check returned ${health.status}`);
+  // Show a countdown while Render free tier wakes up (cold start ~30s)
+  let dots = 0;
+  const waiting = setInterval(() => {
+    dots = (dots + 1) % 4;
+    label.textContent = 'Connecting to API' + '.'.repeat(dots);
+  }, 500);
 
-    label.textContent = 'Fetching live data…';
-    const resp = await fetchWithTimeout(`${API_URL}/api/data`, 30000);
+  try {
+    // Single call to /api/data — no separate health ping.
+    // Timeout 55s: covers Render free-tier cold start (up to ~50s).
+    const resp = await fetchWithTimeout(`${API_URL}/api/data`, 55000);
+    clearInterval(waiting);
+
     if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err.error || `API returned ${resp.status}`);
+      const errBody = await resp.json().catch(() => ({}));
+      throw new Error(errBody.error || `Server returned ${resp.status}`);
     }
 
     const liveData = await resp.json();
@@ -2144,17 +2146,21 @@ async function refreshData() {
 
     label.innerHTML = `<span style="color:var(--success)">● Live</span> · ${fetchedAt} · ${liveData.meta?.projectRows || 0} projects`;
 
+    // Remove any stale banner
+    document.getElementById('refreshBanner')?.remove();
+
   } catch (err) {
-    console.warn('Live refresh failed, using embedded data:', err.message);
+    clearInterval(waiting);
+    console.warn('Refresh failed:', err.message);
     buildDashboard();
 
-    // Show user-friendly error with fallback notice
-    const label = document.getElementById('syncLabel');
-    label.innerHTML = `<span style="color:var(--warning)">⚠ Offline</span> · Embedded data · <span style="font-size:10px;cursor:pointer;text-decoration:underline;" onclick="refreshData()">Retry</span>`;
-
-    // If it's a spin-down issue, show a banner
-    if (err.message.includes('timeout') || err.message.includes('fetch')) {
-      showRefreshBanner('Render API is waking up (free tier cold start). Try refreshing in 30 seconds.');
+    const isTimeout = err.name === 'AbortError' || err.message.toLowerCase().includes('abort');
+    if (isTimeout) {
+      label.innerHTML = `<span style="color:var(--warning)">⚠ Timed out</span> · <span style="font-size:10px;cursor:pointer;text-decoration:underline;" onclick="refreshData()">Try again</span>`;
+      showRefreshBanner('Render is still waking up. Wait 15 seconds and press Retry.');
+    } else {
+      label.innerHTML = `<span style="color:var(--warning)">⚠ Error</span> · ${err.message.substring(0,60)} · <span style="font-size:10px;cursor:pointer;text-decoration:underline;" onclick="refreshData()">Retry</span>`;
+      showRefreshBanner('Could not reach API: ' + err.message.substring(0,80));
     }
   }
 }
