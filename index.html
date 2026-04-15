@@ -324,7 +324,7 @@
   <div class="topbar-right">
     <div class="sync-indicator">
       <div class="sync-dot"></div>
-      <span id="syncLabel">Live · April 14, 2026</span>
+      <span id="syncLabel">● Embedded</span>
     </div>
     <button class="btn btn-ghost" onclick="refreshData()">⟳ Refresh</button>
   </div>
@@ -349,7 +349,7 @@
     <div class="section-header">
       <div>
         <div class="section-title">Portfolio Overview</div>
-        <div class="section-sub">Live data · Cook County Health PMOE · Last synced April 14, 2026</div>
+        <div class="section-sub">Live data · Cook County Health PMOE · Last synced <span id="lastSyncDate">—</span></div>
       </div>
       <button class="btn btn-ghost" onclick="generateAISummary('overview')">💡 Key Insights</button>
     </div>
@@ -608,14 +608,14 @@
 //   Projects Tab → Master File + Load-Update updates + Risk logs + Charters (Compliance Audit)
 //   Benefits Monitoring PRB → Benefits Register - For Chiefs (Sheet 3430790473928580)
 //   Closeout Reports → PM Process Compliance Audit (Sheet 2177565233991556)
-// Last synced: April 14, 2026
+// Embedded data — press Refresh to pull live from Smartsheet
 // ============================================================
 
 let allRisks = [];
 let allIssues = [];
 
 // ============================================================
-// PMOE LOAD - UPDATE  (live report data, last fetched April 14 2026)
+// PMOE LOAD - UPDATE  (embedded baseline — Refresh pulls live data)
 // ============================================================
 const PMOE_LOAD_DATA = [
   { project:"Pharmacy Domestic Spend",      pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Pharmacy Domestic Spend",
@@ -691,21 +691,21 @@ const MASTER_FILE_DATA = {
   "Lab Automation Upgrade":         { health:"Green", phase:"Execution",  pct:29,  start:"2026-01-26", end:"2026-07-10", domain:"Growth, Innovation, & Transformation", sponsor:"Susan Edralin", status:"In Progress" },
   "CCH-Press Ganey Consumerism":    { health:"Green", phase:"Execution",  pct:38,  start:"2025-11-24", end:"2026-06-03", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alex Normington", status:"In Progress" },
   "JSH Nurse Call and Overhead Paging Systems": { health:"Green", phase:"Planning", pct:5,  start:"2026-03-03", end:"2026-08-17", domain:"Growth, Innovation, & Transformation", sponsor:"Ben Laughton", status:"In Progress" },
-  "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Andrea Gibson", status:"In Progress" },
+  "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Julius Ablis", status:"In Progress" },
   "External Providers":             { health:"Green", phase:"Execution",  pct:53,  start:"2025-12-01", end:"2026-07-24", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Erik Mikaitis", status:"In Progress" },
-  "HRO: Clinical Outcomes Group":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Mari Akre", status:"In Progress" },
+  "HRO: Clinical Outcomes Group":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
   "ARPA Spend Monitoring/Sustainability": { health:"Green", phase:"Monitoring", pct:89, start:"2022-12-01", end:"2026-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Andrea Gibson", status:"In Progress" },
   "Behavioral Intake Center":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
   "Unified Strategy: CCH-CCDPH":    { health:"Green", phase:"Planning",  pct:null,start:"2026-02-16", end:"2026-09-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
-  "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Nick Shields", status:"In Progress" },
+  "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Andrea Gibson", status:"In Progress" },
   "Domestic Spend (EARN)":          { health:"Green", phase:"Execution",  pct:36,  start:"2025-06-02", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Surgery Optimization Phase 3":   { health:"Green", phase:"Execution",  pct:83,  start:"2025-07-28", end:"2026-12-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
+  "Surgery Optimization Phase 3":   { health:"Green", phase:"Execution",  pct:83,  start:"2025-07-28", end:"2026-12-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Craig Williams", status:"In Progress" },
   "Cath Lab- EP Optimization Project": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
-  "Pharmacy Domestic Spend":        { health:"Green", phase:"Monitoring", pct:85,  start:"2022-01-01", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
+  "Pharmacy Domestic Spend":        { health:"Green", phase:"Execution", pct:85,  start:"2022-01-01", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
   "Population Health Management/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
   "Medication Refill and Reconciliation Optimization": { health:"Green", phase:"Planning", pct:0, start:"2025-11-03", end:"2026-04-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Sharon Irons", status:"In Progress" },
   "APP Optimization":               { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-11-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Octavia Rolland", status:"In Progress" },
-  "Immediate Care (AH)":            { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-10-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Claudia Burchinal", status:"In Progress" },
+  "Immediate Care (AH)":            { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-10-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Craig Williams", status:"In Progress" },
   "PMOE No Show Tool and Process":  { health:"Green", phase:"Execution",  pct:null,start:"2025-09-01", end:"2026-06-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Andrea Gibson", status:"In Progress" },
   "Health Equity Committee Capacity Building": { health:"Green", phase:"Execution", pct:null, start:"2026-01-12", end:"2026-12-31", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
   // ON HOLD
@@ -791,6 +791,158 @@ const CHARTER_DATA = {
   "City Colleges Workforce": { fileName:"City Colleges Pipeline Project Charter.pdf", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, track student employment outcomes." },
   "Surgery Optimization Phase 3": { fileName:"Project Charter - Surgery Draft 8.25.25.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize surgical operations by improving OR utilization, reducing prior authorization denials, and establishing data-driven performance monitoring.", objectives:"Deploy PPT v2 short and long forms, train staff, publish BI utilization dashboard refreshed biweekly, improve first-case on-time start rate to 85%." },
   "Unified Strategy: CCH-CCDPH": { fileName:"Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Align CCH and CCDPH around a unified strategic framework to improve integration, shared accountability, and joint delivery of population health initiatives.", objectives:"Facilitate leadership alignment sessions, finalize integrated strategic plan, establish biweekly governance reporting structure." },
+  // Charters added from PM Process Compliance Audit attachments
+  "Cath Lab — EP Optimization": { fileName:"Project Charter- Cath Lab 4.3.26.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize Cardiac Catheterization Laboratory and Electrophysiology Lab operations at Stroger Hospital to improve throughput, reduce scheduling gaps, and expand EP procedural capacity.", objectives:"Complete stakeholder alignment, document current-state workflow, finalize project charter and org structure, and gain executive approval before implementation." },
+  "City Colleges Workforce": { fileName:"City Colleges Pipeline Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, and track student employment outcomes." },
+  "JSH Nurse Call & Overhead Paging": { fileName:"Project Charter - JSH Nurse Call & Overhead Paging Systems.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Replace and upgrade Nurse Call and Overhead Paging Systems at John H. Stroger Jr. Hospital to improve clinical communication, patient safety response times, and operational efficiency.", objectives:"Complete system assessment, select vendor via RFP, secure capital budget approval, finalize construction plans, and achieve system go-live within scope and timeline." },
+  "Anal Dysplasia Services": { fileName:"Project Charter - Anal Dysplasia Service.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a dedicated Anal Dysplasia Diagnostic and Treatment Services clinic at Stroger to screen, diagnose, and treat patients — reducing referrals out of CCH and expanding specialty care access.", objectives:"Stand up clinic with credentialed specialist, procure PICO equipment, finalize patient intake and clinical workflow SOPs, and achieve initial patient volume targets." },
+};
+
+// ============================================================
+// CLOSURE REPORTS DATA
+// Source: PM Process Compliance Audit (sheet 2177565233991556)
+// ============================================================
+const CLOSURE_REPORTS = {
+  "ACGME Compliance - Call Room Optimization": {
+    doc:"Project Closure Report - ACGME 10.30.2024.docx",
+    accomplished:"Conducted gap analysis of all resident call rooms across CCH facilities. Developed and implemented corrective action plan aligned with ACGME standards. Achieved compliance status by deadline.",
+    notAccomplished:"Long-term facility upgrade plan deferred to capital planning cycle. Some rooms required temporary solutions pending permanent renovation.",
+    lessonsLearned:"Early engagement with Facilities and Capital Planning is essential — facility constraints surfaced late and nearly missed the ACGME deadline. Document compliance requirements in full before scoping begins.",
+    keyOutcome:"CCH achieved ACGME compliance for call room standards, eliminating risk of program sanctions."
+  },
+  "Allied Health Education Agreements Restructure": {
+    doc:"Project Closure Report - Allied Health.docx",
+    accomplished:"Completed review and restructuring of all Allied Health affiliation agreements. Developed standardized template and approval workflow. Recommendations accepted by CMO and academic leadership.",
+    notAccomplished:"Formal legal review of all legacy agreements not completed within project scope — referred to General Counsel for ongoing review.",
+    lessonsLearned:"Academic affiliation agreements involve external organizations with their own governance timelines. Build in buffer for external review cycles. Engage Legal early as a stakeholder, not just a reviewer.",
+    keyOutcome:"Standardized agreement framework reduces compliance risk and streamlines future affiliation negotiations."
+  },
+  "Birthday Health Screenings Program": {
+    doc:"Project Closure Report - Birthday Health Screenings.docx",
+    accomplished:"Launched birthday health screening program across ACHN primary care sites. Developed patient outreach workflow and screening protocol. Trained clinical staff on program eligibility and scheduling.",
+    notAccomplished:"Volume targets not fully met in first quarter — patient awareness and scheduling uptake lower than projected.",
+    lessonsLearned:"Patient behavior change initiatives require sustained marketing and reminder campaigns. Initial volume projections should account for slow adoption curves. Peer champions within clinical teams drive higher uptake.",
+    keyOutcome:"Program infrastructure established and operationalized; sustained marketing plan handed off to ACHN operations."
+  },
+  "Bronzeville Health Center": {
+    doc:"Project Closure Report - Bronzeville Health Center.docx",
+    accomplished:"Successfully opened Bronzeville Health Center with Family Medicine, Psychiatry, MAT, Pediatrics, and Rehab services. Volume targets met for Psychiatry and Rehab within first 6 months. Provider visits: 10,037.",
+    notAccomplished:"Family Medicine volume lower than projected — patients retained at Sengstacke. Full empanelment not completed within project timeline.",
+    lessonsLearned:"Patient empanelment at new sites takes 12-18 months, not 6. Plan for longer ramp-up periods. Physical space and wayfinding must be finalized before opening day — late room assignment changes disrupted scheduling systems.",
+    keyOutcome:"Bronzeville Health Center operational with 5 service lines serving the underserved Bronzeville community."
+  },
+  "Care Coordination Transition": {
+    doc:"Care Coordination Project - Closure Report 8.5.25.docx",
+    accomplished:"Transitioned moderate and low-risk patient caseloads from CCH Care Coordination to CountyCare. Established health risk stratification process. Successfully handed off workflows and data to CountyCare team.",
+    notAccomplished:"High-risk population retained with CCH Care Coordination due to CountyCare staffing constraints — scope adjusted at closure.",
+    lessonsLearned:"Vendor/partner capacity constraints must be confirmed before project scope is finalized. Build a scope adjustment protocol into the charter. Transition projects require detailed handoff checklists — verbal handoffs lead to gaps.",
+    keyOutcome:"Moderate and low-risk patients successfully transitioned; high-risk population managed with updated scope."
+  },
+  "Centralized Credentialing": {
+    doc:"Project Closure Report - Centralized Credentialing.docx",
+    accomplished:"Unified Stroger and Provident credentials committees into a single body. Credentialing turnaround time reduced by 10 business days. Zero uncredentialed providers deployed to Sengstacke or Bronzeville.",
+    notAccomplished:"Full automation of credentialing workflow not achieved within project scope — manual steps remain in onboarding process.",
+    lessonsLearned:"Governance changes (merging committees) require dedicated change management with medical leadership. Physicians respond better to patient safety arguments than process efficiency arguments. Risk log proved essential for tracking regulatory dependencies.",
+    keyOutcome:"Zero billing denials from credentialing gaps at affiliated sites. Turnaround reduced by 10 business days."
+  },
+  "Crisis Triage Stabilization Center": {
+    doc:"Project Closure Report - Provident CTSC.docx",
+    accomplished:"Crisis Triage Stabilization Center opened at Provident Hospital, operating 24/7. ARPA funding secured. Staff trained and clinical protocols established.",
+    notAccomplished:"Volume targets significantly below projections — community referral pathways not yet fully established. Financial sustainability beyond ARPA remains uncertain.",
+    lessonsLearned:"New behavioral health services require 6-12 months for community referral networks to develop. Do not project volume based on need alone. ARPA-funded services need sustainability plans before go-live.",
+    keyOutcome:"24/7 crisis stabilization service operational at Provident, providing community mental health safety net."
+  },
+  "DGIM - Admin Process Improvement": {
+    doc:"Project Closure Report - DGIM Admin.docx",
+    accomplished:"Legacy DGIM manual request system sunset. All provider operational submissions transitioned to centralized ACHN Coordination process. Tracking embedded in division chairs' Outlook calendars.",
+    notAccomplished:"Full digitization of DGIM internal workflows not completed — some manual email-based approvals remain for non-provider requests.",
+    lessonsLearned:"Process improvement projects succeed when the sponsor actively champions the change with their own team. Legacy system sunset must be paired with immediate alternatives — gaps in coverage are unacceptable in clinical operations.",
+    keyOutcome:"No duplication of DGIM and ACHN efforts. Zero incidents of double-entry or missed provider transitions."
+  },
+  "Health Care Equity Certification": {
+    doc:"HCE Project Closure Report 6.13.25.docx",
+    accomplished:"CCH earned TJC Health Care Equity Certification with zero citations or deficiencies. TJC evaluator noted CCH was 'well prepared.' All documentation and evidence packets completed on time.",
+    notAccomplished:"Post-certification sustainability plan not formally handed off to operational owners — risk of losing momentum without dedicated oversight.",
+    lessonsLearned:"TJC certification requires 12+ months of documented evidence — start documentation from day one. Cross-functional collaboration (clinical, operations, compliance, community health) is essential. Staff recognition drives sustained engagement.",
+    keyOutcome:"CCH is among a small number of health systems nationally to achieve TJC Health Care Equity Certification with zero deficiencies."
+  },
+  "Organizational Consolidations": {
+    doc:"Closure Report - Organizational Consolidation.docx",
+    accomplished:"Completed organizational consolidation for assigned service lines. New org charts, job descriptions, and reporting structures finalized. Leadership announcements made and transitions completed.",
+    notAccomplished:"Some position reclassifications deferred pending HR review. Cultural integration and change management ongoing beyond project close.",
+    lessonsLearned:"Organizational restructuring projects have a long tail — project closure does not mean change is fully absorbed. Employee-facing communication must precede org chart publication. Ongoing change management must be built into operational plans.",
+    keyOutcome:"Organizational clarity achieved for consolidated units; new leadership structures operationalized."
+  },
+  "Population Health Management - Phase 1": {
+    doc:"Word document on file",
+    accomplished:"Current state analysis of risk stratification and care coordination completed. Fragmented processes documented. Preliminary recommendations for PHM infrastructure developed and presented to CCH leadership.",
+    notAccomplished:"Full PHM implementation deferred — current state revealed processes more fragmented than understood. Phase 2 scope not finalized within Phase 1 timeline.",
+    lessonsLearned:"PHM readiness assessments consistently reveal more complexity than expected. Allow time for leadership to absorb findings before committing to next phase. Ensure VBC readiness and PHM implementation are clearly scoped separately.",
+    keyOutcome:"Current state documented; leadership aligned on PHM gaps; Phase 2 scoping initiated."
+  },
+  "Primary Care-Managed Care Info Coordination": {
+    doc:"Project Closure Report - Provident PCP-Managed Care Info Coordination.docx",
+    accomplished:"Automated communication of provider changes from ACHN Operations Coordination into Primary Care and Managed Care data repositories. Manual entry eliminated for standard provider transitions.",
+    notAccomplished:"Edge cases (multi-site providers, temporary deployments) still require manual intervention. Full API integration with Managed Care directory not completed.",
+    lessonsLearned:"Data automation requires deep involvement from IT and downstream data consumers from day one. Requirements must specify every exception case. Process owners must be designated as ongoing stewards.",
+    keyOutcome:"Manual entry eliminated for standard provider changes. Risk of outdated Managed Care provider data significantly reduced."
+  },
+  "Provident Colonoscopy": {
+    doc:"Project Closure Report - Provident Colonoscopy.docx",
+    accomplished:"Resumed colonoscopy and endoscopy services at Provident with contracted GI physician. Show rate improved from historical 58% to 92%. Volume: 437 procedures (5-6 cases/day, 4x/week).",
+    notAccomplished:"Volume below the 1,466 planned encounters for FY2025. Staffing limited to one scheduler and navigator sharing duties with other surgery services.",
+    lessonsLearned:"Patient show rate improvement requires active navigation — assigning a dedicated navigator was the single biggest driver. Contracted physician models work but require clear scope and backup plans. Volume ramp-up takes 6-12 months.",
+    keyOutcome:"Show rate 92% (up from 58%). 437 procedures completed. Service successfully re-established at Provident."
+  },
+  "Provident Observation Unit": {
+    doc:"Word document on file",
+    accomplished:"Dedicated Observation Unit opened at Provident Hospital on 10/30/24. Operationalized dedicated space for extended observation patients.",
+    notAccomplished:"No business case developed before project was greenlighted. ADC tracking below planned targets (11.1 vs planned 14).",
+    lessonsLearned:"Projects initiated without business cases carry high risk of benefit shortfall. PRB process exists for this reason — bypassing it created accountability gaps. Volume projections must be based on historical patient flow data, not aspirational targets.",
+    keyOutcome:"Observation Unit operational. ADC below target but service capacity established."
+  },
+  "Provident PT/OT/SLP": {
+    doc:"Word document on file",
+    accomplished:"Outpatient Rehabilitation services launched at Provident on 10/10/23. End-of-October volume: 238 (avg 12 patients/day). $200k in retroactive funding secured from CFO.",
+    notAccomplished:"Project initiated without confirmed funding — required retroactive financial intervention. Equipment transferred from Stroger assumed cross-training that did not exist, causing delays.",
+    lessonsLearned:"Never initiate equipment-dependent projects without dedicated funding confirmed in advance. Equipment transfers between facilities are not simple logistics — cross-training gaps must be assessed before transfer. Retroactive budget recovery is avoidable.",
+    keyOutcome:"Services launched; 238 patients in first month. Financial gap resolved. Provident-to-Stroger transfers for rehab reduced."
+  },
+  "Provident Volume": {
+    doc:"Project Closure Report - Provident Volumes.docx",
+    accomplished:"Comprehensive volume analysis completed for all Provident service lines. Strategic recommendations developed and presented to executive leadership.",
+    notAccomplished:"Structural volume challenges (market, access, perception) identified as root causes — require multi-year investment beyond project scope.",
+    lessonsLearned:"Volume improvement projects at challenged facilities require honest assessment of root causes before solution design. Do not commit to targets without baseline data. Executive alignment on realistic timelines is essential before kickoff.",
+    keyOutcome:"Leadership aligned on Provident volume strategy; data-driven foundation for multi-year improvement plan established."
+  },
+  "Specialty Clinics Expansion at Sengstacke": {
+    doc:"Word document on file",
+    accomplished:"New specialty clinic services operationalized at Sengstacke Health Center. Provider schedules established and credentialing completed.",
+    notAccomplished:"Some specialty volume targets not met within first year due to referral pathway development lag.",
+    lessonsLearned:"Specialty clinic expansions require referral pipeline development as a parallel workstream — clinic opening and patient volume are separate projects. Community health worker engagement drives higher specialty uptake in underserved areas.",
+    keyOutcome:"Specialty access expanded at Sengstacke for the underserved community."
+  },
+  "Telehealth Optimization": {
+    doc:"Word document on file",
+    accomplished:"AmWell telehealth platform re-optimized across ACHN. Utilization metrics established. Monthly reporting cadence implemented by operations team.",
+    notAccomplished:"Provider adoption variable across specialties — some services remained low-volume telehealth users.",
+    lessonsLearned:"Telehealth adoption is driven by provider champions, not platform availability. Identify and empower clinical champions early. Metrics must distinguish successful calls from attempts — raw volume masks quality issues.",
+    keyOutcome:"Telehealth infrastructure re-established with ongoing monitoring and provider/patient satisfaction tracking."
+  },
+  "UniteUS": {
+    doc:"Word document on file",
+    accomplished:"UniteUS platform implemented and in active use by CountyCare, Behavioral Health Office, ACHN, and community-based organizations. Social services referral coordination operational.",
+    notAccomplished:"CCDPH integration not completed within project scope. Platform maintenance transitioned to Office of Research and Innovation after project close.",
+    lessonsLearned:"Community social service platforms require sustained relationship management with partner organizations — technical implementation is the easier part. Handoff to operational owner must include documented processes, not just system access.",
+    keyOutcome:"Social determinants of health referral network operational across CCH entities and community partners."
+  },
+  "Wellvana": {
+    doc:"Project Closure Report Wellvana js.docx",
+    accomplished:"Wellvana Medicare Value-Based Care enrollment completed. Shared Savings Program participation established. HEDIS measure improvement plan developed.",
+    notAccomplished:"Full HEDIS improvement targets require ongoing monitoring beyond project close. Attribution and care gap closure workflows still maturing.",
+    lessonsLearned:"VBC enrollment projects must include operational readiness for ongoing performance management — enrollment is the start, not the end. HEDIS gap closure requires clinical workflow changes that take time to embed.",
+    keyOutcome:"CCH enrolled in Wellvana Medicare Shared Savings Program. Foundation for value-based care revenue established."
+  },
 };
 
 // ============================================================
@@ -1021,45 +1173,59 @@ const ANNUAL_REPORTS = {
 const LESSONS_THEMES = [
   {
     theme:"Requirements Management", icon:"📋",
-    color:"var(--danger)", bg:"rgba(239,68,68,0.06)", border:"rgba(239,68,68,0.2)", count:8,
-    summary:"The most pervasive failure across projects. Equipment ordered without measurements, technology specs assumed rather than documented, vendor requirements missed, regulatory needs surfacing at Go-Live. Requirements gaps affected Cardio Service Line, Provident PT/OT/SLP, Provident Ambulance Runs, and Provident Observation Unit.",
-    recommendation:"Mandate a completed, signed requirements document before any procurement, vendor engagement, or system build. Include space measurements, technology specs, regulatory needs, and explicit stakeholder expectations. Ask every sponsor: 'Is there anyone else I need to speak to?'",
-    projects:["Cardio Service Line","Provident PT/OT/SLP","Provident Ambulance Runs","Provident Observation Unit","Bronzeville Health Center","Centralized Credentialing"]
-  },
-  {
-    theme:"Task Verification & Quality Gates", icon:"✅",
-    color:"var(--accent)", bg:"rgba(59,130,246,0.06)", border:"rgba(59,130,246,0.2)", count:3,
-    summary:"Verbal or self-reported task completion was accepted without verification — resulting in critical issues surfacing days before Go-Live. In one case, a deliverable reported complete was found 2 months later to have never been delivered.",
-    recommendation:"Require documented proof of task completion for all critical-path deliverables. Acceptable evidence includes photographs, system screenshots, business owner sign-off, or direct stakeholder confirmation. Do not advance a project to Go-Live readiness based on verbal status updates.",
-    projects:["Provident PT/OT/SLP","Provident Ambulance Runs","Cardio Service Line"]
-  },
-  {
-    theme:"Budget & Financial Planning", icon:"💰",
-    color:"var(--warning)", bg:"rgba(245,158,11,0.06)", border:"rgba(245,158,11,0.2)", count:3,
-    summary:"Projects initiated without confirmed funding required retroactive financial intervention (PT/OT/SLP: $200k secured after the fact from CFO). Shared accounting strings across projects created procurement delays. Plastics Clinic at Sengstacke was greenlighted without a business case — resulting in only 5 encounters vs 92 planned.",
-    recommendation:"No project initiates without an approved, dedicated funding source tied to the Cook County budget cycle. For equipment-heavy projects, assign dedicated accounting strings per project. Sponsors must confirm budget availability before charter approval.",
-    projects:["Provident PT/OT/SLP","Inpatient Dialysis (HD & CRRT)","Plastics Clinic at Sengstacke"]
-  },
-  {
-    theme:"Staffing, Training & Cross-Site Assumptions", icon:"👥",
-    color:"var(--accent2)", bg:"rgba(99,102,241,0.06)", border:"rgba(99,102,241,0.2)", count:3,
-    summary:"Physician recruitment timelines were severely underestimated (8+ months for ED physicians). Equipment transferred from Stroger to Provident assumed staff cross-training that did not exist. Provident Electrophysiology Procedures was PRB-approved but had to be abandoned after physician commitment failed to materialize.",
-    recommendation:"For projects requiring physician recruitment: start agency/locums route immediately and engage Legal and union counsel early. For equipment transfers between CCH facilities: never assume cross-training — validate capabilities and schedule training before transfer.",
-    projects:["Provident Ambulance Runs","Inpatient Dialysis (HD & CRRT)","Provident Electrophysiology Procedures (cancelled)"]
+    color:"var(--danger)", bg:"rgba(239,68,68,0.06)", border:"rgba(239,68,68,0.2)", count:10,
+    summary:"The most pervasive failure across CCH PMOE projects. Equipment ordered without measurements, technology specs assumed rather than documented, vendor requirements missed, regulatory needs surfacing at Go-Live, and stakeholder expectations left unspoken. Projects affected include Cardio Service Line, Provident PT/OT/SLP, Provident Ambulance Runs, Provident Observation Unit, Bronzeville Health Center, and Centralized Credentialing.",
+    recommendation:"Mandate a completed, signed requirements document before any procurement, vendor engagement, or system build. Include space measurements, technology specs, regulatory needs, and explicit stakeholder expectations. Engage Clinical Informatics early. Ask every sponsor: 'Is there anyone else I need to speak to?'",
+    projects:["Cardio Service Line","Provident PT/OT/SLP","Provident Ambulance Runs","Provident Observation Unit","Bronzeville Health Center","Centralized Credentialing","Lab Automation Upgrade"]
   },
   {
     theme:"Stakeholder Commitment & Governance Alignment", icon:"🤝",
-    color:"#8b5cf6", bg:"rgba(139,92,246,0.06)", border:"rgba(139,92,246,0.2)", count:4,
-    summary:"Several projects were approved and implemented without complete physician or sponsor commitment. Plastics Clinic had a discrepancy between what was proposed to PRB and what physicians actually committed to deliver. Care Coordination Transition required scope adjustment at closure due to CountyCare staffing constraints not surfaced at kickoff.",
+    color:"#8b5cf6", bg:"rgba(139,92,246,0.06)", border:"rgba(139,92,246,0.2)", count:7,
+    summary:"Multiple projects were approved and implemented without complete physician or sponsor commitment. Plastics Clinic had a discrepancy between what was proposed to PRB and what physicians actually committed to deliver — resulting in only 5 encounters vs 92 planned. Provident Electrophysiology Procedures was PRB-approved but abandoned after physician commitment failed. Care Coordination Transition required scope adjustment at closure due to CountyCare staffing constraints not surfaced at kickoff.",
     recommendation:"Require explicit written commitment from all key physician and department sponsors before PRB approval. For projects crossing organizational boundaries, document commitments from all parties and build a scope change protocol into the project plan.",
-    projects:["Plastics Clinic at Sengstacke","Care Coordination Transition","High Reliability Training","Organizational Consolidations"]
+    projects:["Plastics Clinic at Sengstacke","Care Coordination Transition","High Reliability Training","Organizational Consolidations","Provident Electrophysiology (cancelled)","Crisis Triage Stabilization Center"]
   },
   {
-    theme:"Benefits Realization & Measurement", icon:"📊",
-    color:"var(--success)", bg:"rgba(16,185,129,0.06)", border:"rgba(16,185,129,0.2)", count:5,
-    summary:"Multiple Provident-related projects are significantly underperforming against PRB-approved benefits targets (Inpatient Beds, Plastics Clinic, Ambulance Runs). Projects without defined baseline metrics at charter had no meaningful way to measure success. PET Jubilant and Robotic Bronchoscopy stand as models — volume-based metrics with clear targets met.",
-    recommendation:"Every charter must include a benefits measurement plan with a defined baseline, target metric, data source, measurement frequency, and responsible owner. PRB approval should be contingent on completion of the benefits plan. Surface results in the PMOE Annual Report.",
-    projects:["Provident Observation Unit","Plastics Clinic","Ambulance Runs","PET Jubilant","Robotic Bronchoscopy"]
+    theme:"Task Verification & Quality Gates", icon:"✅",
+    color:"var(--accent)", bg:"rgba(59,130,246,0.06)", border:"rgba(59,130,246,0.2)", count:4,
+    summary:"Verbal or self-reported task completion was accepted without verification — resulting in critical issues surfacing days before Go-Live. In one case, a deliverable reported complete was found 2 months later to have never been delivered. DGIM Admin Improvement and Primary Care-Managed Care Info Coordination both had handoff verification gaps.",
+    recommendation:"Require documented proof of task completion for all critical-path deliverables. Acceptable evidence includes photographs, system screenshots, business owner sign-off, or direct stakeholder confirmation. Do not advance a project to Go-Live readiness based on verbal status updates.",
+    projects:["Provident PT/OT/SLP","Provident Ambulance Runs","Cardio Service Line","DGIM - Admin Process Improvement"]
+  },
+  {
+    theme:"Budget & Financial Planning", icon:"💰",
+    color:"var(--warning)", bg:"rgba(245,158,11,0.06)", border:"rgba(245,158,11,0.2)", count:4,
+    summary:"Projects initiated without confirmed funding required retroactive financial intervention (PT/OT/SLP: $200k secured after the fact from CFO). Shared accounting strings across projects created procurement delays when balances were unknown. Lab Automation Upgrade faced an unbudgeted $92k SCC interface cost mid-project.",
+    recommendation:"No project initiates without an approved, dedicated funding source tied to the Cook County budget cycle. For equipment-heavy projects, assign dedicated accounting strings per project. Sponsors must confirm budget availability before charter approval.",
+    projects:["Provident PT/OT/SLP","Inpatient Dialysis (HD & CRRT)","Lab Automation Upgrade","Plastics Clinic at Sengstacke"]
+  },
+  {
+    theme:"Volume Projections & Benefits Realization", icon:"📊",
+    color:"var(--success)", bg:"rgba(16,185,129,0.06)", border:"rgba(16,185,129,0.2)", count:8,
+    summary:"Multiple Provident-related projects are significantly underperforming against PRB-approved benefits targets (Inpatient Beds at 70-76%, Plastics Clinic at 5-21%, Ambulance Runs declining). Projects without defined baseline metrics at charter had no meaningful way to measure success. PET Jubilant, Robotic Bronchoscopy, EP Lab, and Centralized Credentialing stand as models — volume-based metrics with clear targets met or exceeded.",
+    recommendation:"Every charter must include a benefits measurement plan with a defined baseline, target metric, data source, measurement frequency, and responsible owner. PRB approval should be contingent on completion of the benefits plan. Provident-specific projections must account for market and access constraints. Surface results annually in the PMOE Annual Report.",
+    projects:["Provident Observation Unit","Plastics Clinic","Ambulance Runs","PET Jubilant","Robotic Bronchoscopy","Crisis Triage Stabilization Center","Provident Colonoscopy","Birthday Screenings"]
+  },
+  {
+    theme:"Staffing, Training & Cross-Site Assumptions", icon:"👥",
+    color:"var(--accent2)", bg:"rgba(99,102,241,0.06)", border:"rgba(99,102,241,0.2)", count:5,
+    summary:"Physician recruitment timelines were severely underestimated (8+ months for ED physicians). Equipment transferred from Stroger to Provident assumed staff cross-training that did not exist. Provident Electrophysiology was PRB-approved but had to be abandoned after physician commitment failed to materialize. Telehealth Optimization showed variable adoption driven by provider champion availability.",
+    recommendation:"For projects requiring physician recruitment: start agency/locums route immediately and engage Legal and union counsel early. For equipment transfers between CCH facilities: never assume cross-training — validate capabilities and schedule training before transfer. Identify provider champions before launch.",
+    projects:["Provident Ambulance Runs","Inpatient Dialysis (HD & CRRT)","Provident Electrophysiology (cancelled)","Telehealth Optimization","Bronzeville Health Center"]
+  },
+  {
+    theme:"Partner & Vendor Dependency Management", icon:"🔗",
+    color:"#f97316", bg:"rgba(249,115,22,0.06)", border:"rgba(249,115,22,0.2)", count:5,
+    summary:"Several projects were significantly impacted by external partner constraints that were not confirmed at project initiation. CountyCare staffing limitations forced scope change in Care Coordination Transition. SCC interface cost dispute put Lab Automation Upgrade timeline at risk. UniteUS CCDPH integration fell out of scope due to partner readiness gaps. Population Health/VBC struggles because partner organizations lack dedicated support.",
+    recommendation:"For any project dependent on external vendors or partner organizations: confirm capacity, budget, and governance alignment before charter finalization. Include partner constraints as explicit risk log items. Build scope contingency plans for cases where partners cannot deliver.",
+    projects:["Care Coordination Transition","Lab Automation Upgrade","UniteUS","Population Health/VBC","Domestic Spend (EARN)"]
+  },
+  {
+    theme:"Operational Handoff & Sustainability", icon:"🔄",
+    color:"#06b6d4", bg:"rgba(6,182,212,0.06)", border:"rgba(6,182,212,0.2)", count:6,
+    summary:"Multiple projects transitioned to operations without formal sustainability plans or designated operational owners. Crisis Triage Stabilization Center's financial sustainability beyond ARPA was not planned at project initiation. Telehealth Optimization was re-optimized but monthly reporting ownership was informally assigned. Health Care Equity Certification lacked a post-certification owner.",
+    recommendation:"Every project must include a formal operational handoff plan as part of the project closeout process. This must include: designated operational owner, escalation path, performance metrics, resource requirements, and a 90-day post-launch check-in. ARPA-funded initiatives require sustainability plans before go-live.",
+    projects:["Crisis Triage Stabilization Center","Health Care Equity Certification","UniteUS","Telehealth Optimization","Organizational Consolidations","Primary Care-Managed Care Info Coordination"]
   },
 ];
 
@@ -1072,12 +1238,12 @@ const DASHBOARD_DATA = [
   { name:"HEC Dashboard",                                      project:"Health Equity Committee Capacity",   pm:"Elizabeth Wallish", url:"https://app.smartsheet.com/dashboards/q3p42QfJ7vVM676HRGgfFXRRV4pQ2v2c3h2x7R71", description:"HEC capacity building — recruitment efforts and committee governance." },
   { name:"City Colleges Leadership Dashboard",                 project:"City Colleges Workforce",            pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/dashboards/8Vc7Q4Q8X3qxPXFWfVQ8534CH8wGCVRWjgQvmjj1", description:"Workforce pipeline with City Colleges of Chicago — MOU, curriculum, student placement." },
   { name:"Immunization / Unified Strategy Dashboard",          project:"Unified Strategy: CCH-CCDPH",        pm:"Elizabeth Wallish", url:"https://app.smartsheet.com/dashboards/3446qrv35rXrwcJrRm5WPVj9JmvrF4WpxQ56vcg1", description:"CCH-CCDPH unified strategy — immunization metrics and initiative alignment." },
-  { name:"ACHN Provider and Operations Coordination Tracker",  project:"ACHN Providers Coordination",        pm:"Julius Ablis",      url:"https://app.smartsheet.com/dashboards/8169822098876292", description:"ACHN provider coordination — operations alignment and provider performance monitoring." },
-  { name:"CCH Agency Staffing Request & Utilization Tracker",  project:"Agency Staffing",                    pm:"Julius Ablis",      url:"https://app.smartsheet.com/dashboards/5399766835193732", description:"Agency staffing request and utilization — request volume, fill rates, and cost monitoring." },
-  { name:"PM Support Tracker",                                 project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/3795133230540676", description:"PM support tracker — project management capacity, task assignment, and team support." },
-  { name:"Proposals Tracker",                                  project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/7642616473905028", description:"Proposals tracking — pre-project proposals, PRB submissions, and approval pipeline." },
-  { name:"Program/District Code Tracker",                      project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/2156860905154436", description:"Program and district code management tracker for PMOE portfolio financial tracking." },
-  { name:"PMOE Portfolio Dashboard",                           project:"PMOE Portfolio",                     pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/6hwgprQwqWVx534C7675463whVVcq3w4p7gq3hG1", description:"Full portfolio — project status by PM, strategic domain chart, weekly notes." },
+  { name:"ACHN Provider and Operations Coordination Tracker",  project:"ACHN Providers Coordination",        pm:"Julius Ablis",      url:"https://app.smartsheet.com/sheets/cqPCpC2f5Px6vhjmGRV2wxWJ97H6w3qcRfqPMwq1", description:"ACHN provider coordination — operations alignment and provider performance monitoring." },
+  { name:"CCH Agency Staffing Request & Utilization Tracker",  project:"Agency Staffing",                    pm:"Julius Ablis",      url:"https://app.smartsheet.com/sheets/gC5gJQWW652C6p9H8qrPR66C73fm54Vc34mVW561", description:"Agency staffing request and utilization — request volume, fill rates, and cost monitoring." },
+  { name:"PM Support Tracker",                                 project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/sheets/vg56CWq8JRRgcV9x7FR7HVPW8jP73rHRpQF228r1", description:"PM support tracker — project management capacity, task assignment, and team support." },
+  { name:"Proposals Tracker",                                  project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/sheets/vg56CWq8JRRgcV9x7FR7HVPW8jP73rHRpQF228r1", description:"Proposals tracking — pre-project proposals, PRB submissions, and approval pipeline." },
+  { name:"Program/District Code Tracker",                      project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/sheets/vg56CWq8JRRgcV9x7FR7HVPW8jP73rHRpQF228r1", description:"Program and district code management tracker for PMOE portfolio financial tracking." },
+  { name:"PMOE Portfolio Dashboard",                           project:"PMOE Portfolio",                     pm:"PMOE Team",         url:"https://app.smartsheet.com/sheets/vg56CWq8JRRgcV9x7FR7HVPW8jP73rHRpQF228r1", description:"Full portfolio — project status by PM, strategic domain chart, weekly notes." },
 ];
 
 // ============================================================
@@ -1106,7 +1272,7 @@ function init() {
   function step() {
     if (i >= steps.length) {
       // Start clean with embedded data. User presses Refresh to pull live data.
-      label.innerHTML = '<span style="color:var(--text3)">\u25cf Embedded</span> · Apr 14, 2026';
+      label.innerHTML = '<span style="color:var(--text3)">● Embedded</span>';
       setTimeout(() => { document.getElementById('loader').classList.add('hidden'); }, 300);
       return;
     }
@@ -1121,6 +1287,10 @@ function init() {
 }
 
 function buildDashboard() {
+  // Update sync date display
+  const syncDateEl = document.getElementById('lastSyncDate');
+  if (syncDateEl) syncDateEl.textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
   // Compute global risk/issue arrays from PMOE Load - Update
   allRisks  = PMOE_LOAD_DATA.flatMap(p => p.deliverables.filter(d => d.risk === 'Risk').map(d => ({...d, project:p.project, pm:p.pm, type:'Risk'})));
   allIssues = PMOE_LOAD_DATA.flatMap(p => p.deliverables.filter(d => d.risk === 'Issue').map(d => ({...d, project:p.project, pm:p.pm, type:'Issue'})));
@@ -1316,7 +1486,8 @@ function buildProjectCard(item) {
 
   const { p, master } = item;
   const isOnHold = item.type === 'onhold' || (master && master.status === 'On Hold');
-  const statusClass = isOnHold ? 'onhold' : (master && master.phase === 'Planning' ? 'planning' : 'active');
+  const phaseMap = {Planning:'planning', Monitoring:'active', Execution:'active', Closed:'complete'};
+  const statusClass = isOnHold ? 'onhold' : (master && phaseMap[master.phase]) || 'active';
   const statusLabel = isOnHold ? 'On Hold' : (master && master.phase ? master.phase : 'Active');
   const hasRisk = p.deliverables.some(d => d.risk === 'Risk');
   const hasIssue = p.deliverables.some(d => d.risk === 'Issue');
@@ -1540,7 +1711,7 @@ function buildCloseout() {
     const statusColor = hasDoc ? 'var(--success)' : p.closeout === 'NA' ? 'var(--text3)' : 'var(--danger)';
     const statusLabel = hasDoc ? '✓ Report Filed' : p.closeout === 'NA' ? '— N/A' : '✗ Missing';
     const closeoutBg  = hasDoc ? 'rgba(16,185,129,0.05)' : p.closeout === 'NA' ? 'rgba(100,116,139,0.05)' : 'rgba(239,68,68,0.05)';
-    return `<div class="project-card" style="margin-bottom:10px;cursor:default;">
+    return `<div class="project-card" style="margin-bottom:10px;cursor:pointer;" onclick="openCompletedModal('${p.project.replace(/'/g,"\\'")}')" >
       <div class="project-card-header">
         <div class="project-name">${p.project}</div>
         <span style="font-size:11px;padding:2px 9px;border-radius:10px;background:${closeoutBg};color:${statusColor};border:1px solid ${statusColor}44;font-family:var(--font-mono);flex-shrink:0;">${statusLabel}</span>
@@ -1838,48 +2009,80 @@ function openCompletedModal(projectName) {
   const p = COMPLIANCE_DATA.find(x => x.project === projectName);
   if (!p) return;
 
+  const masterInfo = MASTER_COMPLETED.find(c => c.name === p.project);
+  const closure    = CLOSURE_REPORTS[p.project] || null;
+
   function chipLine(label, val) {
-    const cls = val === true ? 'chip-yes' : val === false ? 'chip-no' : 'chip-na';
+    const cls  = val === true ? 'chip-yes' : val === false ? 'chip-no' : 'chip-na';
     const icon = val === true ? '✓' : val === false ? '✗' : '—';
-    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+    const lbl  = val === true ? 'Filed' : val === false ? 'Missing' : 'N/A';
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border);">
       <span style="font-size:13px;color:var(--text2);">${label}</span>
-      <span class="compliance-chip ${cls}">${icon} ${val===true?'Completed':val===false?'Missing':'N/A'}</span>
+      <span class="compliance-chip ${cls}">${icon} ${lbl}</span>
     </div>`;
   }
 
   document.getElementById('modalTitle').textContent = p.project;
   document.getElementById('modalMeta').innerHTML = `
     <span class="status-pill complete" style="margin-right:8px;">● Complete</span>
-    <span style="font-size:13px;color:var(--text3);">PM: ${p.pm}</span>`;
+    <span style="font-size:13px;color:var(--text3);">PM: ${p.pm}</span>
+    ${masterInfo?.end ? `<span style="font-size:13px;color:var(--text3);margin-left:8px;">· Closed: ${masterInfo.end}</span>` : ''}`;
 
-  const masterInfo = MASTER_COMPLETED.find(c => c.name === p.project);
+  // ── Meta chips ───────────────────────────────────────────
+  const metaHtml = masterInfo ? `
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+      ${masterInfo.domain ? `<span class="meta-chip" style="font-size:11px;">${masterInfo.domain.replace('Optimization, Systemization, & Performance Improvement','Opt. & Perf.').replace('Health Equity, Community Health, & Integration','Health Equity').replace('Growth, Innovation, & Transformation','Growth & Innovation').replace('Workforce: Talents & Teams','Workforce')}</span>` : ''}
+      ${masterInfo.sponsor ? `<span class="meta-chip" style="font-size:11px;">🏢 ${masterInfo.sponsor}</span>` : ''}
+    </div>` : '';
+
+  // ── Closure report content ───────────────────────────────
+  const closureHtml = closure ? `
+    <div style="margin-top:16px;">
+      <div style="font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);">📋 Project Closure Report</div>
+      ${closure.doc && !closure.doc.startsWith('Word') ? `<div style="margin-bottom:12px;"><a href="${closure.smartsheetUrl}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--accent);text-decoration:none;font-family:var(--font-mono);padding:4px 10px;border:1px solid rgba(59,130,246,.3);border-radius:6px;background:rgba(59,130,246,.06);">📄 ${closure.doc} ↗</a></div>` : ''}
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div style="padding:12px;background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.2);border-radius:8px;">
+          <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--success);margin-bottom:6px;">✓ What Was Accomplished</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7;">${closure.accomplished}</div>
+        </div>
+        <div style="padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:8px;">
+          <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--danger);margin-bottom:6px;">✗ What Was Not Accomplished</div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.7;">${closure.notAccomplished}</div>
+        </div>
+      </div>
+      <div style="padding:12px;background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;margin-bottom:10px;">
+        <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--warning);margin-bottom:6px;">💡 Lessons Learned</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7;">${closure.lessonsLearned}</div>
+      </div>
+      <div style="padding:10px 14px;background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.2);border-radius:8px;">
+        <div style="font-size:10px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:4px;">🎯 Key Outcome</div>
+        <div style="font-size:13px;color:var(--text);font-weight:500;line-height:1.6;">${closure.keyOutcome}</div>
+      </div>
+    </div>` : (p.closeout === true ? `
+    <div style="margin-top:14px;padding:12px 14px;background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.2);border-radius:8px;">
+      <div style="font-size:12px;color:var(--success);font-weight:600;margin-bottom:4px;">📋 Closeout Report Filed</div>
+      ${p.doc ? `<div style="font-size:12px;color:var(--text2);">File: <span class="doc-indicator">📄 ${p.doc.startsWith('📄') ? 'Word document on file' : p.doc}</span></div>` : ''}
+    </div>` : (p.closeout === false ? `
+    <div style="margin-top:14px;padding:12px 14px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:8px;">
+      <div style="font-size:12px;color:var(--danger);font-weight:600;">⚠ Closeout Report Not Yet Filed</div>
+    </div>` : ''));
 
   document.getElementById('modalBody').innerHTML = `
     <div class="ai-summary-wrap" id="modalAI" style="display:none;">
       <div class="ai-summary-label"><span class="ai-pulse"></span> Key Insights</div>
       <div class="ai-summary-text" id="modalAIText"><div class="ai-thinking"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div></div>
     </div>
-    ${masterInfo ? `<div style="margin-bottom:14px;padding:10px 14px;background:var(--surface2);border-radius:8px;display:flex;gap:12px;flex-wrap:wrap;">
-      ${masterInfo.domain ? `<span class="meta-chip">${masterInfo.domain.replace('Optimization, Systemization, & Performance Improvement','Opt. & Perf.').replace('Health Equity, Community Health, & Integration','Health Equity').replace('Growth, Innovation, & Transformation','Growth & Innovation')}</span>` : ''}
-      ${masterInfo.end ? `<span class="meta-chip">📅 Completed: ${masterInfo.end}</span>` : ''}
-      ${masterInfo.sponsor ? `<span class="meta-chip">🏢 Sponsor: ${masterInfo.sponsor}</span>` : ''}
-    </div>` : ''}
+    ${metaHtml}
     <div class="modal-section">
       <div class="modal-section-title">PM Compliance Checklist</div>
-      ${chipLine('Project Charter (Final Version)', p.charter)}
+      ${chipLine('Project Charter', p.charter)}
       ${chipLine('Project Plan', p.plan)}
       ${chipLine('Risks Log', p.risks)}
       ${chipLine('Closeout Report', p.closeout)}
     </div>
-    ${p.closeout === true ? `
-    <div style="padding:14px;background:rgba(16,185,129,0.05);border:1px solid rgba(16,185,129,0.2);border-radius:8px;margin-top:14px;margin-bottom:14px;">
-      <div style="font-size:12px;color:var(--success);font-weight:600;margin-bottom:6px;">📋 Closeout Report Filed</div>
-      ${p.doc ? `<div style="font-size:13px;color:var(--text2);">File: <span class="doc-indicator">📄 ${p.doc.startsWith('📄') ? 'Word document on file' : p.doc}</span></div>` : ''}
-    </div>` : p.closeout === false ? `
-    <div style="padding:14px;background:rgba(239,68,68,0.05);border:1px solid rgba(239,68,68,0.2);border-radius:8px;margin-top:14px;margin-bottom:14px;">
-      <div style="font-size:12px;color:var(--danger);font-weight:600;">⚠ Closeout Report Missing</div>
-    </div>` : ''}
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;">
+    ${closureHtml}
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;">
       <button class="btn btn-primary" onclick="getAICloseout('${p.project.replace(/'/g,"\\'")}', '${p.pm}', ${p.closeout===true})">💡 Key Insights</button>
       <button class="btn btn-ghost" onclick="closeModal()">Close</button>
     </div>`;
@@ -1935,7 +2138,7 @@ async function generateAISummary(view) {
 
   let prompt = '';
   if (view === 'overview') {
-    prompt = `You are the PMOE Director at Cook County Health. In 3-4 concise bullet points, synthesize the key takeaways for an executive reviewing the PMOE portfolio today (April 14, 2026). Active projects: ${active}. Open issues: ${issues}. Flagged projects: ${flagged}. Top issues: ${issueList}. Be specific, direct, and actionable. Use plain text (no markdown headers).`;
+    prompt = `You are the PMOE Director at Cook County Health. In 3-4 concise bullet points, synthesize the key takeaways for an executive reviewing the PMOE portfolio today. Active projects: ${active}. Open issues: ${issues}. Flagged projects: ${flagged}. Top issues: ${issueList}. Be specific, direct, and actionable. Use plain text (no markdown headers).`;
   } else if (view === 'projects') {
     prompt = `You are the PMOE Director at Cook County Health. Summarize the active project portfolio in 3 bullet points for an executive. Key active projects: ${PMOE_LOAD_DATA.map(p=>p.project).join(', ')}. Issues: ${issues}. Note any patterns or risks across the portfolio. Be concise and direct.`;
   } else if (view === 'risks') {
@@ -2020,7 +2223,7 @@ const API_URL = 'https://pmoe-api.onrender.com';
 // automatically reflect fresh Smartsheet data.
 // ============================================================
 function ingestLiveData(data) {
-  const { pmoeLoadData, risksData, complianceData } = data;
+  const { pmoeLoadData, risksData, complianceData, masterProjects } = data;
 
   // ── 1. PMOE_LOAD_DATA — replace entirely with live rows ──────────────
   // The API returns rows keyed by project name; map PM display names
@@ -2056,6 +2259,22 @@ function ingestLiveData(data) {
         k.toLowerCase().replace(/[^a-z0-9]/g,'') === p.project.toLowerCase().replace(/[^a-z0-9]/g,'')
       );
       if (match) MASTER_FILE_DATA[match].sponsor = p.sponsor;
+    });
+  }
+
+  // ── 1b. MASTER_FILE_DATA — update phases and sponsors from /api/master ──
+  if (Array.isArray(masterProjects) && masterProjects.length) {
+    const norm = s => (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    masterProjects.forEach(mp => {
+      const keys = Object.keys(MASTER_FILE_DATA);
+      const match = keys.find(k => norm(k) === norm(mp.name) ||
+        norm(k).includes(norm(mp.name).slice(0,15)) ||
+        norm(mp.name).includes(norm(k).slice(0,15)));
+      if (match) {
+        if (mp.phase)   MASTER_FILE_DATA[match].phase   = mp.phase;
+        if (mp.sponsor) MASTER_FILE_DATA[match].sponsor = mp.sponsor;
+        if (mp.status)  MASTER_FILE_DATA[match].status  = mp.status === 'In Progress' ? 'In Progress' : mp.status;
+      }
     });
   }
 
@@ -2143,7 +2362,11 @@ async function refreshData() {
   try {
     // Single call to /api/data — no separate health ping.
     // Timeout 55s: covers Render free-tier cold start (up to ~50s).
-    const resp = await fetchWithTimeout(`${API_URL}/api/data`, 55000);
+    // Fetch both data endpoints in parallel for fastest load
+    const [resp, masterResp] = await Promise.all([
+      fetchWithTimeout(`${API_URL}/api/data`, 55000),
+      fetchWithTimeout(`${API_URL}/api/master`, 30000).catch(() => null)
+    ]);
     clearInterval(waiting);
 
     if (!resp.ok) {
@@ -2152,6 +2375,11 @@ async function refreshData() {
     }
 
     const liveData = await resp.json();
+    // Merge master project data (phases/sponsors) into live data
+    if (masterResp?.ok) {
+      const masterData = await masterResp.json().catch(() => ({}));
+      liveData.masterProjects = masterData.projects || [];
+    }
     ingestLiveData(liveData);
     buildDashboard();
 
