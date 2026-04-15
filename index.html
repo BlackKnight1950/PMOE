@@ -1318,11 +1318,20 @@ function buildProjectCard(item) {
   const isOnHold = item.type === 'onhold' || (master && master.status === 'On Hold');
   const statusClass = isOnHold ? 'onhold' : (master && master.phase === 'Planning' ? 'planning' : 'active');
   const statusLabel = isOnHold ? 'On Hold' : (master && master.phase ? master.phase : 'Active');
-  const pct = master && master.pct != null ? Math.round(master.pct * 100) : null;
   const hasRisk = p.deliverables.some(d => d.risk === 'Risk');
   const hasIssue = p.deliverables.some(d => d.risk === 'Issue');
   const charter = CHARTER_DATA[p.project] || CHARTER_DATA[p.masterKey] || null;
-  const sponsor = master ? master.sponsor : '';
+  // Sponsor priority: 1) direct on p (set from live API), 2) MASTER_FILE_DATA via masterKey, 3) fuzzy match on project name
+  let sponsor = p.sponsor || (master ? master.sponsor : '') || '';
+  if (!sponsor) {
+    // fuzzy fallback: search MASTER_FILE_DATA keys for partial match
+    const norm = s => s.toLowerCase().replace(/[^a-z0-9]/g,'');
+    const mkey = Object.keys(MASTER_FILE_DATA).find(k =>
+      norm(k) === norm(p.project) || norm(k).includes(norm(p.project).slice(0,12)) ||
+      norm(p.project).includes(norm(k).slice(0,12))
+    );
+    if (mkey) sponsor = MASTER_FILE_DATA[mkey].sponsor || '';
+  }
   const domain  = master ? master.domain  : '';
 
   return `<div class="project-card" onclick="openProjectModal('${p.project.replace(/'/g,"\\'")}')">
@@ -1339,10 +1348,7 @@ function buildProjectCard(item) {
         ${hasRisk  ? `<span class="risk-badge risk">Risk</span>`  : ''}
       </div>
       ${master && master.start && master.end ? `<div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);margin-bottom:8px;">${master.start} → ${master.end}</div>` : ''}
-      ${pct !== null ? `<div class="progress-wrap">
-        <div class="progress-label"><span>${p.deliverables[0]?.name || 'Progress'}</span><span>${pct}%</span></div>
-        <div class="progress-bar"><div class="progress-fill ${pct>=80?'green':pct>=50?'blue':'amber'}" style="width:${pct}%;"></div></div>
-      </div>` : ''}
+
       ${charter ? `<div style="margin-top:10px;"><span class="doc-indicator">📋 ${charter.fileName}</span></div>` : ''}
     </div>
   </div>`;
@@ -1797,14 +1803,10 @@ function openProjectModal(projectName) {
     </div>` : '';
 
   const masterHTML = master.start ? `
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
       <div style="padding:10px;background:var(--surface2);border-radius:8px;text-align:center;">
         <div style="font-size:10px;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;margin-bottom:3px;">Phase</div>
         <div style="font-size:13px;font-weight:600;">${master.phase || '—'}</div>
-      </div>
-      <div style="padding:10px;background:var(--surface2);border-radius:8px;text-align:center;">
-        <div style="font-size:10px;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;margin-bottom:3px;">% Complete</div>
-        <div style="font-size:13px;font-weight:600;">${master.pct != null ? Math.round(master.pct*100)+'%' : '—'}</div>
       </div>
       <div style="padding:10px;background:var(--surface2);border-radius:8px;text-align:center;">
         <div style="font-size:10px;font-family:var(--font-mono);color:var(--text3);text-transform:uppercase;margin-bottom:3px;">Target End</div>
@@ -1970,7 +1972,7 @@ async function getAIProjectBrief(projectName) {
   const status = p.deliverables[0]?.status || '';
   const flagged = p.deliverables.filter(d => d.risk).map(d => `${d.risk}: ${d.impact||d.name}`).join('; ');
 
-  const prompt = `You are analyzing a Cook County Health PMOE project for an executive. Project: ${projectName}. PM: ${p.pm}. Phase: ${master.phase||'Active'}. % Complete: ${master.pct!=null?Math.round(master.pct*100)+'%':'unknown'}. Sponsor: ${master.sponsor||'unknown'}. Latest status: "${status}". ${flagged ? `Flagged items: ${flagged}.` : ''} Give 3 focused bullet points: current state, risks/blockers, and recommended next action. Be specific and direct.`;
+  const prompt = `You are analyzing a Cook County Health PMOE project for an executive. Project: ${projectName}. PM: ${p.pm}. Phase: ${master.phase||'Active'}. Sponsor: ${sponsor||master.sponsor||'unknown'}. Latest status: "${status}". ${flagged ? `Flagged items: ${flagged}.` : ''} Give 3 focused bullet points: current state, risks/blockers, and recommended next action. Be specific and direct.`;
 
   await callClaude(prompt, textEl, null);
 }
