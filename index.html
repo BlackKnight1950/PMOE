@@ -336,8 +336,8 @@
   <div class="nav-tab" onclick="showView('projects')" id="tab-projects">📁 Projects <span class="nav-badge" id="projectsCount">—</span></div>
   <div class="nav-tab" onclick="showView('risks')" id="tab-risks">⚠️ Risks &amp; Issues <span class="nav-badge warn" id="riskCount">—</span></div>
   <div class="nav-tab" onclick="showView('benefits')" id="tab-benefits">📈 Project Benefits Monitoring</div>
-  <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
-  <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Compliance</div>
+  <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Project Closeout Reports& Lessons Learned <span class="nav-badge" id="closeoutCount">—</span></div>
+  <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Process Compliance</div>
   <div class="nav-tab" onclick="showView('dashboards')" id="tab-dashboards">🖥️ Project Dashboards <span class="nav-badge" id="dashboardCount">—</span></div>
 </nav>
 
@@ -359,8 +359,8 @@
     </div>
     <div class="stats-row animate-in delay-1" id="statsRow">
       <div class="stat-card blue"><div class="stat-label">Active Projects</div><div class="stat-value" id="stat-active">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
-      <div class="stat-card green"><div class="stat-label">Completed</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
-      <div class="stat-card amber"><div class="stat-label">On Hold</div><div class="stat-value" id="stat-hold">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
+      <div class="stat-card green"><div class="stat-label">Completed Projects</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
+      <div class="stat-card amber"><div class="stat-label">On Hold Projects</div><div class="stat-value" id="stat-hold">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
       <div class="stat-card amber"><div class="stat-label">Risks Flagged</div><div class="stat-value" id="stat-risks">—</div><div class="stat-sub">From PMOE Load - Update</div></div>
       <div class="stat-card red"><div class="stat-label">Issues Open</div><div class="stat-value" id="stat-issues">—</div><div class="stat-sub">From PMOE Load - Update</div></div>
     </div>
@@ -387,7 +387,7 @@
     <div class="section-header">
       <div>
         <div class="section-title">Projects</div>
-        <div class="section-sub">Source: PMOE Load (Master File) · Updates from PMOE Load - Update · Charters from PM Process Compliance Audit</div>
+        <div class="section-sub">Source: PMOE Load (Master File) · Updates from PMOE Load - Update · Project Files from PM Process Compliance Audit</div>
       </div>
       <button class="btn btn-ghost" onclick="generateAISummary('projects')">💡 Key Insights</button>
     </div>
@@ -621,7 +621,7 @@ const PMOE_LOAD_DATA = [
   { project:"Pharmacy Domestic Spend",      pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Pharmacy Domestic Spend",
     deliverables:[{ name:"Project Benefits/Impact Monitoring", status:"Leadership recently met with system APPs to discuss prescribing. Claims data reviewed — focused on HIV and Derm in parallel. Budget to actual data reviewed; currently exceeding budget.", risk:"", impact:"" }]
   },
-  { project:"Population Health/VBC",        pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Population Health Management/VBC",
+  { project:"Population Health/VBC",        pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Population Health/VBC",
     deliverables:[{ name:"Project Benefits/Impact Monitoring", status:"Bi-weekly series for OKR report outs began 3/30. Sr leadership update scheduled for 4/9 was postponed — several senior leaders offsite.", risk:"Issue", impact:"Many leaders are expressing frustration with balancing VBC work alongside other priorities. This program would benefit from dedicated support." }]
   },
   { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon", lastUpdated:"2026-04-13", masterKey:"Medication Refill and Reconciliation Optimization",
@@ -645,7 +645,7 @@ const PMOE_LOAD_DATA = [
   { project:"ARPA",                         pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"ARPA Spend Monitoring/Sustainability",
     deliverables:[{ name:"Cash Flow, Expenditures, Sustainability", status:"DBMS completed rollover analysis. EBS aligned. Corporate-funded line items removed from ARPA PMO budget. FY26 'general fund-covered' items are internal monitoring — don't limit partner spending. Updated budgets to be distributed in next two weeks.", risk:"", impact:"" }]
   },
-  { project:"BH Intake Center Move",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"Behavioral Intake Center",
+  { project:"BH Intake Center Move",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"BH Intake Center Move",
     deliverables:[{ name:"Project Governance", status:"Space committee did not approve BHIAC move to 6W despite verbal affirmations. Planning temporarily paused pending May 4 City Colleges kickoff. Volume projections in development. Facility and security items under financial review.", risk:"", impact:"" }]
   },
   { project:"Domestic Spend (EARN)",        pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Domestic Spend (EARN)",
@@ -657,7 +657,7 @@ const PMOE_LOAD_DATA = [
   { project:"Surgery Optimization Phase 3", pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Surgery Optimization Phase 3",
     deliverables:[{ name:"Implementation / Benefits Monitoring", status:"PPT v2 short form is LIVE but currently on hold — assessing if MAs have bandwidth for surveys.", risk:"Issue", impact:"" }]
   },
-  { project:"Cath Lab — EP Optimization",   pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Cath Lab- EP Optimization Project",
+  { project:"Cath Lab — EP Optimization",   pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Cath Lab- EP Optimization",
     deliverables:[{ name:"Project Governance", status:"In-Progress: Completed project charters, documented key stakeholders, purpose, deliverables, and org structure. Javier will review with Craig — once approved charter can be submitted.", risk:"Issue", impact:"Charter draft v1: https://cchhs1.sharepoint.com" }]
   },
   { project:"Lab Automation Upgrade",       pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Lab Automation Upgrade",
@@ -693,16 +693,16 @@ const MASTER_FILE_DATA = {
   "JSH Nurse Call and Overhead Paging Systems": { health:"Green", phase:"Planning", pct:5,  start:"2026-03-03", end:"2026-08-17", domain:"Growth, Innovation, & Transformation", sponsor:"Ben Laughton", status:"In Progress" },
   "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Julius Ablis", status:"In Progress" },
   "External Providers":             { health:"Green", phase:"Execution",  pct:53,  start:"2025-12-01", end:"2026-07-24", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Erik Mikaitis", status:"In Progress" },
-  "HRO: Clinical Outcomes Group":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
+  "HRO: Clinical Outcomes":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
   "ARPA Spend Monitoring/Sustainability": { health:"Green", phase:"Monitoring", pct:89, start:"2022-12-01", end:"2026-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Behavioral Intake Center":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
+  "BH Intake Center Move":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
   "Unified Strategy: CCH-CCDPH":    { health:"Green", phase:"Planning",  pct:null,start:"2026-02-16", end:"2026-09-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
   "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Andrea Gibson", status:"In Progress" },
   "Domestic Spend (EARN)":          { health:"Green", phase:"Execution",  pct:36,  start:"2025-06-02", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
   "Surgery Optimization Phase 3":   { health:"Green", phase:"Execution",  pct:83,  start:"2025-07-28", end:"2026-12-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Craig Williams", status:"In Progress" },
-  "Cath Lab- EP Optimization Project": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
+  "Cath Lab- EP Optimization": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
   "Pharmacy Domestic Spend":        { health:"Green", phase:"Execution", pct:85,  start:"2022-01-01", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Population Health Management/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
+  "Population Health/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
   "Medication Refill and Reconciliation Optimization": { health:"Green", phase:"Planning", pct:0, start:"2025-11-03", end:"2026-04-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Sharon Irons", status:"In Progress" },
   "APP Optimization":               { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-11-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Octavia Rolland", status:"In Progress" },
   "Immediate Care (AH)":            { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-10-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Craig Williams", status:"In Progress" },
@@ -966,7 +966,7 @@ const COMPLIANCE_DATA = [
   { project:"Unified Strategy: CCH-CCDPH",                    pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Wayfinding App - Stroger and PB",                pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Population Health Mgmt / VBC",                   pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Population Health/VBC",                   pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"APP Optimization",                                pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Immediate Care (Arlington Heights)",              pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"PMOE No Show Tool and Process",                   pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
