@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -640,7 +640,7 @@ const PMOE_LOAD_DATA = [
   { project:"Health Equity Committee Capacity Building", pm:"Elizabeth Wallish", lastUpdated:"2026-04-13", masterKey:"Health Equity Committee Capacity Building",
     deliverables:[{ name:"Project Governance", status:"Initial All-Staff Retreat workgroup kickoff held for August event. Group agrees objectives should be concise and purposeful. Members support mixed breakout groups. Key takeaway focus: ensuring participants understand difference between equity and equality.", risk:"", impact:"" }]
   },
-  { project:"HRO: Clinical Outcomes",       pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"HRO: Clinical Outcomes",
+  { project:"HRO: Clinical Outcomes",       pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"HRO: Clinical Outcomes Group",
     deliverables:[{ name:"Project Governance", status:"Driving outcomes work despite rumblings to replace dyad model. Data static until monthly report out on 4/15. Mortality documentation improvements underway. Sepsis: nurse clinician education planned. PSI-12: physician onboarding underway. PSI-11: lacks assigned lead. CAUTI/CLABSI: new iRounding tool with 5% improvement goal. Falls: 5% reduction target. HAPI: physician education materials approved.", risk:"", impact:"" }]
   },
   { project:"ARPA",                         pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"ARPA Spend Monitoring/Sustainability",
@@ -679,6 +679,12 @@ const PMOE_LOAD_DATA = [
   { project:"Justice-Involved Re-Entry",    pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Justice-Involved Re-Entry",
     deliverables:[{ name:"Billing Mechanism (90-day Pre-release)", status:"Only pending info from HFS are code modifiers. CCH must set up Cermak as outpatient clinic in Oracle. Rev Cycle SPM checking Oracle for solutions to bypass manual registration.", risk:"Issue", impact:"24/7 operations would require more than 25 new Clerk V positions just for manual registration." }]
   },
+  { project:"RxLink",                       pm:"Julius Ablis",     lastUpdated:"2026-04-27", masterKey:"RxLink",
+    deliverables:[{ name:"Project Governance", status:"Project charter filed. Project plan in development. RxLink is a pharmacy auto-enrollment solution for CCH patients.", risk:"", impact:"" }]
+  },
+  { project:"Consent Committee",            pm:"Julius Ablis",     lastUpdated:"2026-04-17", masterKey:"Consent Committee",
+    deliverables:[{ name:"Project Governance", status:"Project charter filed. Establishing consent committee structure and governance framework for CCH.", risk:"", impact:"" }]
+  },
   { project:"CCH-Press Ganey Consumerism",  pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"CCH-Press Ganey Consumerism",
     deliverables:[{ name:"Implementation", status:"Waiting for Provider Finder launch. BI has sent updated file. Waiting for Press Ganey and Chief Communications Officer approval. If approved, Consumerism project starts in 3 weeks.", risk:"", impact:"" }]
   }
@@ -711,6 +717,9 @@ const MASTER_FILE_DATA = {
   "Health Equity Committee Capacity Building": { health:"Green", phase:"Execution", pct:null, start:"2026-01-12", end:"2026-12-31", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
   // ON HOLD
   "Justice-Involved Re-Entry":      { health:"Green", phase:"Planning",   pct:26,  start:"2022-04-01", end:"2022-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Manny Estrada", status:"On Hold" },
+  // New projects from PMOE Load (Master File) — flow in via Refresh
+  "RxLink":                         { health:"Green", phase:"Planning",  pct:null, start:"", end:"", domain:"Growth, Innovation, & Transformation", sponsor:"Catanya Norwood", status:"In Progress" },
+  "Consent Committee":              { health:"Green", phase:"Planning",  pct:null, start:"2026-04-15", end:"2026-08-31", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alisha Patel", status:"In Progress" },
 };
 
 // Completed projects from Master File
@@ -791,6 +800,13 @@ const CHARTER_DATA = {
   "Domestic Spend (EARN)": { fileName:"Project Charter - Domestic Spend.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Increase domestic spend by ensuring CCH patients are routed to in-network providers, reducing out-of-network claim denials and maximizing reimbursement.", objectives:"Implement PCP change request process, reduce claim denials, establish high-utilizer review meetings, build Access Dashboard." },
   "City Colleges Workforce": { fileName:"City Colleges Pipeline Project Charter.pdf", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, track student employment outcomes." },
   "Surgery Optimization Phase 3": { fileName:"Project Charter - Surgery Draft 8.25.25.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize surgical operations by improving OR utilization, reducing prior authorization denials, and establishing data-driven performance monitoring.", objectives:"Deploy PPT v2 short and long forms, train staff, publish BI utilization dashboard refreshed biweekly, improve first-case on-time start rate to 85%." },
+  // New project charters from PM Process Compliance Audit (April 2026)
+  "RxLink": { fileName:"Project Charter - RxLink.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Implement RxLink pharmacy auto-enrollment to increase domestic pharmacy spend by routing CCH patients to in-network pharmacy providers, reducing out-of-network pharmacy claims.", objectives:"Deploy auto-enrollment workflow, integrate with CCH pharmacy benefit systems, establish monitoring dashboard, and achieve measurable increase in domestic pharmacy spend." },
+  "Consent Committee": { fileName:"Project Charter - Consent Committee.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a Consent Committee governance structure at CCH to standardize the informed consent process, improve documentation quality, and ensure regulatory and accreditation compliance.", objectives:"Define committee membership and charter, develop standardized consent forms and workflows, establish audit and monitoring process, and achieve TJC and CMS compliance for consent documentation." },
+  // Fix: also key by exact PMOE_LOAD_DATA project names for City Colleges and Cath Lab
+  "Workforce Pipeline Development (City Colleges of Chicago)": { fileName:"City Colleges Pipeline Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, and track student employment outcomes." },
+  "Cath Lab- EP Optimization Project": { fileName:"Project Charter- Cath Lab 4.3.26.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize Cardiac Catheterization Laboratory and Electrophysiology Lab operations at Stroger Hospital to improve throughput, reduce scheduling gaps, and expand EP procedural capacity.", objectives:"Complete stakeholder alignment, document current-state workflow, finalize project charter and org structure, and gain executive approval before implementation." },
+  "Anal Dysplasia Diagnostic and Treatment Services": { fileName:"Project Charter - Anal Dysplasia Service.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a dedicated Anal Dysplasia Diagnostic and Treatment Services clinic at Stroger to screen, diagnose, and treat patients — reducing out-of-system referrals and expanding specialty care access.", objectives:"Stand up clinic with credentialed specialist, procure PICO equipment, finalize patient intake and clinical workflow SOPs, and achieve initial patient volume targets." },
   "Unified Strategy: CCH-CCDPH": { fileName:"Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Align CCH and CCDPH around a unified strategic framework to improve integration, shared accountability, and joint delivery of population health initiatives.", objectives:"Facilitate leadership alignment sessions, finalize integrated strategic plan, establish biweekly governance reporting structure." },
   // Charters added from PM Process Compliance Audit attachments
   "Cath Lab — EP Optimization": { fileName:"Project Charter- Cath Lab 4.3.26.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize Cardiac Catheterization Laboratory and Electrophysiology Lab operations at Stroger Hospital to improve throughput, reduce scheduling gaps, and expand EP procedural capacity.", objectives:"Complete stakeholder alignment, document current-state workflow, finalize project charter and org structure, and gain executive approval before implementation." },
@@ -954,6 +970,8 @@ const COMPLIANCE_DATA = [
   { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"ARPA Spend Monitoring/Sustainability",             pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"BH Intake Center Move",                           pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"RxLink",                                           pm:"Julius Ablis",    charter:true, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Consent Committee",                                pm:"Julius Ablis",    charter:true, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"CCH-Press Ganey Consumerism",                     pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"City Colleges Workforce",                         pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Domestic Spend (EARN)",                           pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
@@ -1450,18 +1468,23 @@ function buildProjects() {
   if (_projectsFilter === 'active' || _projectsFilter === 'all') {
     // Track which master keys are covered by PMOE_LOAD_DATA entries
     const coveredKeys = new Set();
+    const norm = s => (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
     PMOE_LOAD_DATA.forEach(p => {
       const master = MASTER_FILE_DATA[p.masterKey] || {};
       if (master.status === 'On Hold' && _projectsFilter === 'active') return;
       const sponsor = p.sponsor || master.sponsor || '';
       const domain  = master.domain || '';
+      // Track both the masterKey AND the project name (normalized) to prevent duplicates
       coveredKeys.add(p.masterKey);
+      coveredKeys.add(p.project);
+      coveredKeys.add(norm(p.masterKey));
+      coveredKeys.add(norm(p.project));
       items.push({ type:'active', p, master, sponsor, domain });
     });
     // Add any In Progress projects from MASTER_FILE_DATA that have no Load-Update entry
     // (new projects added to Smartsheet after last HTML push will appear here after Refresh)
     Object.entries(MASTER_FILE_DATA).forEach(([name, master]) => {
-      if (coveredKeys.has(name)) return;
+      if (coveredKeys.has(name) || coveredKeys.has(norm(name))) return;
       if (master.status !== 'In Progress') return;
       items.push({
         type:'active',
@@ -1564,7 +1587,18 @@ function buildProjectCard(item) {
   const statusLabel = isOnHold ? 'On Hold' : (master && master.phase ? master.phase : 'Active');
   const hasRisk = p.deliverables.some(d => d.risk === 'Risk');
   const hasIssue = p.deliverables.some(d => d.risk === 'Issue');
-  const charter = CHARTER_DATA[p.project] || CHARTER_DATA[p.masterKey] || null;
+  // Charter lookup — try exact match first, then fuzzy match
+  const charter = CHARTER_DATA[p.project] || CHARTER_DATA[p.masterKey] || 
+    (() => {
+      const normP = s => (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const nProj = normP(p.project), nMaster = normP(p.masterKey||'');
+      const key = Object.keys(CHARTER_DATA).find(k => {
+        const nk = normP(k);
+        return nk === nProj || nk === nMaster ||
+               nk.includes(nProj.slice(0,14)) || nProj.includes(nk.slice(0,14));
+      });
+      return key ? CHARTER_DATA[key] : null;
+    })();
   // Sponsor priority: 1) direct on p (set from live API), 2) MASTER_FILE_DATA via masterKey, 3) fuzzy match on project name
   let sponsor = p.sponsor || (master ? master.sponsor : '') || '';
   if (!sponsor) {
@@ -2162,7 +2196,18 @@ function openProjectModal(projectName) {
   if (!p) return;
 
   const master = MASTER_FILE_DATA[p.masterKey] || MASTER_FILE_DATA[p.project] || {};
-  const charter = CHARTER_DATA[p.project] || CHARTER_DATA[p.masterKey] || null;
+  // Charter lookup — try exact match first, then fuzzy match
+  const charter = CHARTER_DATA[p.project] || CHARTER_DATA[p.masterKey] || 
+    (() => {
+      const normP = s => (s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const nProj = normP(p.project), nMaster = normP(p.masterKey||'');
+      const key = Object.keys(CHARTER_DATA).find(k => {
+        const nk = normP(k);
+        return nk === nProj || nk === nMaster ||
+               nk.includes(nProj.slice(0,14)) || nProj.includes(nk.slice(0,14));
+      });
+      return key ? CHARTER_DATA[key] : null;
+    })();
   const riskLog = RISKS_DATA.filter(r => r.project === p.project || r.project === p.masterKey);
   const isOnHold = master.status === 'On Hold';
 
