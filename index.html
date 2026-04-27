@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -336,8 +336,8 @@
   <div class="nav-tab" onclick="showView('projects')" id="tab-projects">📁 Projects <span class="nav-badge" id="projectsCount">—</span></div>
   <div class="nav-tab" onclick="showView('risks')" id="tab-risks">⚠️ Risks &amp; Issues <span class="nav-badge warn" id="riskCount">—</span></div>
   <div class="nav-tab" onclick="showView('benefits')" id="tab-benefits">📈 Project Benefits Monitoring</div>
-  <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Project Closeout Reports& Lessons Learned <span class="nav-badge" id="closeoutCount">—</span></div>
-  <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Process Compliance</div>
+  <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
+  <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Compliance</div>
   <div class="nav-tab" onclick="showView('dashboards')" id="tab-dashboards">🖥️ Project Dashboards <span class="nav-badge" id="dashboardCount">—</span></div>
 </nav>
 
@@ -359,8 +359,8 @@
     </div>
     <div class="stats-row animate-in delay-1" id="statsRow">
       <div class="stat-card blue"><div class="stat-label">Active Projects</div><div class="stat-value" id="stat-active">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
-      <div class="stat-card green"><div class="stat-label">Completed Projects</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
-      <div class="stat-card amber"><div class="stat-label">On Hold Projects</div><div class="stat-value" id="stat-hold">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
+      <div class="stat-card green"><div class="stat-label">Completed</div><div class="stat-value" id="stat-complete">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
+      <div class="stat-card amber"><div class="stat-label">On Hold</div><div class="stat-value" id="stat-hold">—</div><div class="stat-sub">From PMOE Load (Master File)</div></div>
       <div class="stat-card amber"><div class="stat-label">Risks Flagged</div><div class="stat-value" id="stat-risks">—</div><div class="stat-sub">From PMOE Load - Update</div></div>
       <div class="stat-card red"><div class="stat-label">Issues Open</div><div class="stat-value" id="stat-issues">—</div><div class="stat-sub">From PMOE Load - Update</div></div>
     </div>
@@ -387,7 +387,7 @@
     <div class="section-header">
       <div>
         <div class="section-title">Projects</div>
-        <div class="section-sub">Source: PMOE Load (Master File) · Updates from PMOE Load - Update · Project Files from PM Process Compliance Audit</div>
+        <div class="section-sub">Source: PMOE Load (Master File) · Updates from PMOE Load - Update · Charters from PM Process Compliance Audit</div>
       </div>
       <button class="btn btn-ghost" onclick="generateAISummary('projects')">💡 Key Insights</button>
     </div>
@@ -476,6 +476,7 @@
     </div>
     <div class="animate-in" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
       <button class="spill active" id="bv-prb"       onclick="setBenefitsView('prb')">📊 PRB Projects – Benefits Register</button>
+      <button class="spill"        id="bv-earn"       onclick="setBenefitsView('earn')">💰 Domestic Spend (EARN)</button>
       <button class="spill"        id="bv-annual2025" onclick="setBenefitsView('annual2025')">📑 Annual Report 2025</button>
       <button class="spill"        id="bv-annual2024" onclick="setBenefitsView('annual2024')">📑 Annual Report 2024</button>
       <button class="spill"        id="bv-annual2023" onclick="setBenefitsView('annual2023')">📑 Annual Report 2023</button>
@@ -621,7 +622,7 @@ const PMOE_LOAD_DATA = [
   { project:"Pharmacy Domestic Spend",      pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Pharmacy Domestic Spend",
     deliverables:[{ name:"Project Benefits/Impact Monitoring", status:"Leadership recently met with system APPs to discuss prescribing. Claims data reviewed — focused on HIV and Derm in parallel. Budget to actual data reviewed; currently exceeding budget.", risk:"", impact:"" }]
   },
-  { project:"Population Health/VBC",        pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Population Health/VBC",
+  { project:"Population Health/VBC",        pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Population Health Management/VBC",
     deliverables:[{ name:"Project Benefits/Impact Monitoring", status:"Bi-weekly series for OKR report outs began 3/30. Sr leadership update scheduled for 4/9 was postponed — several senior leaders offsite.", risk:"Issue", impact:"Many leaders are expressing frustration with balancing VBC work alongside other priorities. This program would benefit from dedicated support." }]
   },
   { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon", lastUpdated:"2026-04-13", masterKey:"Medication Refill and Reconciliation Optimization",
@@ -645,7 +646,7 @@ const PMOE_LOAD_DATA = [
   { project:"ARPA",                         pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"ARPA Spend Monitoring/Sustainability",
     deliverables:[{ name:"Cash Flow, Expenditures, Sustainability", status:"DBMS completed rollover analysis. EBS aligned. Corporate-funded line items removed from ARPA PMO budget. FY26 'general fund-covered' items are internal monitoring — don't limit partner spending. Updated budgets to be distributed in next two weeks.", risk:"", impact:"" }]
   },
-  { project:"BH Intake Center Move",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"BH Intake Center Move",
+  { project:"BH Intake Center Move",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"Behavioral Intake Center",
     deliverables:[{ name:"Project Governance", status:"Space committee did not approve BHIAC move to 6W despite verbal affirmations. Planning temporarily paused pending May 4 City Colleges kickoff. Volume projections in development. Facility and security items under financial review.", risk:"", impact:"" }]
   },
   { project:"Domestic Spend (EARN)",        pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Domestic Spend (EARN)",
@@ -657,7 +658,7 @@ const PMOE_LOAD_DATA = [
   { project:"Surgery Optimization Phase 3", pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Surgery Optimization Phase 3",
     deliverables:[{ name:"Implementation / Benefits Monitoring", status:"PPT v2 short form is LIVE but currently on hold — assessing if MAs have bandwidth for surveys.", risk:"Issue", impact:"" }]
   },
-  { project:"Cath Lab — EP Optimization",   pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Cath Lab- EP Optimization",
+  { project:"Cath Lab — EP Optimization",   pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Cath Lab- EP Optimization Project",
     deliverables:[{ name:"Project Governance", status:"In-Progress: Completed project charters, documented key stakeholders, purpose, deliverables, and org structure. Javier will review with Craig — once approved charter can be submitted.", risk:"Issue", impact:"Charter draft v1: https://cchhs1.sharepoint.com" }]
   },
   { project:"Lab Automation Upgrade",       pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Lab Automation Upgrade",
@@ -666,7 +667,7 @@ const PMOE_LOAD_DATA = [
   { project:"PMOE No Show Tool",            pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"PMOE No Show Tool and Process",
     deliverables:[{ name:"Tool and Process", status:"Completed analysis for Arlington Heights, Austin, Prieto, and North Riverside. Recency and risk stratification codes built for ACHN sites. Results for Jan–Mar 2026 sent to Nancy Rivera for decision. Overall positive prediction value of tool: 51%.", risk:"", impact:"" }]
   },
-  { project:"JSH Nurse Call & Overhead Paging Systems", pm:"Julius Ablis", lastUpdated:"2026-04-13", masterKey:"JSH Nurse Call and Overhead Paging Systems",
+  { project:"JSH Nurse Call & Overhead Paging", pm:"Julius Ablis", lastUpdated:"2026-04-13", masterKey:"JSH Nurse Call and Overhead Paging Systems",
     deliverables:[{ name:"Workflows", status:"Analysis report including indexes completed by IMEG. Discussed with BAM and Capital Planning on 4/1. Next steps are on Capital Planning.", risk:"", impact:"" }]
   },
   { project:"Anal Dysplasia Services",      pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Anal Dysplasia Diagnostic and Treatment Services",
@@ -693,16 +694,16 @@ const MASTER_FILE_DATA = {
   "JSH Nurse Call and Overhead Paging Systems": { health:"Green", phase:"Planning", pct:5,  start:"2026-03-03", end:"2026-08-17", domain:"Growth, Innovation, & Transformation", sponsor:"Ben Laughton", status:"In Progress" },
   "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Julius Ablis", status:"In Progress" },
   "External Providers":             { health:"Green", phase:"Execution",  pct:53,  start:"2025-12-01", end:"2026-07-24", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Erik Mikaitis", status:"In Progress" },
-  "HRO: Clinical Outcomes":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
+  "HRO: Clinical Outcomes Group":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
   "ARPA Spend Monitoring/Sustainability": { health:"Green", phase:"Monitoring", pct:89, start:"2022-12-01", end:"2026-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Andrea Gibson", status:"In Progress" },
-  "BH Intake Center Move":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
+  "Behavioral Intake Center":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
   "Unified Strategy: CCH-CCDPH":    { health:"Green", phase:"Planning",  pct:null,start:"2026-02-16", end:"2026-09-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
   "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Andrea Gibson", status:"In Progress" },
   "Domestic Spend (EARN)":          { health:"Green", phase:"Execution",  pct:36,  start:"2025-06-02", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
   "Surgery Optimization Phase 3":   { health:"Green", phase:"Execution",  pct:83,  start:"2025-07-28", end:"2026-12-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Craig Williams", status:"In Progress" },
-  "Cath Lab- EP Optimization": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
+  "Cath Lab- EP Optimization Project": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
   "Pharmacy Domestic Spend":        { health:"Green", phase:"Execution", pct:85,  start:"2022-01-01", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Population Health/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
+  "Population Health Management/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
   "Medication Refill and Reconciliation Optimization": { health:"Green", phase:"Planning", pct:0, start:"2025-11-03", end:"2026-04-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Sharon Irons", status:"In Progress" },
   "APP Optimization":               { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-11-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Octavia Rolland", status:"In Progress" },
   "Immediate Care (AH)":            { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-10-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Craig Williams", status:"In Progress" },
@@ -966,7 +967,7 @@ const COMPLIANCE_DATA = [
   { project:"Unified Strategy: CCH-CCDPH",                    pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Wayfinding App - Stroger and PB",                pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Population Health/VBC",                   pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Population Health Mgmt / VBC",                   pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"APP Optimization",                                pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Immediate Care (Arlington Heights)",              pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"PMOE No Show Tool and Process",                   pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
@@ -1007,6 +1008,62 @@ const COMPLIANCE_DATA = [
   { project:"ACHN Patient Experience",                         pm:"Lane Harmon",     charter:true,  plan:true,  risks:"NA",  closeout:"NA",  status:"Complete" },
   { project:"Wellvana",                                        pm:"Jasmin Sanchez",  charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
 ];
+
+// ============================================================
+// EARN DOMESTIC SPEND DATA
+// Source: EARN Leadership Dashboard (Smartsheet)
+// Charts: FY2025/2026 Domestic Spend Tracking + Pharmacy Budget vs Actual
+// These values are updated on Refresh via /api/earn endpoint.
+// ============================================================
+const EARN_DATA = {
+  // KPI metrics — updated from Smartsheet on refresh
+  fy2025: {
+    empaneled:    73594206,
+    nonEmpaneled: 65544001,
+    total:        139138207,
+    goal:         139000000,
+    awayFromGoal: -138207,
+  },
+  fy2026: {
+    empaneled:    18925280,
+    nonEmpaneled: 15084387,
+    total:        34009667,
+    goal:         152000000,
+    awayFromGoal: 117990333,
+  },
+  // Pharmacy domestic spend — monthly actuals vs budget
+  pharmacyFY2025: [
+    { month:"Dec-24", budget:1270000, actual:1280000 },
+    { month:"Jan-25", budget:1270000, actual:1380000 },
+    { month:"Feb-25", budget:1270000, actual:1200000 },
+    { month:"Mar-25", budget:1270000, actual:1240000 },
+    { month:"Apr-25", budget:1270000, actual:1360000 },
+    { month:"May-25", budget:1270000, actual:1300000 },
+    { month:"Jun-25", budget:1270000, actual:1290000 },
+    { month:"Jul-25", budget:1270000, actual:1260000 },
+    { month:"Aug-25", budget:1270000, actual:1040000 },
+    { month:"Sep-25", budget:1270000, actual:1120000 },
+    { month:"Oct-25", budget:1270000, actual:1090000 },
+    { month:"Nov-25", budget:1270000, actual:1000000 },
+  ],
+  pharmacyFY2025diff: -573138,
+  pharmacyFY2026: [
+    { month:"Dec-25", budget:1040000, actual:1190000 },
+    { month:"Jan-26", budget:1035000, actual:1210000 },
+    { month:"Feb-26", budget:1030000, actual:1120000 },
+    { month:"Mar-26", budget:1025000, actual:null },
+    { month:"Apr-26", budget:1020000, actual:null },
+    { month:"May-26", budget:1015000, actual:null },
+    { month:"Jun-26", budget:1010000, actual:null },
+    { month:"Jul-26", budget:1005000, actual:null },
+    { month:"Aug-26", budget:1000000, actual:null },
+    { month:"Sep-26", budget:997000,  actual:null },
+    { month:"Oct-26", budget:994000,  actual:null },
+    { month:"Nov-26", budget:991000,  actual:null },
+  ],
+  pharmacyFY2026diff: 255754,
+};
+
 
 // ============================================================
 // BENEFITS REGISTER — For Chiefs  (Sheet 3430790473928580)
@@ -1758,7 +1815,7 @@ function buildCloseout() {
 // ============================================================
 function setBenefitsView(v) {
   _benefitsView = v;
-  ['prb','annual2025','annual2024','annual2023'].forEach(x => {
+  ['prb','earn','annual2025','annual2024','annual2023'].forEach(x => {
     document.getElementById('bv-'+x)?.classList.toggle('active', x === v);
   });
   buildBenefits();
@@ -1767,6 +1824,174 @@ function setBenefitsView(v) {
 function buildBenefits() {
   const el = document.getElementById('benefitsContent');
   if (!el) return;
+
+  // ── EARN / Domestic Spend view ─────────────────────────────────────────
+  if (_benefitsView === 'earn') {
+    const d  = EARN_DATA;
+    const fmt = n => n == null ? '—' : '$' + Math.abs(n).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const fmtM = n => n == null ? '—' : '$' + (n/1e6).toFixed(1) + 'M';
+
+    // ── Latest project status from PMOE_LOAD_DATA ──────────────────────
+    const earn = PMOE_LOAD_DATA.find(p => p.project.toLowerCase().includes('earn') || p.project.toLowerCase().includes('domestic spend (earn)'));
+    const earnStatus = earn?.deliverables?.[0]?.status || '';
+    const earnRisk   = earn?.deliverables?.some(x => x.risk) ? `<span style="font-size:11px;padding:2px 8px;border-radius:8px;background:rgba(239,68,68,.12);color:var(--danger);border:1px solid rgba(239,68,68,.3);font-family:var(--font-mono);">⚠ Issue</span>` : '';
+
+    // ── Chart helpers ───────────────────────────────────────────────────
+    function barChart(items, maxVal, color) {
+      return items.map(it => {
+        const w = Math.max(0, Math.round((it.value / maxVal) * 100));
+        const isNeg = it.value < 0;
+        return `<div style="margin-bottom:12px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;font-family:var(--font-mono);margin-bottom:4px;">
+            <span style="color:var(--text2);">${it.label}</span>
+            <span style="color:${isNeg?'var(--danger)':color};font-weight:600;">${fmt(it.value)}</span>
+          </div>
+          <div style="height:28px;background:var(--border2);border-radius:4px;overflow:hidden;">
+            ${isNeg
+              ? `<div style="height:100%;width:${Math.min(Math.abs(it.value)/maxVal*100,100)}%;background:rgba(239,68,68,.6);border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;color:#fff;">Away from goal</div>`
+              : `<div style="height:100%;width:${w}%;background:${color};border-radius:4px;"></div>`
+            }
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function lineChart(data, keys, colors, labels) {
+      const valid = data.filter(d => keys.some(k => d[k] != null));
+      if (!valid.length) return '<div style="color:var(--text3);font-size:12px;">No data available</div>';
+      const allVals = valid.flatMap(d => keys.map(k => d[k]).filter(v => v != null));
+      const minV = Math.min(...allVals) * 0.85;
+      const maxV = Math.max(...allVals) * 1.08;
+      const W = 480, H = 160, padL = 80, padR = 16, padT = 12, padB = 36;
+      const cW = W - padL - padR, cH = H - padT - padB;
+      const xStep = cW / (valid.length - 1 || 1);
+      const yScale = v => padT + cH - ((v - minV) / (maxV - minV || 1)) * cH;
+      const xPos   = i => padL + i * xStep;
+
+      let paths = keys.map((k, ki) => {
+        const pts = valid.map((d, i) => d[k] != null ? `${xPos(i).toFixed(1)},${yScale(d[k]).toFixed(1)}` : null).filter(Boolean);
+        const validIdxs = valid.map((d,i) => d[k] != null ? i : null).filter(v => v !== null);
+        const pStr = validIdxs.map((vi, pi) => `${pi===0?'M':'L'}${xPos(vi).toFixed(1)},${yScale(valid[vi][k]).toFixed(1)}`).join(' ');
+        return `<path d="${pStr}" fill="none" stroke="${colors[ki]}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+      }).join('');
+
+      // Y-axis labels
+      const yTicks = [minV, (minV+maxV)/2, maxV];
+      const yLabels = yTicks.map(v => `<text x="${padL-6}" y="${yScale(v)+4}" text-anchor="end" font-size="9" fill="#64748b">${'$'+(v/1e6).toFixed(1)+'M'}</text>`).join('');
+
+      // X-axis labels (every 2nd month)
+      const xLabels = valid.map((d,i) => i % 2 === 0 ? `<text x="${xPos(i)}" y="${H-6}" text-anchor="middle" font-size="9" fill="#64748b">${d.month}</text>` : '').join('');
+
+      // Grid lines
+      const grid = yTicks.map(v => `<line x1="${padL}" y1="${yScale(v)}" x2="${W-padR}" y2="${yScale(v)}" stroke="#1e2330" stroke-width="1"/>`).join('');
+
+      // Legend
+      const legend = keys.map((k,ki) => `<span style="display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--text2);margin-right:14px;"><span style="width:20px;height:2px;background:${colors[ki]};display:inline-block;border-radius:1px;"></span>${labels[ki]}</span>`).join('');
+
+      return `<div style="overflow-x:auto;">
+        <svg viewBox="0 0 ${W} ${H}" style="width:100%;max-width:${W}px;height:auto;" xmlns="http://www.w3.org/2000/svg">
+          ${grid}${yLabels}${xLabels}${paths}
+        </svg>
+        <div style="margin-top:4px;">${legend}</div>
+      </div>`;
+    }
+
+    // ── KPI Tiles row 1 ─────────────────────────────────────────────────
+    el.innerHTML = `
+      <!-- Live status banner -->
+      ${earn ? `<div style="padding:10px 14px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:10px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:4px;">Latest Project Update · PMOE Load - Update · Auto-synced</div>
+          <div style="font-size:13px;color:var(--text2);line-height:1.6;">${earnStatus}</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+          <span class="meta-chip">👤 ${earn.pm}</span>
+          ${earn.sponsor ? `<span class="meta-chip">🏢 ${earn.sponsor}</span>` : ''}
+          ${earnRisk}
+          <a href="https://app.smartsheet.com/dashboards/66gRMXVg52qMr4GpMQvRPGxXmg8PRP3m54hWWxh1" target="_blank" rel="noopener" style="font-size:11px;padding:3px 10px;border-radius:7px;background:rgba(59,130,246,.1);color:var(--accent);border:1px solid rgba(59,130,246,.3);text-decoration:none;font-family:var(--font-mono);">Open in Smartsheet ↗</a>
+        </div>
+      </div>` : ''}
+
+      <!-- KPI Row 1: FY2025 -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:6px 10px;background:var(--surface2);border-radius:7px;border-left:3px solid var(--accent);">FY 2025 Domestic Spend</div>
+      <div class="stats-row" style="margin-bottom:16px;">
+        <div class="stat-card blue"><div class="stat-label">Empaneled</div><div class="stat-value" style="font-size:1.4rem;">${fmtM(d.fy2025.empaneled)}</div><div class="stat-sub">${fmt(d.fy2025.empaneled)}</div></div>
+        <div class="stat-card blue"><div class="stat-label">Non-Empaneled</div><div class="stat-value" style="font-size:1.4rem;">${fmtM(d.fy2025.nonEmpaneled)}</div><div class="stat-sub">${fmt(d.fy2025.nonEmpaneled)}</div></div>
+        <div class="stat-card green"><div class="stat-label">Total</div><div class="stat-value" style="font-size:1.4rem;">${fmtM(d.fy2025.total)}</div><div class="stat-sub">${fmt(d.fy2025.total)}</div></div>
+        <div class="stat-card${d.fy2025.awayFromGoal >= 0 ? ' green' : ' red'}"><div class="stat-label">FY2025 Goal</div><div class="stat-value" style="font-size:1.4rem;color:var(--accent);">${fmtM(d.fy2025.goal)}</div><div class="stat-sub" style="color:${d.fy2025.awayFromGoal<0?'var(--danger)':'var(--success)'};">Away: ${fmt(d.fy2025.awayFromGoal)}</div></div>
+      </div>
+
+      <!-- KPI Row 2: FY2026 -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:6px 10px;background:var(--surface2);border-radius:7px;border-left:3px solid var(--success);">FY 2026 Domestic Spend (YTD)</div>
+      <div class="stats-row" style="margin-bottom:20px;">
+        <div class="stat-card blue"><div class="stat-label">Empaneled</div><div class="stat-value" style="font-size:1.4rem;">${fmtM(d.fy2026.empaneled)}</div><div class="stat-sub">${fmt(d.fy2026.empaneled)}</div></div>
+        <div class="stat-card blue"><div class="stat-label">Non-Empaneled</div><div class="stat-value" style="font-size:1.4rem;">${fmtM(d.fy2026.nonEmpaneled)}</div><div class="stat-sub">${fmt(d.fy2026.nonEmpaneled)}</div></div>
+        <div class="stat-card green"><div class="stat-label">Total YTD</div><div class="stat-value" style="font-size:1.4rem;">${fmtM(d.fy2026.total)}</div><div class="stat-sub">${fmt(d.fy2026.total)}</div></div>
+        <div class="stat-card green"><div class="stat-label">FY2026 Goal</div><div class="stat-value" style="font-size:1.4rem;color:var(--accent);">${fmtM(d.fy2026.goal)}</div><div class="stat-sub" style="color:var(--warning);">Away: ${fmt(d.fy2026.awayFromGoal)}</div></div>
+      </div>
+
+      <!-- Bar Charts -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px;">
+        <div class="card">
+          <div class="card-header"><div class="card-title" style="font-size:13px;">2025 Domestic Spend Tracking</div></div>
+          <div class="card-body">
+            ${barChart([
+              {label:'Empaneled',       value: d.fy2025.empaneled},
+              {label:'Non-Empaneled',   value: d.fy2025.nonEmpaneled},
+              {label:'Total',           value: d.fy2025.total},
+              {label:'Away from Goal',  value: d.fy2025.awayFromGoal},
+            ], d.fy2025.total * 1.05, '#3b82f6')}
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><div class="card-title" style="font-size:13px;">FY 2026 Domestic Spend Tracking</div></div>
+          <div class="card-body">
+            ${barChart([
+              {label:'Empaneled',       value: d.fy2026.empaneled},
+              {label:'Non-Empaneled',   value: d.fy2026.nonEmpaneled},
+              {label:'Total YTD',       value: d.fy2026.total},
+              {label:'Away from Goal',  value: d.fy2026.awayFromGoal},
+            ], d.fy2026.goal * 0.85, '#60a5fa')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Pharmacy Line Charts -->
+      <div style="margin-bottom:8px;font-size:11px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:6px 10px;background:var(--surface2);border-radius:7px;border-left:3px solid var(--warning);">Pharmacy Domestic Spend — Budget vs Actual</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title" style="font-size:13px;">2025 Pharmacy Domestic Spend Budgeted vs Actual</div>
+          </div>
+          <div class="card-body">
+            ${lineChart(d.pharmacyFY2025, ['budget','actual'], ['#f97316','#60a5fa'], ['Domestic Pharmacy – Budget','Domestic Pharmacy – Actual'])}
+            <div style="margin-top:14px;padding:10px 14px;border-radius:8px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--text2);">FY2025 Difference Actual vs Budgeted</span>
+              <span style="font-size:16px;font-weight:700;color:var(--danger);">${fmt(d.pharmacyFY2025diff)}</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title" style="font-size:13px;">2026 Pharmacy Domestic Spend Actual vs Budgeted</div>
+          </div>
+          <div class="card-body">
+            ${lineChart(d.pharmacyFY2026, ['actual','budget'], ['#60a5fa','#ef4444'], ['Total','26\' Budgeted'])}
+            <div style="margin-top:14px;padding:10px 14px;border-radius:8px;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;color:var(--text2);">FY2026 Difference Actual vs Budgeted</span>
+              <span style="font-size:16px;font-weight:700;color:var(--success);">+${fmt(d.pharmacyFY2026diff)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Source note -->
+      <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span>📊 KPI values and chart data sourced from EARN Leadership Dashboard · Auto-updated on each Refresh cycle</span>
+        <a href="https://app.smartsheet.com/dashboards/66gRMXVg52qMr4GpMQvRPGxXmg8PRP3m54hWWxh1" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-family:var(--font-mono);font-size:11px;">Open live dashboard ↗</a>
+      </div>`;
+    return;
+  }
 
   if (_benefitsView === 'prb') {
     const hc  = { Yes:'var(--success)', Hold:'var(--warning)', No:'var(--danger)' };
@@ -2357,6 +2582,21 @@ function ingestLiveData(data) {
       }
     });
   }
+
+  // ── 5. EARN_DATA — update KPIs from earnData if server returns it ────
+  // The /api/earn endpoint returns live spend metrics when accessible.
+  // If earnData is not present (sheets not accessible), existing values remain.
+  if (data.earnData) {
+    const e = data.earnData;
+    if (e.fy2025) Object.assign(EARN_DATA.fy2025, e.fy2025);
+    if (e.fy2026) Object.assign(EARN_DATA.fy2026, e.fy2026);
+    if (Array.isArray(e.pharmacyFY2025) && e.pharmacyFY2025.length)
+      EARN_DATA.pharmacyFY2025 = e.pharmacyFY2025;
+    if (Array.isArray(e.pharmacyFY2026) && e.pharmacyFY2026.length)
+      EARN_DATA.pharmacyFY2026 = e.pharmacyFY2026;
+    if (e.pharmacyFY2025diff != null) EARN_DATA.pharmacyFY2025diff = e.pharmacyFY2025diff;
+    if (e.pharmacyFY2026diff != null) EARN_DATA.pharmacyFY2026diff = e.pharmacyFY2026diff;
+  }
 }
 
 // Convert whatever the API sends back into true/false/"NA"/null
@@ -2411,10 +2651,11 @@ async function refreshData() {
   try {
     // Single call to /api/data — no separate health ping.
     // Timeout 55s: covers Render free-tier cold start (up to ~50s).
-    // Fetch both data endpoints in parallel for fastest load
-    const [resp, masterResp] = await Promise.all([
+    // Fetch all data endpoints in parallel for fastest load
+    const [resp, masterResp, earnResp] = await Promise.all([
       fetchWithTimeout(`${API_URL}/api/data`, 55000),
-      fetchWithTimeout(`${API_URL}/api/master`, 30000).catch(() => null)
+      fetchWithTimeout(`${API_URL}/api/master`, 30000).catch(() => null),
+      fetchWithTimeout(`${API_URL}/api/earn`, 20000).catch(() => null)
     ]);
     clearInterval(waiting);
 
@@ -2428,6 +2669,11 @@ async function refreshData() {
     if (masterResp?.ok) {
       const masterData = await masterResp.json().catch(() => ({}));
       liveData.masterProjects = masterData.projects || [];
+    }
+    // Merge EARN spend data if accessible
+    if (earnResp?.ok) {
+      const earnData = await earnResp.json().catch(() => null);
+      if (earnData?.accessible) liveData.earnData = earnData;
     }
     ingestLiveData(liveData);
     buildDashboard();
@@ -2472,6 +2718,46 @@ function showRefreshBanner(msg) {
 // START
 // ============================================================
 window.addEventListener('load', init);
+
+// ── Auto-refresh: silently re-pull live data every 5 minutes ──────────
+// Smartsheet changes flow into the app automatically — no manual refresh needed.
+const AUTO_REFRESH_MS = 5 * 60 * 1000; // 5 minutes
+
+async function silentRefresh() {
+  if (!API_URL) return;
+  try {
+    const [resp, masterResp, earnResp] = await Promise.all([
+      fetchWithTimeout(`${API_URL}/api/data`, 55000),
+      fetchWithTimeout(`${API_URL}/api/master`, 30000).catch(() => null),
+      fetchWithTimeout(`${API_URL}/api/earn`, 20000).catch(() => null)
+    ]);
+    if (!resp.ok) return; // fail silently — never disrupt the user
+    const liveData = await resp.json();
+    if (masterResp?.ok) {
+      const masterData = await masterResp.json().catch(() => ({}));
+      liveData.masterProjects = masterData.projects || [];
+    }
+    if (earnResp?.ok) {
+      const earnData = await earnResp.json().catch(() => null);
+      if (earnData?.accessible) liveData.earnData = earnData;
+    }
+    ingestLiveData(liveData);
+    buildDashboard();
+    const label = document.getElementById('syncLabel');
+    if (label) {
+      const t = liveData.fetchedAt
+        ? new Date(liveData.fetchedAt).toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})
+        : new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+      label.innerHTML = `<span style="color:var(--success)">● Live</span> · ${t} · auto-synced`;
+    }
+  } catch (e) { /* fail silently */ }
+}
+
+// First silent pull 3s after load, then every 5 minutes
+setTimeout(() => {
+  silentRefresh();
+  setInterval(silentRefresh, AUTO_REFRESH_MS);
+}, 3000);
 </script>
 </body>
 </html>
