@@ -44,7 +44,7 @@
     transition: opacity 0.5s ease;
   }
   #loader.hidden { opacity:0; pointer-events:none; }
-  .loader-logo { font-family: var(--font-display); font-size: 2.2rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .loader-logo { font-family: var(--font-display); font-size: 2.2rem; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
   .loader-bar { width: 280px; height: 2px; background: var(--border2); border-radius: 2px; overflow: hidden; }
   .loader-progress { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; transition: width 0.4s ease; }
   .loader-status { font-family: var(--font-mono); font-size: 11px; color: var(--text3); letter-spacing: 0.1em; }
@@ -292,6 +292,99 @@
 
   /* WORD DOC INDICATOR */
   .doc-indicator { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 9px; border-radius: 8px; background: rgba(59,130,246,0.08); color: var(--accent); border: 1px solid rgba(59,130,246,0.2); font-family: var(--font-mono); }
+
+  /* ── CHATBOT ─────────────────────────────────────────────────────────────── */
+  #chatbot-toggle {
+    position: fixed; bottom: 28px; right: 28px; z-index: 800;
+    width: 44px; height: 22px; border-radius: 11px; border: 1px solid var(--border2); cursor: pointer;
+    background: var(--surface2);
+    color: var(--text3); font-size: 11px; font-family: var(--font-mono);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.35);
+    transition: background 0.15s, color 0.15s, bottom 0.22s ease;
+    letter-spacing: 0.04em;
+    z-index: 810;
+  }
+  #chatbot-toggle:hover { background: var(--border2); color: var(--text); }
+
+  #chatbot-window {
+    position: fixed; bottom: 28px; right: 28px; z-index: 800;
+    width: 360px; max-height: 520px;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 16px; display: flex; flex-direction: column;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.55);
+    overflow: hidden;
+    transform: translateY(0) scale(1);
+    opacity: 1; pointer-events: all;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+  }
+  #chatbot-window.minimized {
+    transform: translateY(calc(100% - 52px)) scale(1); opacity: 0; pointer-events: none;
+  }
+  .chat-header {
+    padding: 14px 16px 12px; background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: default;
+  }
+  .chat-header-left { display: flex; align-items: center; gap: 10px; }
+  .chat-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; flex-shrink: 0;
+  }
+  .chat-title { font-weight: 600; font-size: 13px; }
+  .chat-subtitle { font-size: 10px; color: var(--text3); font-family: var(--font-mono); margin-top: 1px; }
+  .chat-minimize-btn {
+    background: none; border: none; cursor: pointer; color: var(--text3);
+    font-size: 18px; line-height: 1; padding: 2px 4px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chat-minimize-btn:hover { color: var(--text); background: var(--border); }
+
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 14px 14px 10px;
+    display: flex; flex-direction: column; gap: 10px;
+    min-height: 0;
+  }
+  .chat-msg { display: flex; gap: 8px; animation: fadeUp 0.25s ease; }
+  .chat-msg.user { flex-direction: row-reverse; }
+  .chat-bubble {
+    max-width: 80%; padding: 9px 13px; border-radius: 12px;
+    font-size: 12.5px; line-height: 1.6; color: var(--text);
+  }
+  .chat-msg.bot .chat-bubble { background: var(--surface2); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .chat-msg.user .chat-bubble { background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+  .chat-msg-avatar { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; margin-top: 2px; }
+  .chat-msg.bot .chat-msg-avatar { background: linear-gradient(135deg,var(--accent),var(--accent2)); }
+  .chat-msg.user .chat-msg-avatar { background: var(--surface2); border: 1px solid var(--border2); }
+
+  .chat-thinking { display: flex; gap: 4px; align-items: center; padding: 9px 13px; }
+  .chat-thinking span { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); animation: blink 1.2s infinite; }
+  .chat-thinking span:nth-child(2) { animation-delay: 0.2s; }
+  .chat-thinking span:nth-child(3) { animation-delay: 0.4s; }
+
+  .chat-input-row {
+    padding: 10px 12px; border-top: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: flex-end;
+  }
+  .chat-input {
+    flex: 1; background: var(--surface2); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 8px 12px; color: var(--text);
+    font-family: var(--font-body); font-size: 12.5px; outline: none;
+    resize: none; max-height: 80px; line-height: 1.5;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-send {
+    width: 34px; height: 34px; border-radius: 8px; border: none; cursor: pointer;
+    background: var(--accent); color: #fff; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background 0.15s;
+  }
+  .chat-send:hover { background: #2563eb; }
+  .chat-send:disabled { background: var(--muted); cursor: default; }
+  /* END CHATBOT */
 </style>
 </head>
 <body>
@@ -339,6 +432,8 @@
   <div class="nav-tab" onclick="showView('closeout')" id="tab-closeout">📋 Closeout Reports <span class="nav-badge" id="closeoutCount">—</span></div>
   <div class="nav-tab" onclick="showView('compliance')" id="tab-compliance">📁 PM Compliance</div>
   <div class="nav-tab" onclick="showView('dashboards')" id="tab-dashboards">🖥️ Project Dashboards <span class="nav-badge" id="dashboardCount">—</span></div>
+  <div class="nav-tab" onclick="showView('solutions')" id="tab-solutions">🚀 PMOE-Developed Solutions <span class="nav-badge" id="solutionsCount">6</span></div>
+  <div class="nav-tab" onclick="showView('tools')" id="tab-tools">🛠️ PMOE Tools</div>
 </nav>
 
 <!-- MAIN -->
@@ -580,6 +675,34 @@
     </div>
   </div>
 
+  <!-- PMOE-DEVELOPED SOLUTIONS -->
+  <div class="view" id="view-solutions">
+    <div class="section-header">
+      <div>
+        <div class="section-title">PMOE-Developed Solutions</div>
+        <div class="section-sub">Applications and tools built by PMOE · Click any card to launch</div>
+      </div>
+    </div>
+    <div class="dashboard-grid animate-in delay-1" id="solutionsGrid"></div>
+  </div>
+
+  <!-- PMOE TOOLS -->
+  <div class="view" id="view-tools">
+    <div class="section-header">
+      <div>
+        <div class="section-title">PMOE Tools</div>
+        <div class="section-sub">Internal tools and resources for the PMOE team</div>
+      </div>
+    </div>
+    <div id="toolsContent" class="animate-in delay-1">
+      <div class="no-results" style="padding:80px 20px;">
+        <div style="font-size:2rem;margin-bottom:16px;">🛠️</div>
+        <div style="font-size:15px;color:var(--text2);margin-bottom:8px;">PMOE Tools — Coming Soon</div>
+        <div style="font-size:12px;color:var(--text3);">This section will feature templates, guides, and internal PMOE resources.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- DASHBOARDS -->
   <div class="view" id="view-dashboards">
     <div class="section-header">
@@ -622,7 +745,7 @@ const PMOE_LOAD_DATA = [
   { project:"Pharmacy Domestic Spend",      pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Pharmacy Domestic Spend",
     deliverables:[{ name:"Project Benefits/Impact Monitoring", status:"Leadership recently met with system APPs to discuss prescribing. Claims data reviewed — focused on HIV and Derm in parallel. Budget to actual data reviewed; currently exceeding budget.", risk:"", impact:"" }]
   },
-  { project:"Population Health/VBC",        pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Population Health/VBC",
+  { project:"Population Health/VBC",        pm:"Lane Harmon",      lastUpdated:"2026-04-13", masterKey:"Population Health Management/VBC",
     deliverables:[{ name:"Project Benefits/Impact Monitoring", status:"Bi-weekly series for OKR report outs began 3/30. Sr leadership update scheduled for 4/9 was postponed — several senior leaders offsite.", risk:"Issue", impact:"Many leaders are expressing frustration with balancing VBC work alongside other priorities. This program would benefit from dedicated support." }]
   },
   { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon", lastUpdated:"2026-04-13", masterKey:"Medication Refill and Reconciliation Optimization",
@@ -640,50 +763,53 @@ const PMOE_LOAD_DATA = [
   { project:"Health Equity Committee Capacity Building", pm:"Elizabeth Wallish", lastUpdated:"2026-04-13", masterKey:"Health Equity Committee Capacity Building",
     deliverables:[{ name:"Project Governance", status:"Initial All-Staff Retreat workgroup kickoff held for August event. Group agrees objectives should be concise and purposeful. Members support mixed breakout groups. Key takeaway focus: ensuring participants understand difference between equity and equality.", risk:"", impact:"" }]
   },
-  { project:"HRO: Clinical Outcomes",       pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"HRO: Clinical Outcomes",
+  { project:"HRO: Clinical Outcomes",       pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"HRO: Clinical Outcomes Group",
     deliverables:[{ name:"Project Governance", status:"Driving outcomes work despite rumblings to replace dyad model. Data static until monthly report out on 4/15. Mortality documentation improvements underway. Sepsis: nurse clinician education planned. PSI-12: physician onboarding underway. PSI-11: lacks assigned lead. CAUTI/CLABSI: new iRounding tool with 5% improvement goal. Falls: 5% reduction target. HAPI: physician education materials approved.", risk:"", impact:"" }]
   },
-  { project:"ARPA Spend Monitoring/Sustainability",                         pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"ARPA Spend Monitoring/Sustainability",
+  { project:"ARPA",                         pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"ARPA Spend Monitoring/Sustainability",
     deliverables:[{ name:"Cash Flow, Expenditures, Sustainability", status:"DBMS completed rollover analysis. EBS aligned. Corporate-funded line items removed from ARPA PMO budget. FY26 'general fund-covered' items are internal monitoring — don't limit partner spending. Updated budgets to be distributed in next two weeks.", risk:"", impact:"" }]
   },
-  { project:"AI Committee",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"AI Committee",
-    deliverables:[{ name:"Project Governance", status:"PM, Sponsor, and Dyad Leader/Co-Chair meet and greet on 4/27. Preparing stakeholder questions to help define the project and frame the opportunity.", risk:"", impact:"" }]
+  { project:"BH Intake Center Move",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"Behavioral Intake Center",
+    deliverables:[{ name:"Project Governance", status:"Space committee did not approve BHIAC move to 6W despite verbal affirmations. Planning temporarily paused pending May 4 City Colleges kickoff. Volume projections in development. Facility and security items under financial review.", risk:"", impact:"" }]
   },
   { project:"Domestic Spend (EARN)",        pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Domestic Spend (EARN)",
     deliverables:[{ name:"Implementation / Project Benefits Monitoring", status:"In-Progress. Corey Hill's team piloting new workflow for New Patient Denials. ~2% increase in pharmacy domestic spend (>$100k/month over budget). Workgroup formed around financial clearance process. Created detailed workflow for 3 teams for review.", risk:"Issue", impact:"Downstream effects of patients not in network — denials for eligibility, uptick in prior auths for out-of-network surgery patients." }]
   },
-  { project:"Workforce Pipeline Development (City Colleges of Chicago)",      pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Workforce Pipeline Development (City Colleges of Chicago)",
+  { project:"City Colleges Workforce",      pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Workforce Pipeline Development (City Colleges of Chicago)",
     deliverables:[{ name:"Implementation", status:"In-Progress. Discovery log created for working groups. Editing master MOU document. Kickoff and quarterly leadership meetings scheduled. Meeting next week on KPIs and Smartsheet tracking. Financial forms sent for 3 payments. Met with Janine on advance skills for MA program.", risk:"Issue", impact:"Need final decision on space (6th floor vs other). Also need clarity on security onboarding, IDs, and IT infrastructure for students." }]
   },
   { project:"Surgery Optimization Phase 3", pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Surgery Optimization Phase 3",
     deliverables:[{ name:"Implementation / Benefits Monitoring", status:"PPT v2 short form is LIVE but currently on hold — assessing if MAs have bandwidth for surveys.", risk:"Issue", impact:"" }]
   },
-  { project:"Cath Lab- EP Optimization",   pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Cath Lab- EP Optimization",
+  { project:"Cath Lab — EP Optimization",   pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Cath Lab- EP Optimization Project",
     deliverables:[{ name:"Project Governance", status:"In-Progress: Completed project charters, documented key stakeholders, purpose, deliverables, and org structure. Javier will review with Craig — once approved charter can be submitted.", risk:"Issue", impact:"Charter draft v1: https://cchhs1.sharepoint.com" }]
   },
   { project:"Lab Automation Upgrade",       pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Lab Automation Upgrade",
     deliverables:[{ name:"Readiness and Implementation", status:"Cable issue resolved with agreed path forward. Construction 75% complete. New automation line being installed. Next 2 weeks: testing and moving new/existing analyzers to new location.", risk:"", impact:"" }]
   },
-  { project:"Anal Dysplasia Diagnostic and Treatment Services",      pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Anal Dysplasia Diagnostic and Treatment Services",
+  { project:"PMOE No Show Tool",            pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"PMOE No Show Tool and Process",
+    deliverables:[{ name:"Tool and Process", status:"Completed analysis for Arlington Heights, Austin, Prieto, and North Riverside. Recency and risk stratification codes built for ACHN sites. Results for Jan–Mar 2026 sent to Nancy Rivera for decision. Overall positive prediction value of tool: 51%.", risk:"", impact:"" }]
+  },
+  { project:"JSH Nurse Call & Overhead Paging", pm:"Julius Ablis", lastUpdated:"2026-04-13", masterKey:"JSH Nurse Call and Overhead Paging Systems",
+    deliverables:[{ name:"Workflows", status:"Analysis report including indexes completed by IMEG. Discussed with BAM and Capital Planning on 4/1. Next steps are on Capital Planning.", risk:"", impact:"" }]
+  },
+  { project:"Anal Dysplasia Services",      pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Anal Dysplasia Diagnostic and Treatment Services",
     deliverables:[{ name:"Procurement", status:"Budget provided account string for PICO equipment procurement ($34k). Waiting for account string for training services procurement.", risk:"", impact:"" }]
   },
-  { project:"Wayfinding App - Stroger and PB",              pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Wayfinding App - Stroger and PB",
+  { project:"Wayfinding Tool",              pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Wayfinding App - Stroger and PB",
     deliverables:[{ name:"Tool and Process", status:"Executive COO agreed to use the PMOE Wayfinding App. Next step: connecting with HIS to add app website to patient reminder SMS. Live: https://blackknight1950.github.io/Wayfinding/", risk:"", impact:"" }]
   },
   { project:"Justice-Involved Re-Entry",    pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Justice-Involved Re-Entry",
     deliverables:[{ name:"Billing Mechanism (90-day Pre-release)", status:"Only pending info from HFS are code modifiers. CCH must set up Cermak as outpatient clinic in Oracle. Rev Cycle SPM checking Oracle for solutions to bypass manual registration.", risk:"Issue", impact:"24/7 operations would require more than 25 new Clerk V positions just for manual registration." }]
   },
-  { project:"RxLink",                       pm:"Julius Ablis",     lastUpdated:"2026-04-17", masterKey:"RxLink",
-    deliverables:[{ name:"Project Implementation", status:"Project charter filed. Project plan in development. RxLink is a pharmacy auto-enrollment solution for CCH patients.", risk:"", impact:"" }]
+  { project:"RxLink",                       pm:"Julius Ablis",     lastUpdated:"2026-04-27", masterKey:"RxLink",
+    deliverables:[{ name:"Project Governance", status:"Project charter filed. Project plan in development. RxLink is a pharmacy auto-enrollment solution for CCH patients.", risk:"", impact:"" }]
   },
   { project:"Consent Committee",            pm:"Julius Ablis",     lastUpdated:"2026-04-17", masterKey:"Consent Committee",
     deliverables:[{ name:"Project Governance", status:"Project charter filed. Establishing consent committee structure and governance framework for CCH.", risk:"", impact:"" }]
   },
   { project:"CCH-Press Ganey Consumerism",  pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"CCH-Press Ganey Consumerism",
     deliverables:[{ name:"Implementation", status:"Waiting for Provider Finder launch. BI has sent updated file. Waiting for Press Ganey and Chief Communications Officer approval. If approved, Consumerism project starts in 3 weeks.", risk:"", impact:"" }]
-  },
-  { project:"Revenue Cycle PDSA",  pm:"Jasmin Sanchez",     lastUpdated:"2026-04-13", masterKey:"Revenue Cycle PDSA",
-    deliverables:[{ name:"Project Governance", status:"New assignment. Set to start on May 6th", risk:"", impact:"" }]
   }
 ];
 
@@ -694,70 +820,71 @@ const MASTER_FILE_DATA = {
   "Anal Dysplasia Diagnostic and Treatment Services": { health:"Green", phase:"Execution",  pct:31,  start:"2025-06-01", end:"2026-05-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Monica Mercon", status:"In Progress" },
   "Lab Automation Upgrade":         { health:"Green", phase:"Execution",  pct:29,  start:"2026-01-26", end:"2026-07-10", domain:"Growth, Innovation, & Transformation", sponsor:"Susan Edralin", status:"In Progress" },
   "CCH-Press Ganey Consumerism":    { health:"Green", phase:"Execution",  pct:38,  start:"2025-11-24", end:"2026-06-03", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alex Normington", status:"In Progress" },
-  "RxLink":                         { health:"Green", phase:"Planning",  pct:null, start:"2026-05-03", end:"2026-11-30", domain:"Growth, Innovation, & Transformation", sponsor:"Catanya Norwood", status:"In Progress" },
-  "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Craig Williams", status:"In Progress" },
-  "Consent Committee":              { health:"Green", phase:"Planning",  pct:null, start:"2026-04-15", end:"2026-09-31", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alisha Patel", status:"In Progress" },
-  "HRO: Clinical Outcomes":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Mari Akre", status:"In Progress" },
-  "ARPA Spend Monitoring/Sustainability": { health:"Green", phase:"Monitoring", pct:89, start:"2022-12-01", end:"2026-06-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Revenue Cycle PDSA":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-05-06", end:"2026-11-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Ven Mothkur", status:"In Progress" },
+  "JSH Nurse Call and Overhead Paging Systems": { health:"Green", phase:"Planning", pct:5,  start:"2026-03-03", end:"2026-08-17", domain:"Growth, Innovation, & Transformation", sponsor:"Ben Laughton", status:"In Progress" },
+  "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Julius Ablis", status:"In Progress" },
+  "External Providers":             { health:"Green", phase:"Execution",  pct:53,  start:"2025-12-01", end:"2026-07-24", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Erik Mikaitis", status:"In Progress" },
+  "HRO: Clinical Outcomes Group":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
+  "ARPA Spend Monitoring/Sustainability": { health:"Green", phase:"Monitoring", pct:89, start:"2022-12-01", end:"2026-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Andrea Gibson", status:"In Progress" },
+  "Behavioral Intake Center":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
   "Unified Strategy: CCH-CCDPH":    { health:"Green", phase:"Planning",  pct:null,start:"2026-02-16", end:"2026-09-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
-  "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Nicholas Shields", status:"In Progress" },
+  "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Andrea Gibson", status:"In Progress" },
   "Domestic Spend (EARN)":          { health:"Green", phase:"Execution",  pct:36,  start:"2025-06-02", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
   "Surgery Optimization Phase 3":   { health:"Green", phase:"Execution",  pct:83,  start:"2025-07-28", end:"2026-12-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Craig Williams", status:"In Progress" },
-  "Cath Lab- EP Optimization": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
+  "Cath Lab- EP Optimization Project": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
   "Pharmacy Domestic Spend":        { health:"Green", phase:"Execution", pct:85,  start:"2022-01-01", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Population Health/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
+  "Population Health Management/VBC": { health:"Green", phase:"Execution", pct:null, start:"2022-12-01", end:"2026-12-29", domain:"Growth, Innovation, & Transformation", sponsor:"Sharon Irons", status:"In Progress" },
   "Medication Refill and Reconciliation Optimization": { health:"Green", phase:"Planning", pct:0, start:"2025-11-03", end:"2026-04-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Sharon Irons", status:"In Progress" },
   "APP Optimization":               { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-11-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Octavia Rolland", status:"In Progress" },
   "Immediate Care (AH)":            { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-10-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Craig Williams", status:"In Progress" },
-  "PMOE No Show Tool and Process":  { health:"Green", phase:"Execution",  pct:null,start:"2025-09-01", end:"2026-06-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Andrea Gibson", status:"Cancelled" },
+  "PMOE No Show Tool and Process":  { health:"Green", phase:"Execution",  pct:null,start:"2025-09-01", end:"2026-06-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Andrea Gibson", status:"In Progress" },
   "Health Equity Committee Capacity Building": { health:"Green", phase:"Execution", pct:null, start:"2026-01-12", end:"2026-12-31", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
   // ON HOLD
   "Justice-Involved Re-Entry":      { health:"Green", phase:"Planning",   pct:26,  start:"2022-04-01", end:"2022-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Manny Estrada", status:"On Hold" },
   // New projects from PMOE Load (Master File) — flow in via Refresh
-  
+  "RxLink":                         { health:"Green", phase:"Planning",  pct:null, start:"", end:"", domain:"Growth, Innovation, & Transformation", sponsor:"Catanya Norwood", status:"In Progress" },
+  "Consent Committee":              { health:"Green", phase:"Planning",  pct:null, start:"2026-04-15", end:"2026-08-31", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alisha Patel", status:"In Progress" },
 };
 
 // Completed projects from Master File
 const MASTER_COMPLETED = [
-  { name:"ACGME Compliance - Call Room Optimization",   pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2024-10-30", sponsor:"Steven Aks" },
+  { name:"ACGME Compliance - Call Room Optimization",   pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2024-10-30", sponsor:"Academic Affairs" },
   { name:"ACHN Providers and Operations Coordination",  pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-07-01", sponsor:"Sharon Irons" },
   { name:"Agency Staffing Process",                     pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-09-30", sponsor:"Carrie Pramuk-Volk" },
-  { name:"Allied Health Education Agreements Restructure", pm:"Elizabeth Wallish", domain:"Optimization, Systemization, & Performance Improvement", end:"2025-11-30", sponsor:"Steven Aks" },
+  { name:"Allied Health Education Agreements Restructure", pm:"Elizabeth Wallish", domain:"Optimization, Systemization, & Performance Improvement", end:"2025-11-30", sponsor:"Academic Affairs" },
   { name:"Ambulatory Optimization (AOTF)",              pm:"Lane Harmon",       domain:"Optimization, Systemization, & Performance Improvement", end:"2026-01-22", sponsor:"Craig Williams" },
   { name:"Anesthesiology Process Improvement",          pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2022-12-30", sponsor:"Angela O'Banion" },
   { name:"ARPA Programs Transition",                    pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-06-05", sponsor:"Andrea Gibson" },
   { name:"Behavioral Health Office Strategic Plan",     pm:"Jasmin Sanchez",    domain:"Health Equity, Community Health, & Integration", end:"2024-12-01", sponsor:"Greg Lee" },
-  { name:"Birthday Health Screenings Program",          pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2025-01-31", sponsor:"Craig Williams" },
-  { name:"Bronzeville Health Center",                   pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-04-30", sponsor:"Craig Williams" },
+  { name:"Birthday Health Screenings Program",          pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2025-01-31", sponsor:"Community Health" },
+  { name:"Bronzeville Health Center",                   pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-04-30", sponsor:"Operations" },
   { name:"Care Coordination Transition",                pm:"Elizabeth Wallish", domain:"Optimization, Systemization, & Performance Improvement", end:"2025-08-05", sponsor:"Andrea Gibson" },
   { name:"CCBHC Certification",                         pm:"Lane Harmon",       domain:"Health Equity, Community Health, & Integration", end:"2023-09-29", sponsor:"Pam Esposito" },
   { name:"CCDPH Sanitarian Fees Review",                pm:"Elizabeth Wallish", domain:"Fiscal Resilience", end:"2024-06-01", sponsor:"Kiran Joshi" },
-  { name:"Centralized Credentialing",                   pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-07-31", sponsor:"Carla Collins" },
-  { name:"Contract & Workforce Taskforce",              pm:"Elizabeth Wallish", domain:"Workforce: Talents & Teams", end:"2024-12-01", sponsor:"Win Buren" },
-  { name:"Crisis Triage Stabilization Center",          pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-02-28", sponsor:"Thomas Nutter" },
-  { name:"DGIM - Admin Process Improvement",            pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-10-31", sponsor:"Michael Davidovich" },
-  { name:"Health Care Equity Certification",            pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2025-06-13", sponsor:"Raji Thomas" },
-  { name:"High Reliability Training",                   pm:"Julius Ablis",      domain:"Patient Safety, Clinical Excellence, & Quality", end:"2025-08-01", sponsor:"Raji Thomas" },
-  { name:"High Reliability: Rebranding & Safety Coaching", pm:"Julius Ablis",   domain:"Patient Safety, Clinical Excellence, & Quality", end:"2025-12-01", sponsor:"Raji Thomas" },
-  { name:"Inpatient Dialysis (HD & CRRT)",              pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2023-12-15", sponsor:"Arnold Turner" },
-  { name:"JJIFP",                                       pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2024-12-01", sponsor:"Beth Vaclavik" },
-  { name:"New Arrivals Clinic Services",                pm:"Lane Harmon",       domain:"Health Equity, Community Health, & Integration", end:"2024-06-01", sponsor:"Craig Williams" },
-  { name:"North Riverside Dental Services",             pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-23", sponsor:"Jorelle Alexander" },
-  { name:"Organizational Consolidations",               pm:"Elizabeth Wallish", domain:"Optimization, Systemization, & Performance Improvement", end:"2026-02-28", sponsor:"Andrea Gibson" },
-  { name:"Population Health Management - Phase 1",      pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-01", sponsor:"Williams Trick" },
-  { name:"Pre-Renal Transplant Clinic",                 pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-10", sponsor:"Kalyani Perumal" },
+  { name:"Centralized Credentialing",                   pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-07-31", sponsor:"Medical Affairs" },
+  { name:"Contract & Workforce Taskforce",              pm:"Elizabeth Wallish", domain:"Workforce: Talents & Teams", end:"2024-12-01", sponsor:"HR" },
+  { name:"Crisis Triage Stabilization Center",          pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-02-28", sponsor:"Behavioral Health" },
+  { name:"DGIM - Admin Process Improvement",            pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-10-31", sponsor:"DGIM" },
+  { name:"Health Care Equity Certification",            pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2025-06-13", sponsor:"TJC" },
+  { name:"High Reliability Training",                   pm:"Julius Ablis",      domain:"Patient Safety, Clinical Excellence, & Quality", end:"2025-08-01", sponsor:"Operations" },
+  { name:"High Reliability: Rebranding & Safety Coaching", pm:"Julius Ablis",   domain:"Patient Safety, Clinical Excellence, & Quality", end:"2025-12-01", sponsor:"Operations" },
+  { name:"Inpatient Dialysis (HD & CRRT)",              pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2023-12-15", sponsor:"Nephrology" },
+  { name:"JJIFP",                                       pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2024-12-01", sponsor:"Justice" },
+  { name:"New Arrivals Clinic Services",                pm:"Lane Harmon",       domain:"Health Equity, Community Health, & Integration", end:"2024-06-01", sponsor:"Community Health" },
+  { name:"North Riverside Dental Services",             pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-23", sponsor:"Dental" },
+  { name:"Organizational Consolidations",               pm:"Elizabeth Wallish", domain:"Optimization, Systemization, & Performance Improvement", end:"2026-02-28", sponsor:"Israel Rocha" },
+  { name:"Population Health Management - Phase 1",      pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-01", sponsor:"CCH Leadership" },
+  { name:"Pre-Renal Transplant Clinic",                 pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-10", sponsor:"Nephrology" },
   { name:"Primary Care-Managed Care Info Coordination", pm:"Julius Ablis",      domain:"Optimization, Systemization, & Performance Improvement", end:"2025-12-31", sponsor:"Dan Vittum" },
-  { name:"Provident Colonoscopy",                       pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-10-31", sponsor:"Arnold Turne" },
-  { name:"Provident Observation Unit",                  pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2024-10-30", sponsor:"Arnold Turne" },
-  { name:"Provident PT/OT/SLP",                         pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2023-10-10", sponsor:"Arnold Turne" },
-  { name:"Provident Volume",                            pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2026-02-28", sponsor:"Arnold Turner" },
-  { name:"Sengstacke Plastics Clinic",                  pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-01", sponsor:"Ratna Kanumury" },
-  { name:"SPD Management Transition",                   pm:"Precious Avery",    domain:"Optimization, Systemization, & Performance Improvement", end:"2024-12-04", sponsor:"Beena Peters" },
-  { name:"Specialty Clinics Expansion at Sengstacke",   pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-01", sponsor:"Ratna Kanumury" },
-  { name:"Telehealth Optimization",                     pm:"Lane Harmon",       domain:"Growth, Innovation, & Transformation", end:"2023-12-01", sponsor:"Claudia Burchinal" },
-  { name:"UniteUS",                                     pm:"Precious Avery",    domain:"Health Equity, Community Health, & Integration", end:"2024-05-16", sponsor:"Thomas Nutter" },
-  { name:"Wellvana Partneship (MSSP)",                  pm:"Jasmin Sanchez",    domain:"Growth, Innovation, & Transformation", end:"2025-12-31", sponsor:"Andrea Gibson" },
+  { name:"Provident Colonoscopy",                       pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2025-10-31", sponsor:"GI" },
+  { name:"Provident Observation Unit",                  pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2024-10-30", sponsor:"Provident" },
+  { name:"Provident PT/OT/SLP",                         pm:"Julius Ablis",      domain:"Health Equity, Community Health, & Integration", end:"2023-10-10", sponsor:"Rehab" },
+  { name:"Provident Volume",                            pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", end:"2026-02-28", sponsor:"Operations" },
+  { name:"Sengstacke Plastics Clinic",                  pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-01", sponsor:"Surgery" },
+  { name:"SPD Management Transition",                   pm:"Precious Avery",    domain:"Optimization, Systemization, & Performance Improvement", end:"2024-12-04", sponsor:"Operations" },
+  { name:"Specialty Clinics Expansion at Sengstacke",   pm:"Julius Ablis",      domain:"Growth, Innovation, & Transformation", end:"2024-12-01", sponsor:"ACHN" },
+  { name:"Telehealth Optimization",                     pm:"Lane Harmon",       domain:"Growth, Innovation, & Transformation", end:"2023-12-01", sponsor:"Operations" },
+  { name:"UniteUS",                                     pm:"Precious Avery",    domain:"Health Equity, Community Health, & Integration", end:"2024-05-16", sponsor:"Community Health" },
+  { name:"Wellvana",                                    pm:"Jasmin Sanchez",    domain:"Growth, Innovation, & Transformation", end:"2025-12-31", sponsor:"Israel Rocha" },
 ];
 
 // Cancelled projects
@@ -767,9 +894,6 @@ const MASTER_CANCELLED = [
   { name:"Bedside Alarm",                           pm:"Julius Ablis",   domain:"Patient Safety, Clinical Excellence, & Quality", sponsor:"Operations" },
   { name:"Cardiac Catheterization Laboratory Throughput", pm:"Julius Ablis", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters" },
   { name:"Benefits Monitoring: PRB-Approved Dental Initiatives", pm:"Julius Ablis", domain:"Growth, Innovation, & Transformation", sponsor:"Dental" },
-  { name:"External Providers", pm:"Julius Ablis", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Ashante Wells-Baines" },
-  { name:"PMOE No Show Tool and Process", pm:"Julius Ablis", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Craig Williams" },
-  { name:"BH Intake Center Move", pm:"Elizabeth Wallish", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee" },
 ];
 
 // ============================================================
@@ -966,27 +1090,28 @@ const CLOSURE_REPORTS = {
 // ============================================================
 const COMPLIANCE_DATA = [
   // ACTIVE
-  { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis",    charter:true, plan:true, risks:true, closeout:null, status:"Active" },
-  { project:"ARPA Spend Monitoring/Sustainability",             pm:"Elizabeth Wallish",charter:"NA", plan:"NA", risks:"NA", closeout:null, status:"Active" },
-  { project:"BH Intake Center Move",                           pm:"Elizabeth Wallish",charter:true, plan:true, risks:null, closeout:"NA", status:"Active" },
-  { project:"RxLink",                                           pm:"Julius Ablis",    charter:true, plan:true, risks:null, closeout:null, status:"Active" },
-  { project:"Consent Committee",                                pm:"Julius Ablis",    charter:true, plan:true, risks:null, closeout:null, status:"Active" },
-  { project:"CCH-Press Ganey Consumerism",                     pm:"Julius Ablis",    charter:true, plan:true, risks:true, closeout:null, status:"Active" },
-  { project:"City Colleges Workforce",                         pm:"Jasmin Sanchez",  charter:true, plan:true, risks:true, closeout:null, status:"Active" },
-  { project:"Domestic Spend (EARN)",                           pm:"Jasmin Sanchez",  charter:true, plan:true, risks:true, closeout:null, status:"Active" },
-  { project:"Health Equity Committee Capacity Building",       pm:"Elizabeth Wallish",charter:true, plan:true, risks:null, closeout:null, status:"Active" },
-  { project:"HRO: Clinical Outcomes",                         pm:"Elizabeth Wallish",charter:true, plan:true, risks:null, closeout:null, status:"Active" },
-  { project:"JSH Nurse Call & Overhead Paging Systems",        pm:"Julius Ablis",    charter:true, plan:true, risks:"NA", closeout:"NA", status:"Active" },
-  { project:"Justice-Involved Re-Entry",                       pm:"Julius Ablis",    charter:true, plan:true, risks:true, closeout:null, status:"On Hold" },
-  { project:"Lab Automation Upgrade",                          pm:"Julius Ablis",    charter:true, plan:true, risks:true, closeout:null, status:"Active" },
-  { project:"Surgery Optimization Phase 3",                    pm:"Jasmin Sanchez",  charter:true, plan:true, risks:null, closeout:null, status:"Active" },
-  { project:"Cath Lab — EP Optimization",                     pm:"Jasmin Sanchez",  charter:true, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Unified Strategy: CCH-CCDPH",                    pm:"Elizabeth Wallish",charter:true, plan:true, risks:null, closeout:null, status:"Active" },
-  { project:"Wayfinding App - Stroger and PB",                pm:"Julius Ablis",    charter:"NA", plan:"NA", risks:"NA", closeout:null, status:"Active" },
+  { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"ARPA Spend Monitoring/Sustainability",             pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"BH Intake Center Move",                           pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"RxLink",                                           pm:"Julius Ablis",    charter:true, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Consent Committee",                                pm:"Julius Ablis",    charter:true, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"CCH-Press Ganey Consumerism",                     pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"City Colleges Workforce",                         pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Domestic Spend (EARN)",                           pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Health Equity Committee Capacity Building",       pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"HRO: Clinical Outcomes",                         pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"JSH Nurse Call & Overhead Paging",               pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Justice-Involved Re-Entry",                       pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"On Hold" },
+  { project:"Lab Automation Upgrade",                          pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Surgery Optimization Phase 3",                    pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Cath Lab — EP Optimization",                     pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Unified Strategy: CCH-CCDPH",                    pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Wayfinding App - Stroger and PB",                pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Medication Refill & Reconciliation Optimization", pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Population Health/VBC",                           pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Population Health Mgmt / VBC",                   pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"APP Optimization",                                pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"Immediate Care (AH)",                             pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Immediate Care (Arlington Heights)",              pm:"Lane Harmon",     charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"PMOE No Show Tool and Process",                   pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   // COMPLETED — from PM Process Compliance Audit (Sheet 2177565233991556)
   { project:"ACGME Compliance - Call Room Optimization",       pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:true,  status:"Complete", doc:"Project Closure Report - ACGME 10.30.2024.docx" },
   { project:"ACHN Providers and Operations Coordination",      pm:"Julius Ablis",    charter:true,  plan:true,  risks:true,  closeout:"NA",  status:"Complete" },
@@ -1022,7 +1147,7 @@ const COMPLIANCE_DATA = [
   { project:"Telehealth Optimization",                         pm:"Lane Harmon",     charter:true,  plan:true,  risks:"NA",  closeout:true,  status:"Complete", doc:"📄 Word document on file" },
   { project:"UniteUS",                                         pm:"Precious Avery",  charter:true,  plan:true,  risks:"NA",  closeout:true,  status:"Complete", doc:"📄 Word document on file" },
   { project:"ACHN Patient Experience",                         pm:"Lane Harmon",     charter:true,  plan:true,  risks:"NA",  closeout:"NA",  status:"Complete" },
-  { project:"Wellvana Partnership (MSSP)",                     pm:"Jasmin Sanchez",  charter:true,  plan:true, risks:true, closeout:true, status:"Complete" },
+  { project:"Wellvana",                                        pm:"Jasmin Sanchez",  charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
 ];
 
 // ============================================================
@@ -1306,17 +1431,85 @@ const LESSONS_THEMES = [
 // DASHBOARD DATA
 // ============================================================
 const DASHBOARD_DATA = [
-  { name:"EARN Leadership Dashboard",                          project:"Domestic Spend (EARN)",              pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/b/publish?EQBCT=a450523a40b641aaa01f611e0a90bc0d", description:"Domestic spend tracking, HEDIS performance, CountyCare member trends. FY2026 Goal: $152M." },
-  { name:"Surgery Optimization Dashboard",                     project:"Surgery Optimization Phase 3",       pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/b/publish?EQBCT=2c2805c20b5045c882eb8aac37f45110", description:"OR utilization, PPT v2 form deployment, deliverables tracker, tasks at risk." },
-  { name:"HEC Dashboard",                                      project:"Health Equity Committee Capacity",   pm:"Elizabeth Wallish", url:"https://app.smartsheet.com/b/publish?EQBCT=837d41a04dc44bfaa1296cf3a8177f6f", description:"HEC capacity building — recruitment efforts and committee governance." },
-  { name:"City Colleges Leadership Dashboard",                 project:"City Colleges Workforce",            pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/b/publish?EQBCT=93c4474c26be4bcb9c55349a987f88bd", description:"Workforce pipeline with City Colleges of Chicago — MOU, curriculum, student placement." },
-  { name:"Immunization / Unified Strategy Dashboard",          project:"Unified Strategy: CCH-CCDPH",        pm:"Elizabeth Wallish", url:"https://app.smartsheet.com/b/publish?EQBCT=5962e48badef4950b97834b6b90e8fea", description:"CCH-CCDPH unified strategy — immunization metrics and initiative alignment." },
-  { name:"ACHN Provider and Operations Coordination Tracker",  project:"ACHN Providers Coordination",        pm:"Julius Ablis",      url:"https://app.smartsheet.com/b/publish?EQBCT=f1675a87db834ce8802c7fed3355004c2", description:"ACHN provider coordination — operations alignment and provider performance monitoring. (Projects - Completed and Closed folder)" },
-  { name:"CCH Agency Staffing Request & Utilization Tracker",  project:"Agency Staffing",                    pm:"Julius Ablis",      url:"https://app.smartsheet.com/b/publish?EQBCT=b450dc6f1d7b4237b64bfbaa345325e5", description:"Agency staffing request and utilization — request volume, fill rates, and cost monitoring." },
-  { name:"PM Support Tracker",                                 project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/b/publish?EQBCT=2591bb23299842c9b405680a385a48ac", description:"PM support tracker — project management capacity, task assignment, and team support. (Capability Maturity Journey workspace)" },
-  { name:"Proposals Tracker",                                  project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/b/publish?EQBCT=86937bda19ac492cae85faa5737b3d51", description:"Proposals tracking — pre-project proposals, PRB submissions, and approval pipeline." },
-  { name:"Program/District Code Tracker",                      project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/b/publish?EQBCT=b834c40e45974e7da011f74457296eeb", description:"Program and district code management tracker for PMOE portfolio financial tracking." },
-  { name:"PMOE Portfolio Dashboard",                           project:"PMOE Portfolio",                     pm:"PMOE Team",         url:"https://app.smartsheet.com/b/publish?EQBCT=8f5e2240b3834ee09ac845f721577105", description:"Full portfolio — project status by PM, strategic domain chart, weekly notes." },
+  { name:"EARN Leadership Dashboard",                          project:"Domestic Spend (EARN)",              pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/b/home?lx=66gRMXVg52qMr4GpMQvRPGxXmg8PRP3m54hWWxh1", description:"Domestic spend tracking, HEDIS performance, CountyCare member trends. FY2026 Goal: $152M." },
+  { name:"Surgery Optimization Dashboard",                     project:"Surgery Optimization Phase 3",       pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/b/home?lx=XhMqGvf69pR8RjPgH67Vcw2g92jPPMw7M66jHxv1", description:"OR utilization, PPT v2 form deployment, deliverables tracker, tasks at risk." },
+  { name:"HEC Dashboard",                                      project:"Health Equity Committee Capacity",   pm:"Elizabeth Wallish", url:"https://app.smartsheet.com/b/home?lx=q3p42QfJ7vVM676HRGgfFXRRV4pQ2v2c3h2x7R71", description:"HEC capacity building — recruitment efforts and committee governance." },
+  { name:"City Colleges Leadership Dashboard",                 project:"City Colleges Workforce",            pm:"Jasmin Sanchez",    url:"https://app.smartsheet.com/b/home?lx=8Vc7Q4Q8X3qxPXFWfVQ8534CH8wGCVRWjgQvmjj1", description:"Workforce pipeline with City Colleges of Chicago — MOU, curriculum, student placement." },
+  { name:"Immunization / Unified Strategy Dashboard",          project:"Unified Strategy: CCH-CCDPH",        pm:"Elizabeth Wallish", url:"https://app.smartsheet.com/b/home?lx=3446qrv35rXrwcJrRm5WPVj9JmvrF4WpxQ56vcg1", description:"CCH-CCDPH unified strategy — immunization metrics and initiative alignment." },
+  { name:"ACHN Provider and Operations Coordination Tracker",  project:"ACHN Providers Coordination",        pm:"Julius Ablis",      url:"https://app.smartsheet.com/b/home?lx=8169822098876292", description:"ACHN provider coordination — operations alignment and provider performance monitoring. (Projects - Completed and Closed folder)" },
+  { name:"CCH Agency Staffing Request & Utilization Tracker",  project:"Agency Staffing",                    pm:"Julius Ablis",      url:"https://app.smartsheet.com/b/home?lx=5399766835193732", description:"Agency staffing request and utilization — request volume, fill rates, and cost monitoring." },
+  { name:"PM Support Tracker",                                 project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/b/home?lx=3795133230540676", description:"PM support tracker — project management capacity, task assignment, and team support. (Capability Maturity Journey workspace)" },
+  { name:"Proposals Tracker",                                  project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/RxqhCCJHWHjMmCXWVGqXqPGQ888V3MCRm33wxGJ1", description:"Proposals tracking — pre-project proposals, PRB submissions, and approval pipeline." },
+  { name:"Program/District Code Tracker",                      project:"PMOE Operations",                    pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/c2xxP96HH9Gq9P3Fh2R5JP339m8Wx7Jq49P4hhq1", description:"Program and district code management tracker for PMOE portfolio financial tracking." },
+  { name:"PMOE Portfolio Dashboard",                           project:"PMOE Portfolio",                     pm:"PMOE Team",         url:"https://app.smartsheet.com/dashboards/6hwgprQwqWVx534C7675463whVVcq3w4p7gq3hG1", description:"Full portfolio — project status by PM, strategic domain chart, weekly notes." },
+];
+
+// ============================================================
+// PMOE-DEVELOPED SOLUTIONS
+// ============================================================
+const SOLUTIONS_DATA = [
+  {
+    name: "CCH Wayfinding",
+    fullName: "Stroger Hospital – Find Your Way",
+    icon: "🗺️",
+    url: "https://blackknight1950.github.io/Wayfinding/",
+    description: "Interactive wayfinding app for Stroger Hospital. Helps patients and visitors navigate the facility with step-by-step directions. Approved by Executive COO for patient reminder SMS integration.",
+    status: "Live",
+    statusColor: "var(--success)",
+    tags: ["Patient Experience", "Navigation", "Stroger"]
+  },
+  {
+    name: "CCH High Reliability & Patient Safety",
+    fullName: "HRO Safety Learning Portal",
+    icon: "🛡️",
+    url: "https://blackknight1950.github.io/HRO/",
+    description: "High Reliability Organization (HRO) Safety Learning Portal for CCH. Supports leadership training in high reliability principles and Zero Harm culture across Cook County Health.",
+    status: "Live",
+    statusColor: "var(--success)",
+    tags: ["HRO", "Patient Safety", "Training"]
+  },
+  {
+    name: "CCH Agency Staffing/Locums Time Clock",
+    fullName: "Staff Time Clock",
+    icon: "⏱️",
+    url: "https://timeclock-server.onrender.com/",
+    description: "Digital time tracking solution for agency and locums staff at CCH. Streamlines shift logging, reduces manual entry errors, and supports payroll accuracy for temporary workforce.",
+    status: "Live",
+    statusColor: "var(--success)",
+    tags: ["Staffing", "Time Tracking", "Operations"]
+  },
+  {
+    name: "CCH Invoice Processor",
+    fullName: "CCH Invoice Processor",
+    icon: "🧾",
+    url: "https://invoice-processor-r1c0.onrender.com/",
+    description: "Automated invoice processing tool for Cook County Health. Reduces manual review time and accelerates accounts payable workflows for CCH finance operations.",
+    status: "Live",
+    statusColor: "var(--success)",
+    tags: ["Finance", "Automation", "Operations"]
+  },
+  {
+    name: "No Show Risk Prediction",
+    fullName: "No Show Risk Prediction (Clinics)",
+    icon: "📉",
+    url: null,
+    description: "Predictive analytics tool that risk-stratifies patients by likelihood of appointment no-show across ACHN clinic sites. Supports proactive outreach and schedule optimization. Overall positive predictive value: 51%.",
+    status: "Live",
+    statusColor: "var(--success)",
+    localOnly: true,
+    tags: ["Analytics", "Predictive", "Clinics", "No Shows"]
+  },
+  {
+    name: "CCH Contract Checker",
+    fullName: "CCH Contract Checker",
+    icon: "📋",
+    url: null,
+    description: "Contract risk assessment tool for Cook County Health. Reviews CCH contracts to identify sections that may put CCH at risk for CBA violations — surfacing high, medium, and low risk classifications.",
+    status: "Live",
+    statusColor: "var(--success)",
+    localOnly: true,
+    tags: ["Contracts", "Risk", "Compliance", "Legal"]
+  }
 ];
 
 // ============================================================
@@ -1384,6 +1577,7 @@ function buildDashboard() {
   buildCloseout();
   buildBenefits();
   filterDashboards();
+  buildSolutions();
 }
 
 // ============================================================
@@ -2187,6 +2381,48 @@ function filterDashboards() {
 }
 
 // ============================================================
+// PMOE-DEVELOPED SOLUTIONS
+// ============================================================
+function buildSolutions() {
+  const el = document.getElementById('solutionsGrid');
+  if (!el) return;
+
+  el.innerHTML = SOLUTIONS_DATA.map(s => {
+    const isLive = s.status === 'Live';
+    const cardClick = s.url ? `onclick="window.open('${s.url}','_blank','noopener')"` : '';
+    const cursorStyle = s.url ? 'cursor:pointer;' : 'cursor:default;';
+    const statusLabel = s.localOnly ? '● Live · Local Device' : (isLive ? '● Live' : '⧖ ' + s.status);
+    const actionBtn = s.url
+      ? `<a href="${s.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()" class="btn btn-ghost" style="font-size:11px;padding:4px 10px;">Launch ↗</a>`
+      : s.localOnly
+        ? `<span style="font-size:11px;color:var(--text3);font-family:var(--font-mono);padding:4px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);">💻 PMOE Device</span>`
+        : `<span style="font-size:11px;color:var(--text3);font-family:var(--font-mono);padding:4px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);">In Development</span>`;
+    return `<div class="dashboard-card" ${cardClick} style="${cursorStyle}transition:all 0.2s;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;gap:10px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="font-size:1.8rem;line-height:1;">${s.icon}</div>
+          <div>
+            <div class="dashboard-name" style="margin-bottom:2px;">${s.name}</div>
+            <div style="font-size:11px;color:var(--text3);font-family:var(--font-mono);">${s.fullName}</div>
+          </div>
+        </div>
+        <span style="font-size:10px;padding:3px 9px;border-radius:10px;font-family:var(--font-mono);font-weight:700;flex-shrink:0;
+          background:${isLive ? 'rgba(16,185,129,0.12)' : 'rgba(245,158,11,0.12)'};
+          color:${s.statusColor};
+          border:1px solid ${isLive ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)'};">${statusLabel}</span>
+      </div>
+      <div class="dashboard-desc" style="margin-bottom:12px;">${s.description}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div style="display:flex;gap:5px;flex-wrap:wrap;">
+          ${s.tags.map(t => `<span class="meta-chip" style="font-size:10px;">${t}</span>`).join('')}
+        </div>
+        ${actionBtn}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ============================================================
 // MODALS
 // ============================================================
 function openProjectModal(projectName) {
@@ -2801,6 +3037,158 @@ setTimeout(() => {
   silentRefresh();
   setInterval(silentRefresh, AUTO_REFRESH_MS);
 }, 3000);
+</script>
+<!-- ── CHATBOT ──────────────────────────────────────────────────────────────── -->
+<div id="chatbot-window">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">🤖</div>
+      <div>
+        <div class="chat-title">Ask Cody</div>
+        <div class="chat-subtitle">PMOE's Bot</div>
+      </div>
+    </div>
+    <button class="chat-minimize-btn" onclick="toggleChat()" title="Minimize">—</button>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-input-row">
+    <textarea class="chat-input" id="chatInput" rows="1" placeholder="Ask about projects, risks, compliance…" onkeydown="chatKeydown(event)" oninput="autoResize(this)"></textarea>
+    <button class="chat-send" id="chatSend" onclick="sendChat()">➤</button>
+  </div>
+</div>
+<button id="chatbot-toggle" onclick="toggleChat()" title="Open Ask Cody" style="display:none;">Cody</button>
+
+<script>
+// ── CHATBOT ────────────────────────────────────────────────────────────────
+const CHAT_API_KEY = 'tm-GsQEqnrPno39c0akztrf1YVH836BnZHzjaCBBYrd007f9f55';
+let chatHistory = [];
+let chatMinimized = false;
+
+function toggleChat() {
+  chatMinimized = !chatMinimized;
+  const win  = document.getElementById('chatbot-window');
+  const btn  = document.getElementById('chatbot-toggle');
+  const minBtn = win.querySelector('.chat-minimize-btn');
+
+  if (chatMinimized) {
+    win.classList.add('minimized');
+    btn.style.display = 'flex';
+    btn.style.bottom = '28px';
+  } else {
+    win.classList.remove('minimized');
+    btn.style.display = 'none';
+    setTimeout(() => document.getElementById('chatInput')?.focus(), 250);
+  }
+}
+
+// Show greeting on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    appendBotMsg("Hi! I'm Cody, PMOE's Assistant. I can help you navigate the PMOE Command Center. How may I assist you today?");
+  }, 1400);
+});
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+
+function autoResize(ta) {
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
+}
+
+function appendBotMsg(text, thinking = false) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg bot';
+  div.innerHTML = `<div class="chat-msg-avatar">🤖</div>
+    <div class="chat-bubble">${thinking
+      ? `<div class="chat-thinking"><span></span><span></span><span></span></div>`
+      : escapeHtml(text).replace(/\n/g, '<br>')
+    }</div>`;
+  if (thinking) div.id = 'thinkingBubble';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function appendUserMsg(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg user';
+  div.innerHTML = `<div class="chat-msg-avatar">👤</div>
+    <div class="chat-bubble">${escapeHtml(text).replace(/\n/g,'<br>')}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const send  = document.getElementById('chatSend');
+  const text  = input.value.trim();
+  if (!text) return;
+
+  input.value = ''; input.style.height = 'auto'; send.disabled = true;
+  appendUserMsg(text);
+  chatHistory.push({ role: 'user', content: text });
+
+  const thinking = appendBotMsg('', true);
+
+  // Build system context from current dashboard state
+  const activeCount = typeof PMOE_LOAD_DATA !== 'undefined' ? PMOE_LOAD_DATA.length : '?';
+  const riskCount   = typeof allRisks !== 'undefined' ? allRisks.length : '?';
+  const issueCount  = typeof allIssues !== 'undefined' ? allIssues.length : '?';
+  const completedCount = typeof MASTER_COMPLETED !== 'undefined' ? MASTER_COMPLETED.length : '?';
+  const systemPrompt = `You are the PMOE Assistant for Cook County Health's Project Management & Operational Excellence (PMOE) department. You help users navigate the PMOE Command Center dashboard and answer questions about the department's project portfolio.
+
+Current portfolio snapshot:
+- Active projects: ${activeCount}
+- Completed projects: ${completedCount}
+- Risks flagged: ${riskCount}
+- Issues open: ${issueCount}
+- PMs: Julius Ablis, Elizabeth Wallish, Jasmin Sanchez, Lane Harmon
+- Director: Enzo (Director of Project Management & Operational Excellence)
+
+The dashboard has these tabs: Overview, Projects, Risks & Issues, Project Benefits Monitoring, Closeout Reports, PM Compliance, Project Dashboards, PMOE-Developed Solutions, PMOE Tools.
+
+Be concise, professional, and helpful. If asked about specific project data, note you can provide general context from the dashboard. For detailed live data, suggest using the Refresh button or the relevant tab.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CHAT_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-haiku-4-5-20251001',
+        max_tokens: 600,
+        system: systemPrompt,
+        messages: chatHistory
+      })
+    });
+
+    if (!res.ok) throw new Error(`API error ${res.status}`);
+    const data = await res.json();
+    const reply = (data.content || []).map(b => b.text || '').join('').trim();
+    chatHistory.push({ role: 'assistant', content: reply });
+
+    thinking.remove();
+    appendBotMsg(reply);
+  } catch (err) {
+    thinking.remove();
+    appendBotMsg('Sorry, I had trouble connecting. Please try again in a moment.');
+    chatHistory.pop(); // remove failed user message from history
+    console.error('Chat error:', err);
+  }
+  send.disabled = false;
+}
 </script>
 </body>
 </html>
