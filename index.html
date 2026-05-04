@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -3045,26 +3045,26 @@ setTimeout(() => {
       <div class="chat-avatar">🤖</div>
       <div>
         <div class="chat-title">Ask Cody</div>
-        <div class="chat-subtitle">PMOE Bot-Virtual Assistant</div>
+        <div class="chat-subtitle">PMOE's Bot</div>
       </div>
     </div>
     <button class="chat-minimize-btn" onclick="toggleChat()" title="Minimize">—</button>
   </div>
   <div class="chat-messages" id="chatMessages"></div>
   <div class="chat-input-row">
-    <textarea class="chat-input" id="chatInput" rows="1" placeholder="How can I help?" onkeydown="chatKeydown(event)" oninput="autoResize(this)"></textarea>
+    <textarea class="chat-input" id="chatInput" rows="1" placeholder="Ask about projects, risks, compliance…" onkeydown="chatKeydown(event)" oninput="autoResize(this)"></textarea>
     <button class="chat-send" id="chatSend" onclick="sendChat()">➤</button>
   </div>
 </div>
 <button id="chatbot-toggle" onclick="toggleChat()" title="Open Ask Cody" style="display:none;">Cody</button>
 
 <script>
-// ── CHATBOT — powered by Cody AI (getcody.ai) ─────────────────────────────
-// Flow: create conversation session → send messages via /api/cody/* proxy on Render.
-// Cody manages conversation history automatically via conversation_id.
-let codyConversationId = null;   // set once on first message (or on init)
-let chatMinimized = false;
-let chatReady = false;           // true once a conversation session is established
+// ── CHATBOT — Hybrid: Cody knowledge base + Claude dashboard intelligence ──────
+// Cody answers first. If Cody doesn't know, Claude steps in with full dashboard context.
+// All orchestration happens server-side at POST /api/chat.
+let codyConversationId = null;   // Cody conversation session (for knowledge base threading)
+let chatHistory        = [];     // Claude-side history for multi-turn memory
+let chatMinimized      = false;
 
 function toggleChat() {
   chatMinimized = !chatMinimized;
@@ -3080,17 +3080,16 @@ function toggleChat() {
   }
 }
 
-// Show greeting on load and create the Cody conversation session
+// On load: show greeting and pre-create Cody session (so first message is instant)
 window.addEventListener('load', () => {
   setTimeout(async () => {
     appendBotMsg("Hi! I'm Cody, PMOE's Assistant. I can help you navigate the PMOE Command Center. How may I assist you today?");
-    // Pre-create the conversation session so first message is instant
     if (API_URL) await initCodySession();
   }, 1400);
 });
 
 async function initCodySession() {
-  if (codyConversationId) return; // already have a session
+  if (codyConversationId) return;
   try {
     const r = await fetch(`${API_URL}/api/cody/conversation`, {
       method: 'POST',
@@ -3099,11 +3098,40 @@ async function initCodySession() {
     });
     if (!r.ok) throw new Error(`Session error ${r.status}`);
     const data = await r.json();
-    codyConversationId = data.conversation_id;
-    chatReady = true;
+    codyConversationId = data.conversation_id || null;
   } catch (err) {
-    console.warn('Cody session init failed (will retry on first message):', err.message);
+    console.warn('Cody session init (will retry on first message):', err.message);
   }
+}
+
+// Build a compact dashboard snapshot for Claude's context
+function buildDashboardContext() {
+  const lines = [];
+  try {
+    // Active projects with PM, status, risks
+    if (typeof PMOE_LOAD_DATA !== 'undefined') {
+      lines.push(`ACTIVE PROJECTS (${PMOE_LOAD_DATA.length} total):`);
+      PMOE_LOAD_DATA.forEach(p => {
+        const d = p.deliverables?.[0] || {};
+        const riskFlag = d.risk ? ` [${d.risk.toUpperCase()}]` : '';
+        lines.push(`  • ${p.project} | PM: ${p.pm}${riskFlag} | Latest: ${(d.status||'').substring(0,120)}`);
+      });
+    }
+    // Completed projects
+    if (typeof MASTER_COMPLETED !== 'undefined') {
+      lines.push(`\nCOMPLETED PROJECTS (${MASTER_COMPLETED.length} total):`);
+      MASTER_COMPLETED.slice(0, 10).forEach(p => lines.push(`  • ${p.name || p.project} | PM: ${p.pm || '—'}`));
+    }
+    // Risks & issues
+    if (typeof allRisks !== 'undefined' && typeof allIssues !== 'undefined') {
+      lines.push(`\nRISKS FLAGGED: ${allRisks.length} | ISSUES OPEN: ${allIssues.length}`);
+      [...allRisks, ...allIssues].forEach(r => lines.push(`  • [${r.type}] ${r.project}: ${(r.impact||r.status||'').substring(0,100)}`));
+    }
+    // PM team
+    lines.push(`\nPM TEAM: Julius Ablis, Elizabeth Wallish, Jasmin Sanchez, Lane Harmon`);
+    lines.push(`DASHBOARD TABS: Overview, Projects, Risks & Issues, Project Benefits Monitoring, Closeout Reports, PM Compliance, Project Dashboards, PMOE-Developed Solutions, PMOE Tools`);
+  } catch(e) { lines.push('(dashboard data not yet loaded — user should press Refresh)'); }
+  return lines.join('\n');
 }
 
 function chatKeydown(e) {
@@ -3117,7 +3145,7 @@ function autoResize(ta) {
 
 function appendBotMsg(text, thinking = false) {
   const msgs = document.getElementById('chatMessages');
-  const div = document.createElement('div');
+  const div  = document.createElement('div');
   div.className = 'chat-msg bot';
   div.innerHTML = `<div class="chat-msg-avatar">🤖</div>
     <div class="chat-bubble">${thinking
@@ -3132,7 +3160,7 @@ function appendBotMsg(text, thinking = false) {
 
 function appendUserMsg(text) {
   const msgs = document.getElementById('chatMessages');
-  const div = document.createElement('div');
+  const div  = document.createElement('div');
   div.className = 'chat-msg user';
   div.innerHTML = `<div class="chat-msg-avatar">👤</div>
     <div class="chat-bubble">${escapeHtml(text).replace(/\n/g,'<br>')}</div>`;
@@ -3154,7 +3182,6 @@ async function sendChat() {
   appendUserMsg(text);
   const thinking = appendBotMsg('', true);
 
-  // Guard: must be connected to the Render API server
   if (!API_URL) {
     thinking.remove();
     appendBotMsg('⚠ Not connected to the API server yet. Press the Refresh button in the top bar, then try again.');
@@ -3163,30 +3190,43 @@ async function sendChat() {
   }
 
   try {
-    // Ensure we have a conversation session
+    // Ensure Cody session exists (for knowledge base lookup)
     if (!codyConversationId) await initCodySession();
-    if (!codyConversationId) throw new Error('Could not create a chat session. Check that CODY_API_KEY and CODY_BOT_ID are set in Render.');
 
-    // Send message to Cody via server proxy
-    const r = await fetch(`${API_URL}/api/cody/message`, {
+    // Add user turn to Claude history
+    chatHistory.push({ role: 'user', content: text });
+
+    // Call the unified hybrid endpoint — server decides Cody vs Claude vs both
+    const r = await fetch(`${API_URL}/api/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content: text, conversation_id: codyConversationId })
+      body: JSON.stringify({
+        content:           text,
+        conversation_id:   codyConversationId,   // for Cody knowledge base
+        dashboard_context: buildDashboardContext(), // for Claude enrichment
+        history:           chatHistory.slice(0, -1)  // Claude multi-turn context
+      })
     });
 
     if (!r.ok) {
       const errBody = await r.json().catch(() => ({}));
-      // If conversation expired, reset and retry once
+      // Cody session expired — reset and ask user to resend
       if (r.status === 422) {
         codyConversationId = null;
         await initCodySession();
-        throw new Error('Session expired — please send your message again.');
+        chatHistory.pop();
+        throw new Error('Session refreshed — please send your message again.');
       }
       throw new Error(errBody.error || `Server error ${r.status}`);
     }
 
-    const data = await r.json();
+    const data  = await r.json();
     const reply = (data.text || '').trim() || 'Sorry, I received an empty response.';
+
+    // Add assistant reply to Claude history for multi-turn continuity
+    chatHistory.push({ role: 'assistant', content: reply });
+    // Keep history bounded (last 10 turns = 20 messages)
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
 
     thinking.remove();
     appendBotMsg(reply);
@@ -3194,11 +3234,12 @@ async function sendChat() {
   } catch (err) {
     thinking.remove();
     appendBotMsg(`⚠ ${err.message}`);
-    console.error('Cody chat error:', err);
+    if (chatHistory[chatHistory.length - 1]?.role === 'user') chatHistory.pop();
+    console.error('Chat error:', err);
   }
   send.disabled = false;
 }
 </script>
 </body>
 </html>
-</html>
+
