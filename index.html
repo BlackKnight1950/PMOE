@@ -3045,7 +3045,7 @@ setTimeout(() => {
       <div class="chat-avatar">🤖</div>
       <div>
         <div class="chat-title">Ask Cody</div>
-        <div class="chat-subtitle">PMOE Bot - Virtual Assistant</div>
+        <div class="chat-subtitle">PMOE's Bot</div>
       </div>
     </div>
     <button class="chat-minimize-btn" onclick="toggleChat()" title="Minimize">—</button>
@@ -3059,21 +3059,20 @@ setTimeout(() => {
 <button id="chatbot-toggle" onclick="toggleChat()" title="Open Ask Cody" style="display:none;">Cody</button>
 
 <script>
-// ── CHATBOT ────────────────────────────────────────────────────────────────
-// Chat calls route through the Render /api/ai proxy — API key stays server-side.
-let chatHistory = [];
+// ── CHATBOT — powered by Cody AI (getcody.ai) ─────────────────────────────
+// Flow: create conversation session → send messages via /api/cody/* proxy on Render.
+// Cody manages conversation history automatically via conversation_id.
+let codyConversationId = null;   // set once on first message (or on init)
 let chatMinimized = false;
+let chatReady = false;           // true once a conversation session is established
 
 function toggleChat() {
   chatMinimized = !chatMinimized;
-  const win  = document.getElementById('chatbot-window');
-  const btn  = document.getElementById('chatbot-toggle');
-  const minBtn = win.querySelector('.chat-minimize-btn');
-
+  const win = document.getElementById('chatbot-window');
+  const btn = document.getElementById('chatbot-toggle');
   if (chatMinimized) {
     win.classList.add('minimized');
     btn.style.display = 'flex';
-    btn.style.bottom = '28px';
   } else {
     win.classList.remove('minimized');
     btn.style.display = 'none';
@@ -3081,12 +3080,31 @@ function toggleChat() {
   }
 }
 
-// Show greeting on load
+// Show greeting on load and create the Cody conversation session
 window.addEventListener('load', () => {
-  setTimeout(() => {
+  setTimeout(async () => {
     appendBotMsg("Hi! I'm Cody, PMOE's Assistant. I can help you navigate the PMOE Command Center. How may I assist you today?");
+    // Pre-create the conversation session so first message is instant
+    if (API_URL) await initCodySession();
   }, 1400);
 });
+
+async function initCodySession() {
+  if (codyConversationId) return; // already have a session
+  try {
+    const r = await fetch(`${API_URL}/api/cody/conversation`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'PMOE Dashboard' })
+    });
+    if (!r.ok) throw new Error(`Session error ${r.status}`);
+    const data = await r.json();
+    codyConversationId = data.conversation_id;
+    chatReady = true;
+  } catch (err) {
+    console.warn('Cody session init failed (will retry on first message):', err.message);
+  }
+}
 
 function chatKeydown(e) {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
@@ -3134,71 +3152,53 @@ async function sendChat() {
 
   input.value = ''; input.style.height = 'auto'; send.disabled = true;
   appendUserMsg(text);
-  chatHistory.push({ role: 'user', content: text });
-
   const thinking = appendBotMsg('', true);
 
-  // Build system context from current dashboard state
-  const activeCount = typeof PMOE_LOAD_DATA !== 'undefined' ? PMOE_LOAD_DATA.length : '?';
-  const riskCount   = typeof allRisks !== 'undefined' ? allRisks.length : '?';
-  const issueCount  = typeof allIssues !== 'undefined' ? allIssues.length : '?';
-  const completedCount = typeof MASTER_COMPLETED !== 'undefined' ? MASTER_COMPLETED.length : '?';
-  const systemPrompt = `You are the PMOE Assistant for Cook County Health's Project Management & Operational Excellence (PMOE) department. You help users navigate the PMOE Command Center dashboard and answer questions about the department's project portfolio.
-
-Current portfolio snapshot:
-- Active projects: ${activeCount}
-- Completed projects: ${completedCount}
-- Risks flagged: ${riskCount}
-- Issues open: ${issueCount}
-- PMs: Julius Ablis, Elizabeth Wallish, Jasmin Sanchez, Lane Harmon
-- Director: Enzo (Director of Project Management & Operational Excellence)
-
-The dashboard has these tabs: Overview, Projects, Risks & Issues, Project Benefits Monitoring, Closeout Reports, PM Compliance, Project Dashboards, PMOE-Developed Solutions, PMOE Tools.
-
-Be concise, professional, and helpful. If asked about specific project data, note you can provide general context from the dashboard. For detailed live data, suggest using the Refresh button or the relevant tab.`;
-
-  // Route through the Render proxy — the Anthropic API blocks direct browser calls (CORS).
-  // The server's /api/ai endpoint holds the API key securely server-side.
+  // Guard: must be connected to the Render API server
   if (!API_URL) {
     thinking.remove();
-    appendBotMsg('⚠ API server not configured. Press the Refresh button first to connect to the live server, then try again.');
-    chatHistory.pop();
+    appendBotMsg('⚠ Not connected to the API server yet. Press the Refresh button in the top bar, then try again.');
     send.disabled = false;
     return;
   }
 
   try {
-    const res = await fetch(`${API_URL}/api/ai`, {
+    // Ensure we have a conversation session
+    if (!codyConversationId) await initCodySession();
+    if (!codyConversationId) throw new Error('Could not create a chat session. Check that CODY_API_KEY and CODY_BOT_ID are set in Render.');
+
+    // Send message to Cody via server proxy
+    const r = await fetch(`${API_URL}/api/cody/message`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        prompt: text,
-        system: systemPrompt,
-        history: chatHistory.slice(0, -1) // send history minus the message we just pushed
-      })
+      body: JSON.stringify({ content: text, conversation_id: codyConversationId })
     });
 
-    if (!res.ok) {
-      const errBody = await res.json().catch(() => ({}));
-      throw new Error(errBody.error || `Server error ${res.status}`);
+    if (!r.ok) {
+      const errBody = await r.json().catch(() => ({}));
+      // If conversation expired, reset and retry once
+      if (r.status === 422) {
+        codyConversationId = null;
+        await initCodySession();
+        throw new Error('Session expired — please send your message again.');
+      }
+      throw new Error(errBody.error || `Server error ${r.status}`);
     }
-    const data = await res.json();
+
+    const data = await r.json();
     const reply = (data.text || '').trim() || 'Sorry, I received an empty response.';
-    chatHistory.push({ role: 'assistant', content: reply });
 
     thinking.remove();
     appendBotMsg(reply);
+
   } catch (err) {
     thinking.remove();
-    const isTimeout = err.name === 'AbortError' || err.message.includes('Failed to fetch');
-    appendBotMsg(isTimeout
-      ? '⚠ Could not reach the API server. Make sure it is running on Render and press Refresh to reconnect.'
-      : `⚠ ${err.message}`);
-    chatHistory.pop();
-    console.error('Chat error:', err);
+    appendBotMsg(`⚠ ${err.message}`);
+    console.error('Cody chat error:', err);
   }
   send.disabled = false;
 }
 </script>
 </body>
+</html>
 </html>
