@@ -3045,7 +3045,7 @@ setTimeout(() => {
       <div class="chat-avatar">🤖</div>
       <div>
         <div class="chat-title">Ask Cody</div>
-        <div class="chat-subtitle">PMOE's Bot</div>
+        <div class="chat-subtitle">PMOE Bot - Virtual Assistant</div>
       </div>
     </div>
     <button class="chat-minimize-btn" onclick="toggleChat()" title="Minimize">—</button>
@@ -3060,7 +3060,7 @@ setTimeout(() => {
 
 <script>
 // ── CHATBOT ────────────────────────────────────────────────────────────────
-const CHAT_API_KEY = 'tm-GsQEqnrPno39c0akztrf1YVH836BnZHzjaCBBYrd007f9f55';
+// Chat calls route through the Render /api/ai proxy — API key stays server-side.
 let chatHistory = [];
 let chatMinimized = false;
 
@@ -3157,34 +3157,44 @@ The dashboard has these tabs: Overview, Projects, Risks & Issues, Project Benefi
 
 Be concise, professional, and helpful. If asked about specific project data, note you can provide general context from the dashboard. For detailed live data, suggest using the Refresh button or the relevant tab.`;
 
+  // Route through the Render proxy — the Anthropic API blocks direct browser calls (CORS).
+  // The server's /api/ai endpoint holds the API key securely server-side.
+  if (!API_URL) {
+    thinking.remove();
+    appendBotMsg('⚠ API server not configured. Press the Refresh button first to connect to the live server, then try again.');
+    chatHistory.pop();
+    send.disabled = false;
+    return;
+  }
+
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch(`${API_URL}/api/ai`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': CHAT_API_KEY,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 600,
+        prompt: text,
         system: systemPrompt,
-        messages: chatHistory
+        history: chatHistory.slice(0, -1) // send history minus the message we just pushed
       })
     });
 
-    if (!res.ok) throw new Error(`API error ${res.status}`);
+    if (!res.ok) {
+      const errBody = await res.json().catch(() => ({}));
+      throw new Error(errBody.error || `Server error ${res.status}`);
+    }
     const data = await res.json();
-    const reply = (data.content || []).map(b => b.text || '').join('').trim();
+    const reply = (data.text || '').trim() || 'Sorry, I received an empty response.';
     chatHistory.push({ role: 'assistant', content: reply });
 
     thinking.remove();
     appendBotMsg(reply);
   } catch (err) {
     thinking.remove();
-    appendBotMsg('Sorry, I had trouble connecting. Please try again in a moment.');
-    chatHistory.pop(); // remove failed user message from history
+    const isTimeout = err.name === 'AbortError' || err.message.includes('Failed to fetch');
+    appendBotMsg(isTimeout
+      ? '⚠ Could not reach the API server. Make sure it is running on Render and press Refresh to reconnect.'
+      : `⚠ ${err.message}`);
+    chatHistory.pop();
     console.error('Chat error:', err);
   }
   send.disabled = false;
