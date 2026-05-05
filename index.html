@@ -769,13 +769,13 @@ const PMOE_LOAD_DATA = [
   { project:"ARPA Spend Monitoring/Sustainability",                         pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"ARPA Spend Monitoring/Sustainability",
     deliverables:[{ name:"Cash Flow, Expenditures, Sustainability", status:"DBMS completed rollover analysis. EBS aligned. Corporate-funded line items removed from ARPA PMO budget. FY26 'general fund-covered' items are internal monitoring — don't limit partner spending. Updated budgets to be distributed in next two weeks.", risk:"", impact:"" }]
   },
-  { project:"BH Intake Center Move",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"Behavioral Intake Center",
-    deliverables:[{ name:"Project Governance", status:"Space committee did not approve BHIAC move to 6W despite verbal affirmations. Planning temporarily paused pending May 4 City Colleges kickoff. Volume projections in development. Facility and security items under financial review.", risk:"", impact:"" }]
+  { project:"AI Committee",        pm:"Elizabeth Wallish",lastUpdated:"2026-04-13", masterKey:"AI Committee",
+    deliverables:[{ name:"Project Governance", status:"Determinations to begin work: Establish dyad leaders as the governing body for the AI Innovation Domain, Activate the AI Domain as the initial focus area, with other domains remaining inactive, Position AI innovation as a continuous evolution rather than a time-bound project, Build foundational structure to support long-term scalability, Incubate programs internally while incorporating external partnerships (e.g., universities, government entities), Sequence enterprise-wide communications until committees are established and operational, Maintain a centralized catalog of AI initiatives to ensure visibility and alignment and Log and track incoming initiatives through project management processes..", risk:"", impact:"" }]
   },
   { project:"Domestic Spend (EARN)",        pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Domestic Spend (EARN)",
     deliverables:[{ name:"Implementation / Project Benefits Monitoring", status:"In-Progress. Corey Hill's team piloting new workflow for New Patient Denials. ~2% increase in pharmacy domestic spend (>$100k/month over budget). Workgroup formed around financial clearance process. Created detailed workflow for 3 teams for review.", risk:"Issue", impact:"Downstream effects of patients not in network — denials for eligibility, uptick in prior auths for out-of-network surgery patients." }]
   },
-  { project:"City Colleges Workforce",      pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Workforce Pipeline Development (City Colleges of Chicago)",
+  { project:"Workforce Pipeline Development (City Colleges of Chicago)",      pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Workforce Pipeline Development (City Colleges of Chicago)",
     deliverables:[{ name:"Implementation", status:"In-Progress. Discovery log created for working groups. Editing master MOU document. Kickoff and quarterly leadership meetings scheduled. Meeting next week on KPIs and Smartsheet tracking. Financial forms sent for 3 payments. Met with Janine on advance skills for MA program.", risk:"Issue", impact:"Need final decision on space (6th floor vs other). Also need clarity on security onboarding, IDs, and IT infrastructure for students." }]
   },
   { project:"Surgery Optimization Phase 3", pm:"Jasmin Sanchez",   lastUpdated:"2026-04-13", masterKey:"Surgery Optimization Phase 3",
@@ -790,8 +790,8 @@ const PMOE_LOAD_DATA = [
   { project:"PMOE No Show Tool",            pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"PMOE No Show Tool and Process",
     deliverables:[{ name:"Tool and Process", status:"Completed analysis for Arlington Heights, Austin, Prieto, and North Riverside. Recency and risk stratification codes built for ACHN sites. Results for Jan–Mar 2026 sent to Nancy Rivera for decision. Overall positive prediction value of tool: 51%.", risk:"", impact:"" }]
   },
-  { project:"JSH Nurse Call & Overhead Paging", pm:"Julius Ablis", lastUpdated:"2026-04-13", masterKey:"JSH Nurse Call and Overhead Paging Systems",
-    deliverables:[{ name:"Workflows", status:"Analysis report including indexes completed by IMEG. Discussed with BAM and Capital Planning on 4/1. Next steps are on Capital Planning.", risk:"", impact:"" }]
+  { project:"Revenue Cycle PDSA", pm:"Julius Ablis", lastUpdated:"2026-04-13", masterKey:"Revenue Cycle PDSA",
+    deliverables:[{ name:"Project Governance", status:"New Assignment. Set to start on May 6th.", risk:"", impact:"" }]
   },
   { project:"Anal Dysplasia Diagnostic and Treatment Services",      pm:"Julius Ablis",     lastUpdated:"2026-04-13", masterKey:"Anal Dysplasia Diagnostic and Treatment Services",
     deliverables:[{ name:"Procurement", status:"Budget provided account string for PICO equipment procurement ($34k). Waiting for account string for training services procurement.", risk:"", impact:"" }]
@@ -817,17 +817,16 @@ const PMOE_LOAD_DATA = [
 // MASTER FILE DATA  (from PMOE Load (Master File) — key active projects)
 // ============================================================
 const MASTER_FILE_DATA = {
-  "Anal Dysplasia Diagnostic and Treatment Services": { health:"Green", phase:"Execution",  pct:31,  start:"2025-06-01", end:"2026-05-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Monica Mercon", status:"In Progress" },
+  "Anal Dysplasia Diagnostic and Treatment Services": { health:"Green", phase:"Execution",  pct:31,  start:"2025-06-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Monica Mercon", status:"In Progress" },
   "Lab Automation Upgrade":         { health:"Green", phase:"Execution",  pct:29,  start:"2026-01-26", end:"2026-07-10", domain:"Growth, Innovation, & Transformation", sponsor:"Susan Edralin", status:"In Progress" },
-  "CCH-Press Ganey Consumerism":    { health:"Green", phase:"Execution",  pct:38,  start:"2025-11-24", end:"2026-06-03", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alex Normington", status:"In Progress" },
-  "JSH Nurse Call and Overhead Paging Systems": { health:"Green", phase:"Planning", pct:5,  start:"2026-03-03", end:"2026-08-17", domain:"Growth, Innovation, & Transformation", sponsor:"Ben Laughton", status:"In Progress" },
-  "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2025-08-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Julius Ablis", status:"In Progress" },
-  "External Providers":             { health:"Green", phase:"Execution",  pct:53,  start:"2025-12-01", end:"2026-07-24", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Erik Mikaitis", status:"In Progress" },
-  "HRO: Clinical Outcomes":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Beena Peters", status:"In Progress" },
+  "CCH-Press Ganey Consumerism":    { health:"Green", phase:"Execution",  pct:38,  start:"2025-11-24", end:"2026-08-03", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Alex Normington", status:"In Progress" },
+  "Revenue Cycle PDSA": { health:"Green", phase:"Planning", pct:5,  start:"2026-05-06", end:"2026-12-30", domain:"Growth, Innovation, & Transformation", sponsor:"Ven Mothkur", status:"In Progress" },
+  "Wayfinding App - Stroger and PB": { health:"Green", phase:"Execution",  pct:66,  start:"2026-04-01", end:"2026-07-29", domain:"Growth, Innovation, & Transformation", sponsor:"Julius Ablis", status:"In Progress" },
+  "AI Committee":             { health:"Green", phase:"Execution",  pct:53,  start:"2026-05-01", end:"2027-07-24", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Jafar Hasan", status:"In Progress" },
+  "HRO: Clinical Outcomes":   { health:"Green", phase:"Monitoring", pct:90,  start:"2024-12-01", end:"2026-10-28", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Mari Akre", status:"In Progress" },
   "ARPA Spend Monitoring/Sustainability": { health:"Green", phase:"Monitoring", pct:89, start:"2022-12-01", end:"2026-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Andrea Gibson", status:"In Progress" },
-  "Behavioral Intake Center":       { health:"Green", phase:"Planning",  pct:0,   start:"2026-02-02", end:"2026-05-22", domain:"Health Equity, Community Health, & Integration", sponsor:"Greg Lee", status:"In Progress" },
   "Unified Strategy: CCH-CCDPH":    { health:"Green", phase:"Planning",  pct:null,start:"2026-02-16", end:"2026-09-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
-  "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Andrea Gibson", status:"In Progress" },
+  "Workforce Pipeline Development (City Colleges of Chicago)": { health:"Green", phase:"Execution", pct:71, start:"2025-06-30", end:"2026-12-18", domain:"Workforce: Talents & Teams", sponsor:"Nicholas Shields", status:"In Progress" },
   "Domestic Spend (EARN)":          { health:"Green", phase:"Execution",  pct:36,  start:"2025-06-02", end:"2026-12-31", domain:"Fiscal Resilience", sponsor:"Andrea Gibson", status:"In Progress" },
   "Surgery Optimization Phase 3":   { health:"Green", phase:"Execution",  pct:83,  start:"2025-07-28", end:"2026-12-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Craig Williams", status:"In Progress" },
   "Cath Lab- EP Optimization": { health:"Green", phase:"Planning", pct:null, start:"2026-03-02", end:"2026-10-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Javier Medero", status:"In Progress" },
@@ -836,7 +835,6 @@ const MASTER_FILE_DATA = {
   "Medication Refill and Reconciliation Optimization": { health:"Green", phase:"Planning", pct:0, start:"2025-11-03", end:"2026-04-17", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Sharon Irons", status:"In Progress" },
   "APP Optimization":               { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-11-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Octavia Rolland", status:"In Progress" },
   "Immediate Care (AH)":            { health:"Green", phase:"Planning",  pct:null,start:"2026-01-05", end:"2026-10-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Craig Williams", status:"In Progress" },
-  "PMOE No Show Tool and Process":  { health:"Green", phase:"Execution",  pct:null,start:"2025-09-01", end:"2026-06-30", domain:"Optimization, Systemization, & Performance Improvement", sponsor:"Andrea Gibson", status:"In Progress" },
   "Health Equity Committee Capacity Building": { health:"Green", phase:"Execution", pct:null, start:"2026-01-12", end:"2026-12-31", domain:"Health Equity, Community Health, & Integration", sponsor:"Kiran Joshi", status:"In Progress" },
   // ON HOLD
   "Justice-Involved Re-Entry":      { health:"Green", phase:"Planning",   pct:26,  start:"2022-04-01", end:"2022-06-30", domain:"Health Equity, Community Health, & Integration", sponsor:"Manny Estrada", status:"On Hold" },
@@ -912,7 +910,7 @@ const RISKS_DATA = [
 // CHARTER DATA  (from PM Process Compliance Audit attachments)
 // ============================================================
 const CHARTER_DATA = {
-  "Anal Dysplasia Services": { fileName:"Project Charter - Anal Dysplasia Service.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a dedicated clinic to screen, diagnose, and treat patients — reducing referrals out of the CCH system and expanding specialty care access.", objectives:"Stand up clinic with credentialed specialist, procure PICO equipment, finalize patient intake workflows, and achieve initial patient volume targets." },
+  "Anal Dysplasia Diagnostic and Treatment Services": { fileName:"Project Charter - Anal Dysplasia Service.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a dedicated clinic to screen, diagnose, and treat patients — reducing referrals out of the CCH system and expanding specialty care access.", objectives:"Stand up clinic with credentialed specialist, procure PICO equipment, finalize patient intake workflows, and achieve initial patient volume targets." },
   "CCH-Press Ganey Consumerism": { fileName:"Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Leverage Press Ganey's Consumerism platform to improve CCH's digital presence and capture patient reviews to drive reputation management and patient acquisition.", objectives:"Complete provider mapping, launch Provider Finder, implement PHI-compliant review response protocol, and establish baseline patient experience metrics." },
   "JSH Nurse Call and Overhead Paging Systems": { fileName:"Project Charter - JSH Nurse Call & Overhead Paging.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Replace and upgrade Nurse Call and Overhead Paging Systems at Stroger Hospital to improve clinical communication and patient safety response times.", objectives:"Complete system assessment, select vendor via RFP, secure capital budget approval, finalize construction plans, and achieve system go-live within scope and timeline." },
   "Lab Automation Upgrade": { fileName:"Project Charter - Lab Automation Upgrade.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Upgrade the laboratory automation line at Stroger to increase throughput, reduce turnaround time, and improve lab operational efficiency and staff safety.", objectives:"Complete construction, resolve interface cost with SCC, finalize staff training plan, achieve system go-live by July 2026." },
@@ -921,21 +919,18 @@ const CHARTER_DATA = {
   "HRO: Clinical Outcomes": { fileName:"Project Charter Clin Outc.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Advance HRO principles across CCH by establishing a Clinical Outcomes Council structure that tracks PSI-12 and HAC metrics and drives quality improvement.", objectives:"Establish council model, assign CNL/nurse leads to PSI and HAC subgroups, onboard new PSI-12 physician lead, maintain monthly report-out cadence." },
   "Justice-Involved Re-Entry": { fileName:"Project Charter - Justice Involved Reentry.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a 90-day pre-release healthcare coordination model for justice-involved individuals at Cermak, enabling billing under fee-for-service Medicaid.", objectives:"Resolve billing mechanism with HFS, set up Cermak as outpatient clinic in Oracle, address manual registration constraints, develop sustainable staffing model." },
   "Domestic Spend (EARN)": { fileName:"Project Charter - Domestic Spend.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Increase domestic spend by ensuring CCH patients are routed to in-network providers, reducing out-of-network claim denials and maximizing reimbursement.", objectives:"Implement PCP change request process, reduce claim denials, establish high-utilizer review meetings, build Access Dashboard." },
-  "City Colleges Workforce": { fileName:"City Colleges Pipeline Project Charter.pdf", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, track student employment outcomes." },
+  "Workforce Pipeline Development (City Colleges of Chicago)": { fileName:"City Colleges Pipeline Project Charter.pdf", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, track student employment outcomes." },
   "Surgery Optimization Phase 3": { fileName:"Project Charter - Surgery Draft 8.25.25.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize surgical operations by improving OR utilization, reducing prior authorization denials, and establishing data-driven performance monitoring.", objectives:"Deploy PPT v2 short and long forms, train staff, publish BI utilization dashboard refreshed biweekly, improve first-case on-time start rate to 85%." },
   // New project charters from PM Process Compliance Audit (April 2026)
   "RxLink": { fileName:"Project Charter - RxLink.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Implement RxLink pharmacy auto-enrollment to increase domestic pharmacy spend by routing CCH patients to in-network pharmacy providers, reducing out-of-network pharmacy claims.", objectives:"Deploy auto-enrollment workflow, integrate with CCH pharmacy benefit systems, establish monitoring dashboard, and achieve measurable increase in domestic pharmacy spend." },
   "Consent Committee": { fileName:"Project Charter - Consent Committee.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a Consent Committee governance structure at CCH to standardize the informed consent process, improve documentation quality, and ensure regulatory and accreditation compliance.", objectives:"Define committee membership and charter, develop standardized consent forms and workflows, establish audit and monitoring process, and achieve TJC and CMS compliance for consent documentation." },
   // Fix: also key by exact PMOE_LOAD_DATA project names for City Colleges and Cath Lab
-  "Workforce Pipeline Development (City Colleges of Chicago)": { fileName:"City Colleges Pipeline Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, and track student employment outcomes." },
-  "Cath Lab- EP Optimization Project": { fileName:"Project Charter- Cath Lab 4.3.26.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize Cardiac Catheterization Laboratory and Electrophysiology Lab operations at Stroger Hospital to improve throughput, reduce scheduling gaps, and expand EP procedural capacity.", objectives:"Complete stakeholder alignment, document current-state workflow, finalize project charter and org structure, and gain executive approval before implementation." },
+  "Cath Lab- EP Optimization": { fileName:"Project Charter- Cath Lab 4.3.26.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize Cardiac Catheterization Laboratory and Electrophysiology Lab operations at Stroger Hospital to improve throughput, reduce scheduling gaps, and expand EP procedural capacity.", objectives:"Complete stakeholder alignment, document current-state workflow, finalize project charter and org structure, and gain executive approval before implementation." },
   "Anal Dysplasia Diagnostic and Treatment Services": { fileName:"Project Charter - Anal Dysplasia Service.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a dedicated Anal Dysplasia Diagnostic and Treatment Services clinic at Stroger to screen, diagnose, and treat patients — reducing out-of-system referrals and expanding specialty care access.", objectives:"Stand up clinic with credentialed specialist, procure PICO equipment, finalize patient intake and clinical workflow SOPs, and achieve initial patient volume targets." },
   "Unified Strategy: CCH-CCDPH": { fileName:"Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Align CCH and CCDPH around a unified strategic framework to improve integration, shared accountability, and joint delivery of population health initiatives.", objectives:"Facilitate leadership alignment sessions, finalize integrated strategic plan, establish biweekly governance reporting structure." },
   // Charters added from PM Process Compliance Audit attachments
   "Cath Lab — EP Optimization": { fileName:"Project Charter- Cath Lab 4.3.26.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Optimize Cardiac Catheterization Laboratory and Electrophysiology Lab operations at Stroger Hospital to improve throughput, reduce scheduling gaps, and expand EP procedural capacity.", objectives:"Complete stakeholder alignment, document current-state workflow, finalize project charter and org structure, and gain executive approval before implementation." },
-  "City Colleges Workforce": { fileName:"City Colleges Pipeline Project Charter.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Create a healthcare workforce pipeline in partnership with City Colleges of Chicago to develop local talent for CCH clinical and operational roles.", objectives:"Finalize MOU, secure space for student training, establish security and IT infrastructure, launch cohort program, and track student employment outcomes." },
   "JSH Nurse Call & Overhead Paging": { fileName:"Project Charter - JSH Nurse Call & Overhead Paging Systems.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Replace and upgrade Nurse Call and Overhead Paging Systems at John H. Stroger Jr. Hospital to improve clinical communication, patient safety response times, and operational efficiency.", objectives:"Complete system assessment, select vendor via RFP, secure capital budget approval, finalize construction plans, and achieve system go-live within scope and timeline." },
-  "Anal Dysplasia Services": { fileName:"Project Charter - Anal Dysplasia Service.docx", url:"https://app.smartsheet.com/sheets/gm7QvXgCcvp2Pm66Xfw9WPp4J9WGw9xQcFc4QJH1", purpose:"Establish a dedicated Anal Dysplasia Diagnostic and Treatment Services clinic at Stroger to screen, diagnose, and treat patients — reducing referrals out of CCH and expanding specialty care access.", objectives:"Stand up clinic with credentialed specialist, procure PICO equipment, finalize patient intake and clinical workflow SOPs, and achieve initial patient volume targets." },
 };
 
 // ============================================================
@@ -1076,7 +1071,7 @@ const CLOSURE_REPORTS = {
     lessonsLearned:"Community social service platforms require sustained relationship management with partner organizations — technical implementation is the easier part. Handoff to operational owner must include documented processes, not just system access.",
     keyOutcome:"Social determinants of health referral network operational across CCH entities and community partners."
   },
-  "Wellvana": {
+  "Wellvana Partnership (MSSP)": {
     doc:"Project Closure Report Wellvana js.docx",
     accomplished:"Wellvana Medicare Value-Based Care enrollment completed. Shared Savings Program participation established. HEDIS measure improvement plan developed.",
     notAccomplished:"Full HEDIS improvement targets require ongoing monitoring beyond project close. Attribution and care gap closure workflows still maturing.",
@@ -1092,11 +1087,10 @@ const COMPLIANCE_DATA = [
   // ACTIVE
   { project:"Anal Dysplasia Diagnostic and Treatment Services", pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"ARPA Spend Monitoring/Sustainability",             pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"BH Intake Center Move",                           pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Cancelled" },
   { project:"RxLink",                                           pm:"Julius Ablis",    charter:true, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Consent Committee",                                pm:"Julius Ablis",    charter:true, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"CCH-Press Ganey Consumerism",                     pm:"Julius Ablis",    charter:null, plan:null, risks:null, closeout:null, status:"Active" },
-  { project:"City Colleges Workforce",                         pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
+  { project:"Workforce Pipeline Development (City Colleges of Chicago)", pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Domestic Spend (EARN)",                           pm:"Jasmin Sanchez",  charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"Health Equity Committee Capacity Building",       pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
   { project:"HRO: Clinical Outcomes",                         pm:"Elizabeth Wallish",charter:null, plan:null, risks:null, closeout:null, status:"Active" },
@@ -1146,7 +1140,7 @@ const COMPLIANCE_DATA = [
   { project:"Telehealth Optimization",                         pm:"Lane Harmon",     charter:true,  plan:true,  risks:"NA",  closeout:true,  status:"Complete", doc:"📄 Word document on file" },
   { project:"UniteUS",                                         pm:"Precious Avery",  charter:true,  plan:true,  risks:"NA",  closeout:true,  status:"Complete", doc:"📄 Word document on file" },
   { project:"ACHN Patient Experience",                         pm:"Lane Harmon",     charter:true,  plan:true,  risks:"NA",  closeout:"NA",  status:"Complete" },
-  { project:"Wellvana",                                        pm:"Jasmin Sanchez",  charter:false, plan:false, risks:false, closeout:false, status:"Complete" },
+  { project:"Wellvana Partnership (MSSP)",                     pm:"Jasmin Sanchez",  charter:true,  plan:true,  risks:false, closeout:true, status:"Complete" },
 ];
 
 // ============================================================
@@ -1449,7 +1443,7 @@ const DASHBOARD_DATA = [
 const SOLUTIONS_DATA = [
   {
     name: "CCH Wayfinding",
-    fullName: "Stroger Hospital – Find Your Way",
+    fullName: "Stroger Hospital and Professional Building – Find Your Way",
     icon: "🗺️",
     url: "https://blackknight1950.github.io/Wayfinding/",
     description: "Interactive wayfinding app for Stroger Hospital. Helps patients and visitors navigate the facility with step-by-step directions. Approved by Executive COO for patient reminder SMS integration.",
@@ -1473,7 +1467,7 @@ const SOLUTIONS_DATA = [
     icon: "⏱️",
     url: "https://timeclock-server.onrender.com/",
     description: "Digital time tracking solution for agency and locums staff at CCH. Streamlines shift logging, reduces manual entry errors, and supports payroll accuracy for temporary workforce.",
-    status: "Live",
+    status: "Ready For Deployment",
     statusColor: "var(--success)",
     tags: ["Staffing", "Time Tracking", "Operations"]
   },
@@ -1483,7 +1477,7 @@ const SOLUTIONS_DATA = [
     icon: "🧾",
     url: "https://invoice-processor-r1c0.onrender.com/",
     description: "Automated invoice processing tool for Cook County Health. Reduces manual review time and accelerates accounts payable workflows for CCH finance operations.",
-    status: "Live",
+    status: "Ready For Deployment",
     statusColor: "var(--success)",
     tags: ["Finance", "Automation", "Operations"]
   },
